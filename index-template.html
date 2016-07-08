@@ -1,0 +1,66 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8" %>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="_csrf" content="${_csrf.token}" />
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
+
+    <title>MoMo</title>
+
+    <style>
+        p#loadmask {
+            font-weight: 100;
+            font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+            position: absolute;
+            top: 35%;
+            left: 42%;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <p id="loadmask">
+            <img src="resources/images/MoMo_Logo_green_white.svg" style="width:200px" /><br />
+            <img src="resources/images/loader.gif" />
+            Loading, please wait...
+        </p>
+    </div>
+
+    <script src="../lib/jszip/dist/jszip.min.js"></script>
+    <script src="../lib/geotiff.js/dist/geotiff.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/ol3/ol.css">
+    <script src="../lib/ol3/ol.js"></script>
+
+    <script src="../lib/jsonix/dist/Jsonix-all.js"></script>
+
+    <!-- I figured these dependencies on my own, there must be a better way -->
+    <script src="../lib/ogc-schemas/Filter_1_0_0.js"></script>
+    <script src="../lib/ogc-schemas/GML_2_1_2.js"></script>
+    <script src="../lib/ogc-schemas/SLD_1_0_0_GeoServer.js"></script>
+    <script src="../lib/ogc-schemas/XLink_1_0.js"></script>
+
+    <script type="text/javascript">
+        var Ext = Ext || {}; // Ext namespace won't be defined yet...
+
+        // This function is called by the Microloader after it has performed basic
+        // device detection. The results are provided in the "tags" object. You can
+        // use these tags here or even add custom tags. These can be used by platform
+        // filters in your manifest or by platformConfig expressions in your app.
+        //
+        Ext.beforeLoad = function (tags) {
+            // always load the classic profile
+            Ext.manifest = 'classic'; // this name must match a build profile name
+        };
+    </script>
+
+    <!-- The line below must be kept intact for Sencha Cmd to build your application -->
+    <script id="microloader" data-app="9745cd28-d311-4016-a57a-363e52ec47b7" type="text/javascript" src="bootstrap.js"></script>
+</body>
+</html>

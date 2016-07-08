@@ -1,0 +1,48 @@
+.mm-fa-stack-top-right {
+    margin-left: 0.8em;
+    margin-top: -0.8em;
+}
+
+.mm-main-tab {
+    background-image:url('/momo/admin/resources/images/world-gray.png');
+    background-size:cover;
+    background-repeat:repeat;
+    padding: 50px !important;
+}
+
+.x-title-icon-navigation {
+    font-family: FontAwesome;
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.title-icon {
+   background-size:cover
+}
+
+.x-btn-momo-tools-large {
+    font-size: 1.8em;
+}
+
+.thumb-wrap {
+    width: 100px;
+    padding: 4px;
+    border: 1px solid #DCDCDC;
+    background-color:$accompanying-2nd-green;
+    color: $accompanying-white;
+    margin: 0 1px 10px 1px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/**
+ * Setting these avoids the black bars happening on different fieldsets, e.g.
+ * the styler panel or the account info panel
+ */
+.x-fieldset .x-fieldset-header {
+    display: block;
+}

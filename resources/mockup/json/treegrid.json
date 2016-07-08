@@ -1,0 +1,62 @@
+{
+    "text": ".",
+    "children": [
+        {
+            "id": 1,
+            "name": "Lakes",
+            "children": [
+                {
+                    "id": 12,
+                    "name": "Layer A",
+                    "leaf": true
+                }, {
+                    "id": 13,
+                    "name": "Layer B",
+                    "leaf": true
+                }, {
+                    "id": 14,
+                    "name": "Layer C",
+                    "leaf": true
+                }, {
+                    "id": 15,
+                    "name": "Layer D",
+                    "leaf": true
+                }
+            ]
+        }, {
+            "id": 2,
+            "name": "Traffic",
+            "children": [
+                {
+                    "id": 22,
+                    "name": "Layer A",
+                    "leaf": true
+                }, {
+                    "id": 23,
+                    "name": "Layer E",
+                    "leaf": true
+                }, {
+                    "id": 24,
+                    "name": "Layer F",
+                    "leaf": true
+                }, {
+                    "id": 25,
+                    "name": "Layer G",
+                    "leaf": true
+                }
+            ]
+        },{
+            "id": 101,
+            "name": "Layer H",
+            "leaf": true
+        }, {
+            "id": 102,
+            "name": "Layer I",
+            "leaf": true
+        }, {
+            "id": 103,
+            "name": "Layer J",
+            "leaf": true
+        }
+    ]
+}

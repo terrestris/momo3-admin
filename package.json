@@ -1,0 +1,27 @@
+{
+  "name": "MoMo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint-js": "eslint -c .eslintrc app classic",
+    "test": "npm run lint-js"
+  },
+  "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
+  "contributors": [
+    "Nils Bühner <buehner@terrestris.de>",
+    "Marc Jansen <jansen@terrestris.de>",
+    "Daniel Koch <koch@terrestris.de>",
+    "Kai Volland <volland@terrestris.de>",
+    "Johannes Weskamm <weskamm@terrestris.de>"
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/apollomapping/momo-admin"
+  },
+  "bugs": "https://github.com/apollomapping/momo-admin/issues",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "eslint": "1.10.3"
+  }
+}
