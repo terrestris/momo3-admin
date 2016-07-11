@@ -1,0 +1,52 @@
+.thumb-img {
+    height: 30px;
+    display: block;
+    margin: 0 auto 5px auto;
+}
+
+.thumb-wrap {
+    width: 100px;
+    padding: 4px;
+    border: 1px solid #DCDCDC;
+    background-color:$main-2nd-color;
+    color: $main-light-color;
+    margin: 0 1px 10px 1px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.thumb-over {
+    background: $accompanying-color;
+    color: $main-light-color;
+    cursor: pointer;
+}
+.thumb-selected {
+    background-color: #DFE8F6;
+    cursor: pointer;
+}
+
+.theme-img {
+    width: 100%;
+}
+
+.theme-thumb-wrap {
+    border: 1px solid #DCDCDC;
+    margin: 0 1px 10px 1px;
+    overflow: hidden;
+}
+
+.theme-thumb-over {
+    border-color: $accent-color;
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.theme-thumb-selected {
+    border-color: $accent-color;
+    border-width: 4px;
+    border-style: solid;
+    cursor: pointer;
+}

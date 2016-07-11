@@ -53,9 +53,7 @@
      * The name of the theme for this application.
      */
 
-
-    /*"theme": "theme-momo-default",*/
-
+    "theme": "theme-momo-default",
 
     /**
      * The list of required packages (with optional versions; default is "latest").
@@ -556,7 +554,7 @@
         "classic": {
             "toolkit": "classic",
 
-            /*"theme": "theme-momo-default",*/
+            "theme": "theme-momo-default",
 
             "sass": {
                 // "save": "classic/sass/save.scss"

@@ -37,7 +37,7 @@ Ext.define('MoMo.admin.view.main.MainController', {
     getUserBySession: function(){
         var viewModel = this.getViewModel();
         var getUserBySessionPath = BasiGX.util.Url.getWebProjectBaseUrl() +
-            'user/getBySession.action';
+            'user/getUserBySession.action';
 
         Ext.Ajax.request({
             url: getUserBySessionPath,
@@ -45,29 +45,11 @@ Ext.define('MoMo.admin.view.main.MainController', {
             success: function(response) {
                 if (response && response.responseText) {
                     var responseObj = Ext.decode(response.responseText);
-                    var user = Ext.create('MoMo.admin.model.User');
-                    var MoMoUser = Ext.create(
-                        'MoMo.admin.model.MoMoUser',
-                        responseObj.data.MoMoUser
+                    var user = Ext.create(
+                        'MoMo.admin.model.User',
+                        responseObj.data.User
                     );
-                    var stripeCustomerParams = Ext.create(
-                        'MoMo.admin.model.StripeCustomerParams',
-                        responseObj.data.stripeCustomerParams
-                    );
-                    var sessionInfo = Ext.create(
-                        'MoMo.admin.model.SessionInfo',
-                        responseObj.data.sessionInfo
-                    );
-                    user.setMoMoUser(MoMoUser);
-                    user.setStripeCustomerParams(stripeCustomerParams);
-                    user.setSessionInfo(sessionInfo);
                     viewModel.set('user', user);
-
-                    var activeGroup = user.getSessionInfo().get('userGroup');
-                    // set the activeGroup as selected group
-                    if (activeGroup && activeGroup.id) {
-                        viewModel.set('selectedUserGroup', activeGroup.id);
-                    }
                 } else {
                     Ext.Error.raise('Could not get user by session.');
                 }
@@ -78,100 +60,6 @@ Ext.define('MoMo.admin.view.main.MainController', {
                     Ext.String.format(response.responseText)
                 );
             }
-        });
-    },
-
-    /**
-     *
-     */
-    activeGroupSelected: function(combo, record) {
-        var me = this;
-        var view = this.getView();
-        var groupId = record.get('id');
-        var lastValue = this.getViewModel().get('user').
-            getSessionInfo().get('userGroup').id;
-        if (parseInt(groupId, 10) === lastValue) {
-            return;
-        }
-        var url = BasiGX.util.Url.getWebProjectBaseUrl() +
-            'user/setSessionGroup.action';
-        view.setLoading(true);
-        Ext.Ajax.request({
-            url: url,
-            params: {
-                groupId: groupId
-            },
-            method: 'POST',
-            headers: BasiGX.util.CSRF.getHeader(),
-            success: function(response) {
-                view.setLoading(false);
-                var json = Ext.decode(response.responseText);
-                if (json.success) {
-                    me.handleGroupChange(json);
-                } else {
-                    combo.setValue(lastValue);
-                }
-            },
-            failure: function(response) {
-                view.setLoading(false);
-                combo.setValue(lastValue);
-                Ext.Msg.alert(
-                    'Error',
-                    Ext.String.format(response.responseText)
-                );
-            }
-        });
-    },
-
-    handleGroupChange: function(json) {
-        var view = this.getView();
-        var viewModel = view.getViewModel();
-
-        // Refresh the model data. We have to create a new instance of
-        // sessiondata in order to trigger the mainmodels formulas binds
-        // on the user object, because deep:true seems to only work this way
-        var newSessionInfo = Ext.create('MoMo.admin.model.SessionInfo', {
-            userGroup: json.data.userGroup,
-            roleForGroup: json.data.roleForGroup
-        });
-        viewModel.get('user').setSessionInfo(newSessionInfo);
-
-        //set active tab to gisclients, should be always visible for everyone
-        var gisClientTab = Ext.ComponentQuery.query(
-            '[itemId=manage-web-maps-tab]')[0];
-        view.setActiveTab(gisClientTab);
-
-        // TODO: Refactor to always load a store / substore when a
-        // specific tabpanel is shown!?!
-        var storesToReload = [];
-        var componentsWithStore = [];
-        storesToReload.push(Ext.getStore('momotoolsStore'));
-        storesToReload.push(Ext.getStore('gisClientStore'));
-
-        // createnewfolders
-        componentsWithStore = Ext.Array.merge(componentsWithStore,
-            Ext.ComponentQuery.query('mm_grid_layerlist'));
-        // createoreditlayer
-        componentsWithStore = Ext.Array.merge(componentsWithStore,
-            Ext.ComponentQuery.query('mm_grid_layergrouplist'));
-        // create gisclient step 3 and 'my data layers and folders'
-        componentsWithStore = Ext.Array.merge(componentsWithStore,
-            Ext.ComponentQuery.query('treepanel'));
-        // userstore - invite users to gisclient
-        componentsWithStore = Ext.Array.merge(componentsWithStore,
-            Ext.ComponentQuery.query('tagfield'));
-        // userstore - manage users
-        componentsWithStore = Ext.Array.merge(componentsWithStore,
-            Ext.ComponentQuery.query('mm_grid_manageusers'));
-
-        Ext.each(componentsWithStore, function(comp) {
-            if (comp.store) {
-                storesToReload.push(comp.getStore());
-            }
-        });
-
-        Ext.each(storesToReload, function(store) {
-            store.load();
         });
     },
 

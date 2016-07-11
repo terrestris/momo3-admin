@@ -59,8 +59,8 @@ Ext.define('MoMo.admin.view.container.ManageGisClientsController', {
                             },
                             failure: function(){
                                 Ext.toast('Internal Server Error!' +
-                                        'Visibility of ' + gisClient.get('name') +
-                                        'could not be set to ' + !isVisible);
+                                    'Visibility of ' + gisClient.get('name') +
+                                    'could not be set to ' + !isVisible);
                             }
                         });
                     });
@@ -79,7 +79,8 @@ Ext.define('MoMo.admin.view.container.ManageGisClientsController', {
         }
 
         //cleanup old panels before building a new one
-        var panels = Ext.ComponentQuery.query('panel[name=createoreditgisclient]');
+        var panels = Ext.ComponentQuery.query(
+                'panel[name=createoreditgisclient]');
         Ext.each(panels, function(panel) {
             panel.destroy();
         });
