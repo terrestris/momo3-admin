@@ -6,5 +6,9 @@ Ext.define('MoMo.admin.view.main.MainModel', {
 
     alias: 'viewmodel.main',
 
-    requires: []
+    requires: [],
+
+    data: {
+        user: null
+    }
 });

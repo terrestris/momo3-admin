@@ -32,9 +32,10 @@ Ext.define('MoMo.admin.view.main.Main', {
         layout: {
             align: 'stretch'
         },
+
         title: {
             bind: {
-                text: 'Peter'
+                text: '{user.firstName}'
             },
             flex: 0
         },

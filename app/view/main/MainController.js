@@ -47,7 +47,7 @@ Ext.define('MoMo.admin.view.main.MainController', {
                     var responseObj = Ext.decode(response.responseText);
                     var user = Ext.create(
                         'MoMo.admin.model.User',
-                        responseObj.data.User
+                        responseObj.data
                     );
                     viewModel.set('user', user);
                 } else {
