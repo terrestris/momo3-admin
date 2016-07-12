@@ -56,7 +56,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         xtype: 'templatecolumn',
         flex: 1,
         align: "center",
-        name: "general-settings",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-gear fa-2x" data-qtip="General Settings"></i>',
         bind: {
@@ -66,7 +65,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         xtype: 'templatecolumn',
         flex: 1,
         align: "center",
-        name: "tool-settings",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-wrench fa-2x" data-qtip="Interface Settings">' +
             '</i>',
@@ -77,7 +75,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         xtype: 'templatecolumn',
         flex: 1,
         align: "center",
-        name: "layer-settings",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-list fa-2x" data-qtip="Layers Settings"></i>',
         bind: {
@@ -87,7 +84,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         xtype: 'templatecolumn',
         flex: 1,
         align: "center",
-        name: "share-settings",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-users fa-2x" data-qtip="Share Web Map"></i>',
         bind: {
@@ -97,7 +93,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         xtype: 'templatecolumn',
         flex: 1,
         align: "center",
-        name: "preview",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-eye fa-2x" data-qtip="Show Preview"></i>'
     }],

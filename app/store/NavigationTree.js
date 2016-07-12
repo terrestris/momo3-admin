@@ -19,7 +19,7 @@ Ext.define('MoMo.admin.store.NavigationTree', {
             routeId: 'layers'
         }, {
             text: 'Users',
-            view: 'pages.Users',
+            view: 'grid.UserList',
             leaf: true,
             iconCls: 'x-fa fa-users',
             routeId: 'users'

@@ -1,23 +1,23 @@
-Ext.define('MoMo.admin.view.grid.LayerList',{
+Ext.define('MoMo.admin.view.grid.UserList',{
     extend: 'Ext.grid.Panel',
 
-    xtype: 'momo-layerlist',
+    xtype: 'momo-userlist',
 
     requires: [
-        'MoMo.admin.view.grid.LayerListController',
-        'MoMo.admin.view.grid.LayerListModel',
+        'MoMo.admin.view.grid.UserListController',
+        'MoMo.admin.view.grid.UserListModel',
 
-        'MoMo.admin.store.Layers'
+        'MoMo.admin.store.Users'
     ],
 
-    controller: 'momo-layerlist',
+    controller: 'momo-userlist',
 
     viewModel: {
-        type: 'momo-layerlist'
+        type: 'momo-userlist'
     },
 
     store: {
-        type: 'layers'
+        type: 'users'
     },
 
     bind: {
@@ -43,32 +43,28 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
 
     columns: [{
         xtype: 'templatecolumn',
+        width: 40,
+        align: "center",
+        tdCls: "column-tool",
+        tpl: new Ext.XTemplate(
+            '<tpl if="mainRole == \'ROLE_ADMIN\'">',
+                '<i class="fa fa-star fa-2x" data-qtip="Admin"></i>',
+            '<tpl elseif="mainRole == \'ROLE_SUBADMIN\'">',
+                '<i class="fa fa-star-half-o fa-2x" data-qtip="Sub-Admin"></i>',
+            '<tpl else >',
+                '<i class="fa fa-star-o fa-2x" data-qtip="User"></i>',
+            '</tpl>'
+        )
+    }, {
+        xtype: 'templatecolumn',
         flex: 10,
-        tpl: '<div data-qtip="{name}">{name}</div>'
+        tpl: '<div data-qtip="{fullName}">{fullName}</div>'
     },{
         xtype: 'templatecolumn',
         width: 40,
         align: "center",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-gear fa-2x" data-qtip="Layer Settings">'
-    },{
-        xtype: 'templatecolumn',
-        width: 40,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-paint-brush fa-2x" data-qtip="Layer Style"></i>'
-    },{
-        xtype: 'templatecolumn',
-        width: 40,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-download fa-2x" data-qtip="Download Layerdata"></i>'
-    },{
-        xtype: 'templatecolumn',
-        width: 40,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-eye fa-2x" data-qtip="Preview Layer"></i>'
     }],
 
     tbar: [{
@@ -79,15 +75,6 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         iconCls: 'fa fa-plus fa-2x',
         listeners: {
             click: 'onCreateClick'
-        }
-    }, {
-        xtype: 'button',
-        text: 'Copy',
-        scale: 'large',
-        ui: 'momo',
-        iconCls: 'fa fa-copy fa-2x',
-        listeners: {
-            click: 'onCopyClick'
         }
     }, {
         xtype: 'button',
