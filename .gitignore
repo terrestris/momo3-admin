@@ -1,20 +1,25 @@
-bin
-target
-tmp
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directory
+node_modules
+
+# Eclipse
 .project
 
-node_modules
-npm-debug.log
-
-cache.appcache
-sencha-error-*.log
-bootstrap.json
-bootstrap.js
-bootstrap.css
+# Sencha 
+build/
+ext/
+packages/
 classic.json
-modern.json
 sass/example/example.css
 sass/example/bootstrap.json
 sass/example/bootstrap.js
-build
-ext
+
+# Coverage
+.instrumented/
+test/.index_coverage.html
+coverage/
+

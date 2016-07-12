@@ -51,8 +51,7 @@
 
     /**
      * The name of the theme for this application.
-     */
-
+    */
     "theme": "theme-momo-default",
 
     /**
@@ -230,7 +229,7 @@
         "js": [
             // Remove this entry to individually load sources from the framework.
             {
-                "path": "${framework.dir}/build/ext-all-debug.js"
+                "path": "${framework.dir}/build/ext-all-rtl-debug.js"
             }
         ]
     },
@@ -238,14 +237,14 @@
     /**
      * Settings specific to modern toolkit builds.
      */
-    /*"modern": {
-        "js": [
-            // Remove this entry to individually load sources from the framework.
-            {
-                "path": "${framework.dir}/build/ext-modern-all.js"
-            }
-        ]
-    },*/
+    //"modern": {
+    //    "js": [
+    //        // Remove this entry to individually load sources from the framework.
+    //        {
+    //            "path": "${framework.dir}/build/ext-modern-all-debug.js"
+    //        }
+    //    ]
+    //},
 
     /**
      * List of all CSS assets in the right inclusion order.
@@ -310,7 +309,8 @@
     "production": {
         "output": {
             "appCache": {
-                "enable": false
+                "enable": true,
+                "path": "cache.appcache"
             }
         },
         "loader": {
@@ -421,18 +421,19 @@
      */
 
     "output": {
-        "base": "${workspace.build.dir}/${build.environment}",
-        "page": "../../index.html",
+        "base": "${workspace.build.dir}/${build.environment}/${app.name}",
+        "page": "index.html",
+        "manifest": "${build.id}.json",
         "js": "${build.id}/app.js",
-        "manifest": "../../${build.id}.json",
+        "appCache": {
+            "enable": false
+        },
         "resources": {
             "path": "${build.id}/resources",
             "shared": "resources"
-        },
-        "appCache": {
-            "enable": false
         }
     },
+
 
     /**
     * Controls for localStorage caching
@@ -483,11 +484,9 @@
      * Extra resources to be copied into the resource folder as specified in the "resources"
      * property of the "output" object. Folders specified in this list will be deeply copied.
      */
-    "resources": [
-        {
-            "path": "${toolkit.name}/resources"
-        }
-    ],
+    "resources": [{
+        "path": "${toolkit.name}/resources"
+    }],
 
     /**
      * File / directory name patttern to ignore when copying to the builds. Must be a
@@ -567,5 +566,5 @@
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "9745cd28-d311-4016-a57a-363e52ec47b7"
+    "id": "1fc3e476-354f-4127-8169-afcc23522257"
 }
