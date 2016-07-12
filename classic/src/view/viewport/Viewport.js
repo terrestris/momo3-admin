@@ -73,7 +73,6 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         flex: 1,
         items: [{
             xtype: 'container',
-            height: '100%',
             reference: 'navigationContainer',
             layout: 'vbox',
             defaults: {

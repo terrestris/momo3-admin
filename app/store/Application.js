@@ -1,20 +1,8 @@
 Ext.define('MoMo.admin.store.Application', {
     extend: 'Ext.data.Store',
 
-    storeId: 'Application',
+    alias: 'store.applications',
 
-    fields: [{
-        name: 'Name'
-    }],
-
-    data: [{
-        name: 'My Webapplication 1'
-    }, {
-        name: 'My Webapplication 2'
-    }, {
-        name: 'My Webapplication 3'
-    }, {
-        name: 'My Webapplication 4'
-    }]
+    model: 'MoMo.admin.model.Application'
 
 });
