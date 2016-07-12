@@ -1,4 +1,4 @@
-Ext.define('MoMo.admin.store.Application', {
+Ext.define('MoMo.admin.store.Applications', {
     extend: 'Ext.data.Store',
 
     alias: 'store.applications',

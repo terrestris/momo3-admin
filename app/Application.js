@@ -10,7 +10,6 @@ Ext.define('MoMo.admin.Application', {
 
     stores: [
         'NavigationTree',
-        'Application',
         'Layout',
         'ApplicationLayout',
         'AvailableModules',
