@@ -2,7 +2,7 @@
  * Generates a set of style rules for the "navigation" tab UI.
  */
 @include extjs-tab-panel-ui(
-    $ui: 'navigation',
+    $ui: 'navigation_old',
     $ui-tab-background-color: $main-dark-color,
     $ui-tab-background-color-over: $main-dark-color,
     $ui-tab-background-color-active: $accent-color,

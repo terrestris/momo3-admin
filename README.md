@@ -1,1 +1,4 @@
-# momo3-admin
+# momoadmin-admin
+Admin application for a momoadmin based webapp
+
+TODO
