@@ -1,0 +1,159 @@
+/**
+ * The ui config for 'momo';
+ */
+@include extjs-button-small-ui(
+    $ui: 'momo',
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+);
+@include extjs-button-large-ui(
+    $ui: 'momo',
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+)
+@include extjs-button-toolbar-small-ui(
+    $ui: 'momo',
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+);
+
+/**
+ * The ui config for 'momo-cancel';
+ */
+@include extjs-button-small-ui(
+    $ui: 'momo-cancel',
+    $color: $main-red,
+    $glyph-color: $main-red,
+    $background-color: $main-grey,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+);
+@include extjs-button-large-ui(
+    $ui: 'momo-cancel',
+    $color: $main-red,
+    $glyph-color: $main-red,
+    $background-color: $main-grey,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+)
+@include extjs-button-toolbar-small-ui(
+    $ui: 'momo-cancel',
+    $color: $main-red,
+    $glyph-color: $main-red,
+    $background-color: $main-grey,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+);
+
+/**
+ * The ui config for 'momo-deleteaccount';
+ */
+@include extjs-button-small-ui(
+    $ui: 'momo-deleteaccount',
+    $background-color: $main-red,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+);
+@include extjs-button-large-ui(
+    $ui: 'momo-deleteaccount',
+    $background-color: $main-red,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+)
+@include extjs-button-toolbar-small-ui(
+    $ui: 'momo-deleteaccount',
+    $background-color: $main-red,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+);
+
+/**
+ * The ui config for 'momo-submit';
+ */
+@include extjs-button-small-ui(
+    $ui: 'momo-submit',
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+);
+@include extjs-button-large-ui(
+    $ui: 'momo-submit',
+    $line-height: 34px,
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+);
+@include extjs-button-toolbar-small-ui(
+    $ui: 'momo-submit',
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+);
+
+/**
+ * The ui config for 'momo-delete';
+ */
+@include extjs-button-small-ui(
+    $ui: 'momo-delete',
+    $color: $main-red,
+    $glyph-color: $main-red,
+    $background-color: $main-grey,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+);
+@include extjs-button-large-ui(
+    $ui: 'momo-delete',
+    $color: $main-red,
+    $glyph-color: $main-red,
+    $background-color: $main-grey,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+)
+@include extjs-button-toolbar-small-ui(
+    $ui: 'momo-delete',
+    $color: $main-red,
+    $glyph-color: $main-red,
+    $background-color: $main-grey,
+    $border-color:darken($main-red, 5%),
+    $border-radius:5px
+);
+
+/**
+ * The ui config for 'momo-tools';
+ */
+@include extjs-button-large-ui(
+    $ui: 'momo-tools',
+    $background-color: lightgrey,
+    $border-color: lightgrey,
+    $border-color-pressed: $button-default-border-color,
+    $background-color-pressed: $main-2nd-color,
+    $border-radius:5px
+);
+
+/**
+ * The wizardprogressbar settings;
+ */
+$wizard-primary-background-color: #fff;
+$wizard-button-background-color: #579ddb;
+
+.wizardprogressbar .x-btn-disabled.x-btn-default-toolbar-small {
+    opacity: 1 !important;
+}
+
+.wizardprogressbar {
+    .active {
+        .x-btn-icon-el, .x-btn-inner{
+            color: $main-2nd-color;
+        }
+    }
+
+    background-color: $wizard-primary-background-color;
+    color: #fff;
+
+    .x-btn-icon-el, .x-btn-inner {
+        color: #cccccc;
+    }
+}
