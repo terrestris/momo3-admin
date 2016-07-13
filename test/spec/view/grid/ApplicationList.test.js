@@ -1,12 +1,18 @@
 describe('MoMo.admin.view.grid.ApplicationList', function() {
-    var ApplicationList;
+    var applicationList;
+    var controller;
+    var viewModel;
+    var store;
 
     beforeEach(function() {
-        ApplicationList = Ext.create('MoMo.admin.view.grid.ApplicationList');
+        applicationList = Ext.create('MoMo.admin.view.grid.ApplicationList');
+        controller = applicationList.getController();
+        viewModel = applicationList.getViewModel();
+        store = applicationList.getStore();
     });
 
     afterEach(function() {
-        ApplicationList.destroy();
+        applicationList.destroy();
     });
 
     describe('Basics', function() {
@@ -14,13 +20,31 @@ describe('MoMo.admin.view.grid.ApplicationList', function() {
             expect(MoMo.admin.view.grid.ApplicationList).to.not.be(undefined);
         });
         it('has a ViewController', function() {
-            expect(ApplicationList.getController()).to.be.an(MoMo.admin.view.grid.ApplicationListController);
+            expect(controller).to.be.an(MoMo.admin.view.grid.ApplicationListController);
         });
         it('has a ViewModel', function() {
-            expect(ApplicationList.getViewModel()).to.be.an(MoMo.admin.view.grid.ApplicationListModel);
+            expect(viewModel).to.be.an(MoMo.admin.view.grid.ApplicationListModel);
         });
         it('has a store of type "applications"', function() {
-            expect(ApplicationList.getStore()).to.be.an(MoMo.admin.store.Applications);
+            expect(store).to.be.an(MoMo.admin.store.Applications);
+        });
+    });
+
+    describe('View Controller', function() {
+        it('has the default methods', function(){
+            expect(controller.onFilterChange).to.not.be(undefined);
+            expect(controller.handleCellClick).to.not.be(undefined);
+            expect(controller.onCreateClick).to.not.be(undefined);
+            expect(controller.onCopyClick).to.not.be(undefined);
+            expect(controller.onDeleteClick).to.not.be(undefined);
+        });
+    });
+
+    describe('View Model', function() {
+        it('all binded values are defined', function(){
+            Ext.iterate(applicationList.getBind(), function(k,v ){
+                expect(viewModel.get(k)).to.not.be(undefined);
+            })
         });
     });
 });
