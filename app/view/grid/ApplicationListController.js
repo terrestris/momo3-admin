@@ -44,7 +44,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     },
 
     handleCellClick: function(gridview, td, cellIndex, record){
-        var me = this;
         switch(cellIndex) {
         case 2: // general-settings
             Ext.toast("Edit general-settings");

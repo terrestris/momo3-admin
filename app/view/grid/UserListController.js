@@ -39,8 +39,7 @@ Ext.define('MoMo.admin.view.grid.UserListController', {
         Ext.toast("Delete user");
     },
 
-    handleCellClick: function(gridview, td, cellIndex, record){
-        var me = this;
+    handleCellClick: function(gridview, td, cellIndex){
         switch(cellIndex) {
         case 2:
             Ext.toast("Edit user-settings");
