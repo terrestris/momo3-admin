@@ -9,7 +9,7 @@ node_modules
 # Eclipse
 .project
 
-# Sencha 
+# Sencha
 build/
 ext/
 packages/
@@ -22,4 +22,3 @@ sass/example/bootstrap.js
 .instrumented/
 test/.index_coverage.html
 coverage/
-

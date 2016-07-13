@@ -1,8 +1,6 @@
 Ext.define('MoMo.admin.model.Application', {
     extend: 'MoMo.admin.model.Base',
 
-    requires: [],
-
     proxy: {
         type: 'rest',
         url: BasiGX.util.Url.getWebProjectBaseUrl() + 'rest/applications',

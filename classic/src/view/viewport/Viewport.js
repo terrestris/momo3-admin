@@ -5,6 +5,8 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
     requires: [
         'Ext.list.Tree',
 
+        'MoMo.admin.view.viewport.ViewportController',
+        'MoMo.admin.view.viewport.ViewportModel',
         'MoMo.admin.view.container.MainContainer',
         'MoMo.admin.view.grid.ApplicationList',
         'MoMo.admin.view.grid.LayerList',
