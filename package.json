@@ -1,42 +1,43 @@
 {
-    "name": "momo-admin",
-    "type": "code",
-    "version": "0.0.1",
-    "description": "Basic Admin-Client for momoadmin",
-    "license": "GPL-3.0",
-    "homepage": "https://github.com/terrestris/momoadmin-admin#readme",
-    "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
-    "contributors": [
-        "Nils Bühner <buehner@terrestris.de>",
-        "André Henn <henn@terrestris.de>",
-        "Marc Jansen <jansen@terrestris.de>",
-        "Daniel Koch <koch@terrestris.de>",
-        "Anna Rieger <rieger@terrestris.de>",
-        "Kai Volland <volland@terrestris.de>",
-        "Johannes Weskamm <weskamm@terrestris.de>"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/terrestris/momoadmin-admin.git"
-    },
-    "bugs": {
-        "url": "https://github.com/terrestris/momoadmin-admin/issues"
-    },
-    "scripts": {
-        "lint-js": "eslint -c .eslintrc ./",
-        "test": "mocha-phantomjs --ssl-protocol=any --ignore-ssl-errors=true test/index.html",
-        "coverage-clean": "rm -rf .instrumented/ && rm -rf ./coverage/ && rm -f ./test/.index_coverage.html",
-        "coverage-sed": "sed -e 's/..\\/app/..\\/.instrumented\\/app/g' ./test/index.html > ./test/.index_coverage.html",
-        "coverage-instrument": "istanbul instrument -o .instrumented/ -x '**/ext/** **/build/** **/node_modules/** **/packages/** **/sass/** **/test/**' ./",
-        "coverage-report": "mocha-phantomjs --ssl-protocol=any --ignore-ssl-errors=true --hooks ./test/phantom_hooks.js ./test/.index_coverage.html && istanbul report --root ./coverage html",
-        "coverage-run": "npm run coverage-clean && npm run coverage-sed && npm run coverage-instrument && npm run coverage-report"
-    },
-    "dependencies": {
-        "eslint": "1.10.3",
-        "expect.js": "0.3.1",
-        "istanbul": "0.4.2",
-        "mocha": "2.3.4",
-        "mocha-phantomjs": "4.0.2",
-        "sinon": "1.17.2"
-    }
+  "name": "momo-admin",
+  "type": "code",
+  "version": "0.0.1",
+  "description": "Basic Admin-Client for momoadmin",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/terrestris/momoadmin-admin#readme",
+  "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
+  "contributors": [
+    "Nils Bühner <buehner@terrestris.de>",
+    "André Henn <henn@terrestris.de>",
+    "Marc Jansen <jansen@terrestris.de>",
+    "Daniel Koch <koch@terrestris.de>",
+    "Anna Rieger <rieger@terrestris.de>",
+    "Kai Volland <volland@terrestris.de>",
+    "Johannes Weskamm <weskamm@terrestris.de>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terrestris/momoadmin-admin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/terrestris/momoadmin-admin/issues"
+  },
+  "scripts": {
+    "js-lint": "eslint -c .eslintrc ./",
+    "test": "mocha-phantomjs --ssl-protocol=any --ignore-ssl-errors=true index-mocha.html",
+    "coverage-clean": "rm -rf .instrumented/ && rm -rf ./coverage/ && rm -f ./test/.index_coverage.html",
+    "coverage-sed": "sed -e 's/..\\/app/..\\/.instrumented\\/app/g' ./test/index.html > ./test/.index_coverage.html",
+    "coverage-instrument": "istanbul instrument -o .instrumented/ -x '**/ext/** **/build/** **/node_modules/** **/packages/** **/sass/** **/test/**' ./",
+    "coverage-report": "mocha-phantomjs --ssl-protocol=any --ignore-ssl-errors=true --hooks ./test/phantom_hooks.js ./test/.index_coverage.html && istanbul report --root ./coverage html",
+    "coverage-run": "npm run coverage-clean && npm run coverage-sed && npm run coverage-instrument && npm run coverage-report"
+  },
+  "dependencies": {
+    "eslint": "1.10.3",
+    "expect.js": "0.3.1",
+    "istanbul": "0.4.2",
+    "mocha": "2.3.4",
+    "mocha-extjs": "^0.1.71",
+    "mocha-phantomjs": "4.0.2",
+    "sinon": "1.17.2"
+  }
 }
