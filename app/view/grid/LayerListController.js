@@ -31,6 +31,18 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         }
     },
 
+    onCreateClick: function() {
+        Ext.toast("Create layer");
+    },
+
+    onCopyClick: function() {
+        Ext.toast("Copy layer");
+    },
+
+    onDeleteClick: function() {
+        Ext.toast("Delete layer");
+    },
+
     handleCellClick: function(gridview, td, cellIndex, record){
         var me = this;
         switch(cellIndex) {

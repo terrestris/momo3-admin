@@ -73,18 +73,14 @@ Ext.define('MoMo.admin.view.grid.UserList',{
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-plus fa-2x',
-        listeners: {
-            click: 'onCreateClick'
-        }
+        handler: 'onCreateClick'
     }, {
         xtype: 'button',
         text: 'Delete',
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-minus fa-2x',
-        listeners: {
-            click: 'onDeleteClick'
-        }
+        handler: 'onDeleteClick'
     }, '->', {
         xtype: 'textfield',
         fieldLabel: 'Filter by name',

@@ -31,6 +31,14 @@ Ext.define('MoMo.admin.view.grid.UserListController', {
         }
     },
 
+    onCreateClick: function() {
+        Ext.toast("Create user");
+    },
+
+    onDeleteClick: function() {
+        Ext.toast("Delete user");
+    },
+
     handleCellClick: function(gridview, td, cellIndex, record){
         var me = this;
         switch(cellIndex) {

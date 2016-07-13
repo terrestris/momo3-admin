@@ -103,27 +103,21 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-plus fa-2x',
-        listeners: {
-            click: 'onCreateClick'
-        }
+        handler: 'onCreateClick'
     }, {
         xtype: 'button',
         text: 'Copy',
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-copy fa-2x',
-        listeners: {
-            click: 'onCopyClick'
-        }
+        handler: 'onCopyClick'
     }, {
         xtype: 'button',
         text: 'Delete',
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-minus fa-2x',
-        listeners: {
-            click: 'onDeleteClick'
-        }
+        handler: 'onDeleteClick'
     }, '->', {
         xtype: 'textfield',
         fieldLabel: 'Filter by name',

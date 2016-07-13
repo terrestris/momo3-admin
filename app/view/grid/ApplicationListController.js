@@ -31,6 +31,18 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
         }
     },
 
+    onCreateClick: function() {
+        this.redirectTo('applications/createOrEdit');
+    },
+
+    onCopyClick: function() {
+        Ext.toast("Copy application");
+    },
+
+    onDeleteClick: function() {
+        Ext.toast("Delete application");
+    },
+
     handleCellClick: function(gridview, td, cellIndex, record){
         var me = this;
         switch(cellIndex) {
