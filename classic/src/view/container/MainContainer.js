@@ -8,11 +8,9 @@ Ext.define('MoMo.admin.view.container.MainContainer', {
 
     cls: 'momo-main-container',
 
-    scrollable: 'y',
-
     layout: {
         type: 'hbox',
-        align: 'stretchmax',
+        align: 'stretch',
 
         // Tell the layout to animate the x/width of the child items.
         animate: true,

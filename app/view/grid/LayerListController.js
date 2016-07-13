@@ -1,9 +1,9 @@
-Ext.define('MoMo.admin.view.grid.ApplicationListController', {
+Ext.define('MoMo.admin.view.grid.LayerListController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.momo-applicationlist',
+    alias: 'controller.momo-layerlist',
 
     requires: [
-        'MoMo.admin.view.tab.CreateOrEditApplication'
+        // 'MoMo.admin.view.tab.CreateOrEditApplication'
     ],
 
     loadStore: function(){
@@ -32,34 +32,31 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     },
 
     onCreateClick: function() {
-        this.redirectTo('applications/createOrEdit');
+        Ext.toast("Create layer");
     },
 
     onCopyClick: function() {
-        Ext.toast("Copy application");
+        Ext.toast("Copy layer");
     },
 
     onDeleteClick: function() {
-        Ext.toast("Delete application");
+        Ext.toast("Delete layer");
     },
 
     handleCellClick: function(gridview, td, cellIndex, record){
         var me = this;
         switch(cellIndex) {
-        case 2: // general-settings
+        case 2:
             Ext.toast("Edit general-settings");
             break;
-        case 3: //tool-settings
-            Ext.toast("Edit tool-settings");
+        case 3:
+            Ext.toast("Edit style-settings");
             break;
-        case 4: //layer-settings
-            Ext.toast("Edit layer-settings");
+        case 4:
+            Ext.toast("Download layerdata");
             break;
-        case 5: //share-settings
-            Ext.toast("Edit share-settings");
-            break;
-        case 6: // shwo preview
-            window.open('/momo/client?id=' + record.get('id'));
+        case 5:
+            Ext.toast("Show Layer preview");
             break;
         default:
             return;

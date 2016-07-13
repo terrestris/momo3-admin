@@ -1,9 +1,9 @@
-Ext.define('MoMo.admin.view.grid.ApplicationListController', {
+Ext.define('MoMo.admin.view.grid.UserListController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.momo-applicationlist',
+    alias: 'controller.momo-userlist',
 
     requires: [
-        'MoMo.admin.view.tab.CreateOrEditApplication'
+        // 'MoMo.admin.view.tab.CreateOrEditApplication'
     ],
 
     loadStore: function(){
@@ -32,34 +32,18 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     },
 
     onCreateClick: function() {
-        this.redirectTo('applications/createOrEdit');
-    },
-
-    onCopyClick: function() {
-        Ext.toast("Copy application");
+        Ext.toast("Create user");
     },
 
     onDeleteClick: function() {
-        Ext.toast("Delete application");
+        Ext.toast("Delete user");
     },
 
     handleCellClick: function(gridview, td, cellIndex, record){
         var me = this;
         switch(cellIndex) {
-        case 2: // general-settings
-            Ext.toast("Edit general-settings");
-            break;
-        case 3: //tool-settings
-            Ext.toast("Edit tool-settings");
-            break;
-        case 4: //layer-settings
-            Ext.toast("Edit layer-settings");
-            break;
-        case 5: //share-settings
-            Ext.toast("Edit share-settings");
-            break;
-        case 6: // shwo preview
-            window.open('/momo/client?id=' + record.get('id'));
+        case 2:
+            Ext.toast("Edit user-settings");
             break;
         default:
             return;

@@ -6,7 +6,9 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         'Ext.list.Tree',
 
         'MoMo.admin.view.container.MainContainer',
-        'MoMo.admin.view.grid.ApplicationList'
+        'MoMo.admin.view.grid.ApplicationList',
+        'MoMo.admin.view.grid.LayerList',
+        'MoMo.admin.view.grid.UserList'
     ],
 
     controller: 'momo-mainviewport',
@@ -73,7 +75,6 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         flex: 1,
         items: [{
             xtype: 'container',
-            height: '100%',
             reference: 'navigationContainer',
             layout: 'vbox',
             defaults: {

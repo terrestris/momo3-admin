@@ -1,23 +1,23 @@
-Ext.define('MoMo.admin.view.grid.ApplicationList',{
+Ext.define('MoMo.admin.view.grid.LayerList',{
     extend: 'Ext.grid.Panel',
 
-    xtype: 'momo-applicationlist',
+    xtype: 'momo-layerlist',
 
     requires: [
-        'MoMo.admin.view.grid.ApplicationListController',
-        'MoMo.admin.view.grid.ApplicationListModel',
+        'MoMo.admin.view.grid.LayerListController',
+        'MoMo.admin.view.grid.LayerListModel',
 
-        'MoMo.admin.store.Applications'
+        'MoMo.admin.store.Layers'
     ],
 
-    controller: 'momo-applicationlist',
+    controller: 'momo-layerlist',
 
     viewModel: {
-        type: 'momo-applicationlist'
+        type: 'momo-layerlist'
     },
 
     store: {
-        type: 'applications'
+        type: 'layers'
     },
 
     bind: {
@@ -44,57 +44,31 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     columns: [{
         xtype: 'templatecolumn',
         flex: 10,
-        tpl: new Ext.XTemplate(
-                '<div data-qtip="{name}">',
-                '{name}',
-                '<tpl if="active === false">',
-                    ' <i class="fa fa-eye-slash"></i>',
-                '</tpl>',
-                '</div>'
-            )
+        tpl: '<div data-qtip="{name}">{name}</div>'
     },{
         xtype: 'templatecolumn',
-        flex: 1,
+        width: 40,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-gear fa-2x" data-qtip="General Settings"></i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
+        tpl: '<i class="fa fa-gear fa-2x" data-qtip="Layer Settings">'
     },{
         xtype: 'templatecolumn',
-        flex: 1,
+        width: 40,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-wrench fa-2x" data-qtip="Interface Settings">' +
-            '</i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
+        tpl: '<i class="fa fa-paint-brush fa-2x" data-qtip="Layer Style"></i>'
     },{
         xtype: 'templatecolumn',
-        flex: 1,
+        width: 40,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-list fa-2x" data-qtip="Layers Settings"></i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
+        tpl: '<i class="fa fa-download fa-2x" data-qtip="Download Layerdata"></i>'
     },{
         xtype: 'templatecolumn',
-        flex: 1,
+        width: 40,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-users fa-2x" data-qtip="Share Web Map"></i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
-    },{
-        xtype: 'templatecolumn',
-        flex: 1,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-eye fa-2x" data-qtip="Show Preview"></i>'
+        tpl: '<i class="fa fa-eye fa-2x" data-qtip="Preview Layer"></i>'
     }],
 
     tbar: [{

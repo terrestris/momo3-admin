@@ -13,16 +13,16 @@ Ext.define('MoMo.admin.store.NavigationTree', {
             leaf: true
         }, {
             text: 'Layers',
-            view: 'search.Results',
+            view: 'grid.LayerList',
             leaf: true,
-            iconCls: 'x-fa fa-search',
-            routeId: 'search'
+            iconCls: 'x-fa fa-list',
+            routeId: 'layers'
         }, {
             text: 'Users',
-            view: 'pages.Users',
+            view: 'grid.UserList',
             leaf: true,
             iconCls: 'x-fa fa-users',
-            routeId: 'faq'
+            routeId: 'users'
         }]
     },
     fields: [{

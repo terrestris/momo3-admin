@@ -167,7 +167,7 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
     },
 
     onSearchRouteChange: function () {
-        this.setCurrentView('search');
+        this.setCurrentView('layers');
     },
 
     onEmailRouteChange: function () {
