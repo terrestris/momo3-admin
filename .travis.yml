@@ -1,0 +1,12 @@
+language: node_js
+node_js: "6.2.1"
+install:
+  - git clone https://github.com/geoext/geoext3.git ../lib/geoext
+  - git clone https://github.com/terrestris/BasiGX.git ../lib/BasiGX
+  - npm install
+script:
+  - npm test
+  - npm run js-lint
+branches:
+  only:
+    - master

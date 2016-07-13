@@ -62,7 +62,8 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         width: 40,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-download fa-2x" data-qtip="Download Layerdata"></i>'
+        tpl: '<i class="fa fa-download fa-2x" ' +
+                'data-qtip="Download Layerdata"></i>'
     },{
         xtype: 'templatecolumn',
         width: 40,
