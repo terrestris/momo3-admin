@@ -24,10 +24,10 @@ INSTALL_DIR="$TRAVIS_BUILD_DIR/ci/__install"
 SENCHA_CMD="$INSTALL_DIR/sencha"
 
 # The version of sencha command to downlaod and install
-SENCHA_CMD_VERSION="6.1.2.15"
+SENCHA_CMD_VERSION="6.1.3.42"
 
 # The version of ExtJS to download and configure the sencha workspace with
-SENCHA_EXTJS_VERSION="6.0.1"
+SENCHA_EXTJS_VERSION="6.0.0"
 
 #(if needed), will not fail if they are there already
 mkdir -p $DOWN_DIR
