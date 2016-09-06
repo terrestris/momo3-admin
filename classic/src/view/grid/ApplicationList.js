@@ -140,7 +140,7 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     initComponent: function(){
         this.callParent(arguments);
         this.getView().on('cellclick', 'handleCellClick');
-        this.getView().on('selectionchange', 'selectionChanged');
+//        this.getView().on('selectionchange', 'selectionChanged');
         this.getView().on('render', 'loadStore');
     }
 
