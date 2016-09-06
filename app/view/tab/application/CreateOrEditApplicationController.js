@@ -15,7 +15,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             function(choice) {
                 if (choice === 'yes') {
                     var view = this.getView(),
-                        viewportCtrl = view.up('mainviewport').getController();
+                        viewportCtrl = view.up('momo-mainviewport').getController();
                     //viewportCtrl.switchToView('applications');
                     viewportCtrl.redirectTo('applications');
                 } else {
