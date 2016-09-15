@@ -49,8 +49,10 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     padding: '0 5 5 5',
                     columnWidth: 1/2,
                     labelAlign: 'top',
-                    step: 100,
+                    step: 1,
                     allowBlank: false,
+                    allowDecimals: true,
+                    decimalPrecision: 4,
                     listeners: {
                         change: 'onFormFieldChange'
                     }
@@ -85,6 +87,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                 },
                 items: [{
                     name: 'mapCenterX',
+                    xtype: 'numberfield',
                     bind: {
                         fieldLabel: '{mapCenterXLabel}',
                         value: '{mapCenter.x}'

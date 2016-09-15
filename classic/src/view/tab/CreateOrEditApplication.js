@@ -20,6 +20,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
 
     routeId: 'createOrEdit',
 
+    /**
+     * It is important to set this to false to assure that the DOM of all
+     * tabs will be build immediately to assure that the databinding is
+     * working even if a user did not activate one of the tabs before saving.
+     */
+    deferredRender: false,
+
     bbar: [{
         xtype: 'tbfill'
     }, {
@@ -39,11 +46,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
     items: [{
         xtype: 'momo-application-general'
     }, {
-        xtype: 'momo-application-layout'
+        xtype: 'momo-application-layout',
+        disabled: true
     }, {
         xtype: 'momo-application-start-view'
     }, {
-        xtype: 'momo-application-layer'
+        xtype: 'momo-application-layer',
+        disabled: true
     }]
 
 });
