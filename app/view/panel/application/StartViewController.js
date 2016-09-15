@@ -2,18 +2,29 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-application-start-view',
 
+    /**
+     * 
+     */
     renderMap: function() {
         var me = this;
 
         me.setOlMap();
-        //me.addMapCrossHair();
         me.registerOnMapMoveEnd();
 
     },
 
+    /**
+     * 
+     */
     setOlMap: function() {
         var me = this,
             view = me.getView(),
+            viewModel = me.getViewModel(),
+            defaultData = viewModel.getData(),
+            zoom = defaultData.mapZoom,
+            x = defaultData.mapCenter.x,
+            y = defaultData.mapCenter.y,
+            projCode = defaultData.mapProjection,
             olMap;
 
         olMap = new ol.Map({
@@ -30,14 +41,18 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
                 })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([7.1067575, 50.7374741]),
-                zoom: 12
+                center: ol.proj.fromLonLat([x, y]),
+                projection: ol.proj.get(projCode),
+                zoom: zoom
             })
         });
 
         view.down('gx_map').setMap(olMap);
     },
 
+    /**
+     * 
+     */
     addMapCrossHair: function() {
         var me = this,
             view = me.getView(),
@@ -69,6 +84,9 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
 
     },
 
+    /**
+     * 
+     */
     registerOnMapMoveEnd: function() {
         var me = this,
             view = me.getView(),
@@ -77,6 +95,9 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
         map.on('moveend', me.onMapMoveEnd, me);
     },
 
+    /**
+     * 
+     */
     onMapMoveEnd: function(evt) {
         var me = this,
             viewModel = me.getViewModel(),
@@ -89,14 +110,14 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
 
         viewModel.setData({
             mapExtent: {
-                minX: Math.round(mapExtent[0]),
-                minY: Math.round(mapExtent[1]),
-                maxX: Math.round(mapExtent[2]),
-                maxY: Math.round(mapExtent[3])
+                minX: mapExtent[0],
+                minY: mapExtent[1],
+                maxX: mapExtent[2],
+                maxY: mapExtent[3]
             },
             mapCenter: {
-                x: Math.round(mapCenter[0]),
-                y: Math.round(mapCenter[1])
+                x: mapCenter[0],
+                y: mapCenter[1]
             },
             mapZoom: mapZoom,
             mapProjection: mapProjection
@@ -104,6 +125,9 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
 
     },
 
+    /**
+     * 
+     */
     onFormFieldChange: function(field, newVal) {
         var me = this,
             view = me.getView(),
@@ -111,47 +135,43 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
             mapView = map.getView();
 
         switch(field.getName()) {
-        case 'mapZoom':
-            mapView.setZoom(newVal);
-            break;
-        case 'mapCenterX':
-            mapView.setCenter([newVal, mapView.getCenter()[1]]);
-            break;
-        case 'mapCenterY':
-            mapView.setCenter([mapView.getCenter()[0], newVal]);
-            break;
-        default:
-            break;
+            case 'mapZoom':
+                mapView.setZoom(newVal);
+                break;
+            case 'mapCenterX':
+                mapView.setCenter([newVal, mapView.getCenter()[1]]);
+                break;
+            case 'mapCenterY':
+                mapView.setCenter([mapView.getCenter()[0], newVal]);
+                break;
+            default:
+                break;
         }
 
     },
 
+    /**
+     *
+     */
     onMapProjectionSelect: function(combo, rec) {
         var me = this,
             projCode = rec.get('code'),
             view = me.getView(),
-            map = view.down('gx_map').getMap();
+            map = view.down('gx_map').getMap(),
+            mapView = map.getView(),
+            oldCenter = mapView.getCenter(),
+            oldProjection = mapView.getProjection(),
+            oldZoom = mapView.getZoom(),
+            newProjection = ol.proj.get(projCode),
+            newCenter = ol.proj.transform(oldCenter, oldProjection, newProjection);
 
-        var projection = ol.proj.get(projCode);
-
-        //TODO work with wgs84 coordinates to simply transform
-        // example ol.proj.transform([8.23, 46.86], 'EPSG:4326', 'EPSG:900913'),
         var newMapView = new ol.View({
-            center: [0, 0],
-            projection: projection,
-            zoom: 1
+            center: newCenter,
+            projection: newProjection,
+            zoom: oldZoom
         });
 
         map.setView(newMapView);
-    },
-
-    setDefaultProjection: function(combo) {
-        var me = this,
-            view = me.getView(),
-            map = view.down('gx_map').getMap(),
-            mapView = map.getView();
-
-        combo.setValue(mapView.getProjection().getCode());
     }
 
 });

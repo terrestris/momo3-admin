@@ -4,13 +4,19 @@ Ext.define('MoMo.admin.store.Language', {
     storeId: 'Language',
 
     fields: [{
+        locale: 'Locale',
         name: 'Name'
     }],
 
     data: [{
-        name: 'de'
+        locale: 'de',
+        name: 'Deutsch'
     }, {
-        name: 'en'
+        locale: 'en',
+        name: 'English'
+    }, {
+        locale: 'mn',
+        name: 'Монгол'
     }]
 
 });

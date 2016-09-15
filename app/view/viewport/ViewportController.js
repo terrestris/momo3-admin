@@ -95,7 +95,7 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
 
         if (!existingItem) {
             var viewToCreate = 'MoMo.admin.view.' +
-                    (view || 'pages.Error404Window');
+                    (view || 'pages.Error404Window'); // TODO: Uncaught Error: [Ext.create] Unrecognized class name / alias: MoMo.admin.view.pages.Error404Window
             newView = Ext.create(viewToCreate, {
                 hideMode: 'offsets',
                 routeId: hashTag

@@ -10,12 +10,6 @@ Ext.define('MoMo.admin.store.MapProjection', {
     }],
 
     data: [{
-        name: 'UTM 32N',
-        code: 'EPSG:25832'
-    }, {
-        name: 'UTM 33N',
-        code: 'EPSG:25833'
-    }, {
         name: 'Google Mercator',
         code: 'EPSG:3857'
     }, {

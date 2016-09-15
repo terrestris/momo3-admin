@@ -44,7 +44,7 @@ Ext.define('MoMo.admin.view.panel.application.Layout', {
                 store: 'Layout',
                 editable: false,
                 displayField: 'name',
-                valueField: 'id',
+                valueField: 'layoutName',
                 forceSelection: true,
                 listeners: {
                     select: 'onLayoutSelect'
