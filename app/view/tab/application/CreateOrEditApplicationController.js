@@ -23,8 +23,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                 callback: function() {
                     view.setLoading(false);
                 },
-                success: function(response) {
-                    var json = JSON.parse(response.responseText);
+                success: function(/*response*/) {
+//                    var json = JSON.parse(response.responseText);
                     // TODO ...
                 }
             });
@@ -71,7 +71,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             function(choice) {
                 if (choice === 'yes') {
                     var view = this.getView(),
-                        viewportCtrl = view.up('momo-mainviewport').getController();
+                        viewportCtrl =
+                            view.up('momo-mainviewport').getController();
                     //viewportCtrl.switchToView('applications');
                     viewportCtrl.redirectTo('applications');
                 } else {
@@ -89,18 +90,17 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         var valid = true;
         Ext.each(view.query('field'), function(field) {
             if(!field.validate()){
-                var fs = field.up('fieldset');
                 valid = false;
 
                 // set active tab where validation failed
-                var invalidPanel = field.up('panel[xtype^=momo\-application\-]');
+                var invalidPanel =
+                    field.up('panel[xtype^=momo\-application\-]');
                 invalidPanel.up().setActiveTab(invalidPanel);
-
 
                 return false; // -> break Ext.each
             }
         });
         return valid;
-    },
+    }
 
 });

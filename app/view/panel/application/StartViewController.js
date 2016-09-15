@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     alias: 'controller.momo-application-start-view',
 
     /**
-     * 
+     *
      */
     renderMap: function() {
         var me = this;
@@ -14,7 +14,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     },
 
     /**
-     * 
+     *
      */
     setOlMap: function() {
         var me = this,
@@ -51,7 +51,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     },
 
     /**
-     * 
+     *
      */
     addMapCrossHair: function() {
         var me = this,
@@ -85,7 +85,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     },
 
     /**
-     * 
+     *
      */
     registerOnMapMoveEnd: function() {
         var me = this,
@@ -96,7 +96,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     },
 
     /**
-     * 
+     *
      */
     onMapMoveEnd: function(evt) {
         var me = this,
@@ -126,7 +126,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     },
 
     /**
-     * 
+     *
      */
     onFormFieldChange: function(field, newVal) {
         var me = this,
@@ -135,17 +135,17 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
             mapView = map.getView();
 
         switch(field.getName()) {
-            case 'mapZoom':
-                mapView.setZoom(newVal);
-                break;
-            case 'mapCenterX':
-                mapView.setCenter([newVal, mapView.getCenter()[1]]);
-                break;
-            case 'mapCenterY':
-                mapView.setCenter([mapView.getCenter()[0], newVal]);
-                break;
-            default:
-                break;
+        case 'mapZoom':
+            mapView.setZoom(newVal);
+            break;
+        case 'mapCenterX':
+            mapView.setCenter([newVal, mapView.getCenter()[1]]);
+            break;
+        case 'mapCenterY':
+            mapView.setCenter([mapView.getCenter()[0], newVal]);
+            break;
+        default:
+            break;
         }
 
     },
@@ -163,7 +163,10 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
             oldProjection = mapView.getProjection(),
             oldZoom = mapView.getZoom(),
             newProjection = ol.proj.get(projCode),
-            newCenter = ol.proj.transform(oldCenter, oldProjection, newProjection);
+            newCenter = ol.proj.transform(
+                    oldCenter,
+                    oldProjection,
+                    newProjection);
 
         var newMapView = new ol.View({
             center: newCenter,
