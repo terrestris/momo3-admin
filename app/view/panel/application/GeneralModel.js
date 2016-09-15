@@ -17,7 +17,7 @@ Ext.define('MoMo.admin.view.panel.application.GeneralModel', {
                 'afterwards!',
         activeFieldLabel: 'Active',
         activeBoxToastText: '<b>Note:</b> This application will be ' +
-                'deactivated and will not be visibile to anyone afterwards!',
+                'deactivated and will not be visible to anyone afterwards!',
 
         appData: {
             name: null,
