@@ -22,6 +22,9 @@ Ext.define('MoMo.admin.model.Layer', {
         name: 'hoverFieldTemplate',
         type: 'string'
     }, {
+        name: 'hoverable',
+        type: 'string'
+    },{
         name: 'description',
         type: 'string'
     }, {
