@@ -27,7 +27,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                     var json = JSON.parse(response.responseText);
                     Ext.toast('Successfully created the application "'
                             + json.name + '"', null, 'b');
-                    appList = viewport.down('momo-applicationlist');
+                    var appList = viewport.down('momo-applicationlist');
                     appList.getStore().load();
                     this.redirectTo('applications');
                 },
