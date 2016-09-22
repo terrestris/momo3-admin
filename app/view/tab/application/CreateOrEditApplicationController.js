@@ -4,14 +4,14 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
 
     onSaveClick: function() {
         var me = this;
-        var view = me.getView();
+        var viewport = me.getView().up('viewport');
 
         // validate fields in all tabs
         var allFieldsValid = me.validateFields();
 
         if(allFieldsValid) {
 
-            view.setLoading(true);
+            viewport.setLoading(true);
 
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
@@ -21,11 +21,32 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                 jsonData: me.collectAppData(),
                 scope: me,
                 callback: function() {
-                    view.setLoading(false);
+                    viewport.setLoading(false);
                 },
-                success: function(/*response*/) {
-//                    var json = JSON.parse(response.responseText);
-                    // TODO ...
+                success: function(response) {
+                    var json = JSON.parse(response.responseText);
+                    Ext.toast('Successfully created the application "'
+                            + json.name + '"', null, 'b');
+                    var appList = viewport.down('momo-applicationlist');
+                    appList.getStore().load();
+                    this.redirectTo('applications');
+                },
+                failure: function(response) {
+                    var errorPrefix = "Could not create application:<br>";
+                    var errorMessage = errorPrefix +
+                        "An unknown error occured.";
+
+                    if(response.status && response.statusText) {
+                        if(response.status === 500) {
+                            var json = JSON.parse(response.responseText);
+                            errorMessage = errorPrefix + json.message;
+                        } else {
+                            errorMessage = errorPrefix + "HTTP-Status: " +
+                            response.statusText + " (" + response.status + ")";
+                        }
+                    }
+
+                    Ext.Msg.alert("Error", errorMessage);
                 }
             });
 
@@ -70,11 +91,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             'All unsaved changes will be lost. Do you really want to quit?',
             function(choice) {
                 if (choice === 'yes') {
-                    var view = this.getView(),
-                        viewportCtrl =
-                            view.up('momo-mainviewport').getController();
-                    //viewportCtrl.switchToView('applications');
-                    viewportCtrl.redirectTo('applications');
+                    this.redirectTo('applications');
                 } else {
                     return false;
                 }
