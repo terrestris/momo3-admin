@@ -5,7 +5,9 @@ Ext.define('MoMo.admin.view.panel.application.Layout', {
 
     requires: [
         'MoMo.admin.view.panel.application.LayoutController',
-        'MoMo.admin.view.panel.application.LayoutModel'
+        'MoMo.admin.view.panel.application.LayoutModel',
+        'Ext.form.field.ComboBox',
+        'Ext.tree.Panel'
     ],
 
     controller: 'momo-application-layout',

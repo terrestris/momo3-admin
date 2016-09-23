@@ -5,7 +5,8 @@ Ext.define('MoMo.admin.view.panel.application.General', {
 
     requires: [
         'MoMo.admin.view.panel.application.GeneralController',
-        'MoMo.admin.view.panel.application.GeneralModel'
+        'MoMo.admin.view.panel.application.GeneralModel',
+        'Ext.form.field.ComboBox'
     ],
 
     controller: 'momo-application-general',

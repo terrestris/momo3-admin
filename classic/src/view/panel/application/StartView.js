@@ -6,6 +6,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
     requires: [
         'MoMo.admin.view.panel.application.StartViewController',
         'MoMo.admin.view.panel.application.StartViewModel',
+        'Ext.form.field.ComboBox',
 
         'GeoExt.component.Map'
     ],
