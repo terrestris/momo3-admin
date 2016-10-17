@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.model.Application', {
 
     proxy: {
         type: 'rest',
-        url: BasiGX.util.Url.getWebProjectBaseUrl() + 'rest/applications',
+        url: BasiGX.util.Url.getWebProjectBaseUrl() + 'rest/momoapps',
         headers: BasiGX.util.CSRF.getHeader()
     },
 
