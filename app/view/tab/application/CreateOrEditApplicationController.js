@@ -15,7 +15,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
 
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
-                        'apps/create.action',
+                        'momoapps/create.action',
                 method: 'POST',
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 jsonData: me.collectAppData(),
