@@ -3,10 +3,14 @@ node_js: "6.2.1"
 install:
   - git clone https://github.com/geoext/geoext3.git ../lib/geoext3
   - git clone https://github.com/terrestris/BasiGX.git ../lib/BasiGX
+  - git clone https://github.com/highsource/jsonix ../lib/jsonix
+  - git clone https://github.com/Stuk/jszip ../lib/jszip
+  - git clone https://github.com/constantinius/geotiff.js ../lib/geotiff.js
+  - git clone https://github.com/openlayers/ol3.git ../lib/ol3
   - ./ci/create-sencha-environment.sh
   - npm install
+  - make build -C ../lib/ol3
 script:
-  - npm test
   - npm run js-lint
 branches:
   only:
