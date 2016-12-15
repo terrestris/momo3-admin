@@ -20,11 +20,26 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         type: 'layers'
     },
 
+    config: {
+        showCreateButton: true,
+        showCopyButton: true,
+        showDeleteButton: true,
+        showFilterField: true,
+        showLayerSettingsColumn: true,
+        showLayerStyleColumn: true,
+        showLayerMetadataColumn: true,
+        showLayerPreviewColumn: true
+    },
+
     bind: {
         title: '{title}'
     },
 
     hideHeaders: true,
+
+    listeners: {
+        beforerender: 'setComponentsVisibility'
+    },
 
     selModel: {
         type: 'checkboxmodel',
@@ -47,18 +62,21 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         tpl: '<div data-qtip="{name}">{name}</div>'
     },{
         xtype: 'templatecolumn',
+        name: 'layer-settings-column',
         width: 40,
         align: "center",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-gear fa-2x" data-qtip="Layer Settings">'
     },{
         xtype: 'templatecolumn',
+        name: 'layer-style-column',
         width: 40,
         align: "center",
         tdCls: "column-tool",
         tpl: '<i class="fa fa-paint-brush fa-2x" data-qtip="Layer Style"></i>'
     },{
         xtype: 'templatecolumn',
+        name: 'layer-metadata-column',
         width: 40,
         align: "center",
         tdCls: "column-tool",
@@ -66,6 +84,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
                 'data-qtip="Download Layerdata"></i>'
     },{
         xtype: 'templatecolumn',
+        name: 'layer-preview-column',
         width: 40,
         align: "center",
         tdCls: "column-tool",
@@ -74,6 +93,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
 
     tbar: [{
         xtype: 'button',
+        name: 'create-layer-button',
         text: 'Create',
         scale: 'large',
         ui: 'momo',
@@ -81,6 +101,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         handler: 'onCreateClick'
     }, {
         xtype: 'button',
+        name: 'copy-layer-button',
         text: 'Copy',
         scale: 'large',
         ui: 'momo',
@@ -88,6 +109,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         handler: 'onCopyClick'
     }, {
         xtype: 'button',
+        name: 'delete-layer-button',
         text: 'Delete',
         scale: 'large',
         ui: 'momo',
@@ -95,6 +117,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         handler: 'onDeleteClick'
     }, '->', {
         xtype: 'textfield',
+        name: 'filter-layer-list-field',
         fieldLabel: 'Filter by name',
         labelWidth: undefined,
         triggers: {
