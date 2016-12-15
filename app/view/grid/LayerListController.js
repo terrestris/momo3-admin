@@ -2,10 +2,6 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-layerlist',
 
-    requires: [
-        // 'MoMo.admin.view.tab.CreateOrEditApplication'
-    ],
-
     /**
      *
      */
@@ -69,7 +65,7 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     },
 
     onCreateClick: function() {
-        Ext.toast("Create layer");
+        this.redirectTo('layers/createOrEdit');
     },
 
     onCopyClick: function() {

@@ -2,6 +2,12 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-mainviewport',
 
+    require: [
+        'MoMo.admin.view.tab.CreateOrEditApplication',
+        'MoMo.admin.view.tab.CreateOrEditLayer',
+        'MoMo.admin.view.tab.CreateOrEditUser'
+    ],
+
     listen : {
         controller : {
             '#': {
@@ -12,11 +18,13 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
 
     routes: {
         ':node': 'onRouteChange',
-        'applications/:createOrEdit': 'switchToView'
+        ':clazz/createOrEdit': 'switchToView'
     },
 
     componentMap: {
-        'createOrEdit': 'MoMo.admin.view.tab.CreateOrEditApplication'
+        'applications': 'MoMo.admin.view.tab.CreateOrEditApplication',
+        'layers': 'MoMo.admin.view.tab.CreateOrEditLayer',
+        'users': 'MoMo.admin.view.tab.CreateOrEditUser'
     },
 
     /**
@@ -52,16 +60,16 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         });
     },
 
-    switchToView: function(hashTag) {
-        var me = this,
-            refs = me.getReferences(),
+    switchToView: function(clazz) {
+        var refs = this.getReferences(),
             mainCard = refs.mainCardPanel,
             mainLayout = mainCard.getLayout(),
-            viewToCreate = me.componentMap[hashTag],
+            viewToCreate = this.componentMap[clazz],
             newView;
 
+        // TODO CREATE ?
         newView = Ext.create(viewToCreate, {
-            routeId: hashTag
+            routeId: clazz
         });
 
         Ext.suspendLayouts();

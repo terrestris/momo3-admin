@@ -23,7 +23,7 @@
     "url": "https://github.com/terrestris/momoadmin-admin/issues"
   },
   "scripts": {
-    "js-lint": "eslint -c .eslintrc ./",
+    "lint": "eslint -c .eslintrc ./",
     "test": "mocha-phantomjs --ssl-protocol=any --ignore-ssl-errors=true index-mocha.html",
     "coverage-clean": "rm -rf .instrumented/ && rm -rf ./coverage/ && rm -f ./test/.index_coverage.html",
     "coverage-sed": "sed -e 's/..\\/app/..\\/.instrumented\\/app/g' ./test/index.html > ./test/.index_coverage.html",
