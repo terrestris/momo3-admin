@@ -25,11 +25,16 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
 
     padding: 20,
 
+    layout: 'fit',
+
     items: [{
         xtype: 'fieldset',
-        autoScroll: true,
         bind: {
             title: '{title}'
+        },
+        layout: {
+            type: 'vbox',
+            align: 'stretch'
         },
         defaults: {
             width: '100%'
@@ -164,7 +169,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
             }]
         }, {
             xtype: 'gx_map',
-            height: 500,
+            flex: 1,
             listeners: {
                 render: 'renderMap',
                 boxready: 'addMapCrossHair'

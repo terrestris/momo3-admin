@@ -23,6 +23,8 @@ Ext.define('MoMo.admin.view.panel.application.General', {
 
     padding: 20,
 
+    scrollable: 'y',
+
     items: [{
         xtype: 'fieldset',
         bind: {

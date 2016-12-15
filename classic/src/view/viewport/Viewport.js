@@ -72,7 +72,6 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         }]
     }, {
         xtype: 'momo-maincontainerwrap',
-        id: 'main-view-detail-wrap',
         reference: 'mainContainerWrap',
         flex: 1,
         items: [{
@@ -105,8 +104,7 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
             cls: 'main-card-panel',
             itemId: 'contentPanel',
             layout: {
-                type: 'card',
-                anchor: '100%'
+                type: 'card'
             }
         }]
     }]
