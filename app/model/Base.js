@@ -9,8 +9,8 @@ Ext.define('MoMo.admin.model.Base', {
     ],
 
     fields: [{
-        name:'id',
-        type:'int',
+        name: 'id',
+        type: 'int',
         allowNull: true
     }],
 

@@ -14,7 +14,8 @@ Ext.define('MoMo.admin.Application', {
         'ApplicationLayout',
         'AvailableModules',
         'Language',
-        'MapProjection'
+        'MapProjection',
+        'LayerTree'
     ],
 
     launch: function () {

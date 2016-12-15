@@ -5,50 +5,17 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     onSaveClick: function() {
         var me = this;
         var viewport = me.getView().up('viewport');
+        var layerTreePanel = me.getView().down('momo-layertree');
+        var layerTreePanelCtrl = layerTreePanel.getController();
 
         // validate fields in all tabs
         var allFieldsValid = me.validateFields();
 
-        if(allFieldsValid) {
+        if (allFieldsValid) {
 
             viewport.setLoading(true);
 
-            Ext.Ajax.request({
-                url: BasiGX.util.Url.getWebProjectBaseUrl() +
-                        'momoapps/create.action',
-                method: 'POST',
-                defaultHeaders: BasiGX.util.CSRF.getHeader(),
-                jsonData: me.collectAppData(),
-                scope: me,
-                callback: function() {
-                    viewport.setLoading(false);
-                },
-                success: function(response) {
-                    var json = JSON.parse(response.responseText);
-                    Ext.toast('Successfully created the application "'
-                            + json.name + '"', null, 'b');
-                    var appList = viewport.down('momo-applicationlist');
-                    appList.getStore().load();
-                    this.redirectTo('applications');
-                },
-                failure: function(response) {
-                    var errorPrefix = "Could not create application:<br>";
-                    var errorMessage = errorPrefix +
-                        "An unknown error occured.";
-
-                    if(response.status && response.statusText) {
-                        if(response.status === 500) {
-                            var json = JSON.parse(response.responseText);
-                            errorMessage = errorPrefix + json.message;
-                        } else {
-                            errorMessage = errorPrefix + "HTTP-Status: " +
-                            response.statusText + " (" + response.status + ")";
-                        }
-                    }
-
-                    Ext.Msg.alert("Error", errorMessage);
-                }
-            });
+            layerTreePanelCtrl.syncTreeStore(me.saveApplication, me);
 
         } else {
             Ext.toast('Please fill out all required fields.', null, 'b');
@@ -58,10 +25,59 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     /**
      *
      */
+    saveApplication: function() {
+        var me = this;
+        var viewport = me.getView().up('viewport');
+
+        Ext.Ajax.request({
+            url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'momoapps/create.action',
+            method: 'POST',
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            jsonData: me.collectAppData(),
+            scope: me,
+            callback: function() {
+                viewport.setLoading(false);
+            },
+            success: function(response) {
+                var json = JSON.parse(response.responseText);
+                Ext.toast('Successfully created the application "'
+                        + json.name + '"', null, 'b');
+                var appList = viewport.down('momo-applicationlist');
+                if (appList) {
+                    appList.getStore().load();
+                }
+                this.redirectTo('applications');
+            },
+            failure: function(response) {
+                var errorPrefix = "Could not create application:<br>";
+                var errorMessage = errorPrefix +
+                    "An unknown error occured.";
+
+                if(response.status && response.statusText) {
+                    if(response.status === 500) {
+                        var json = JSON.parse(response.responseText);
+                        errorMessage = errorPrefix + json.message;
+                    } else {
+                        errorMessage = errorPrefix + "HTTP-Status: " +
+                        response.statusText + " (" + response.status + ")";
+                    }
+                }
+
+                Ext.Msg.alert("Error", errorMessage);
+            }
+        });
+    },
+
+    /**
+     *
+     */
     collectAppData: function() {
         var me = this;
         var generalTab = me.getView().down('momo-application-general');
         var startViewTab = me.getView().down('momo-application-start-view');
+        var layerTab = me.getView().down('momo-application-layer');
+        var layerTreePanel = layerTab.down('momo-layertree');
 
         var generalData = generalTab.getViewModel().getData().appData;
         var startViewData = startViewTab.getViewModel().getData();
@@ -74,7 +90,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             isActive: generalData.isActive,
             projection: startViewData.mapProjection,
             center: startViewData.mapCenter,
-            zoom: startViewData.mapZoom
+            zoom: startViewData.mapZoom,
+            layerTree: layerTreePanel.getTreeConfigId()
         };
 
         return appData;

@@ -74,7 +74,7 @@
 
         "brace-style": [1, "1tbs"],
         "eol-last": 1,
-        "indent": 1,
+        "indent": [1, 4, { "SwitchCase": 1 }],
         "linebreak-style": [2, "unix"],
         "no-mixed-spaces-and-tabs": 2,
         "no-nested-ternary": 2,

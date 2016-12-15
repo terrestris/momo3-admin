@@ -135,17 +135,17 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
             mapView = map.getView();
 
         switch(field.getName()) {
-        case 'mapZoom':
-            mapView.setZoom(newVal);
-            break;
-        case 'mapCenterX':
-            mapView.setCenter([newVal, mapView.getCenter()[1]]);
-            break;
-        case 'mapCenterY':
-            mapView.setCenter([mapView.getCenter()[0], newVal]);
-            break;
-        default:
-            break;
+            case 'mapZoom':
+                mapView.setZoom(newVal);
+                break;
+            case 'mapCenterX':
+                mapView.setCenter([newVal, mapView.getCenter()[1]]);
+                break;
+            case 'mapCenterY':
+                mapView.setCenter([mapView.getCenter()[0], newVal]);
+                break;
+            default:
+                break;
         }
 
     },
