@@ -3,7 +3,8 @@ Ext.define('MoMo.admin.view.panel.application.LayerModel', {
     alias: 'viewmodel.momo-application-layer',
 
     data: {
-        title: 'Layer'
+        title: 'Layer',
+        availableLayersGridTitle: 'Available layers'
     }
 
 });

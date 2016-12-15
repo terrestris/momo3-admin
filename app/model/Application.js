@@ -23,6 +23,9 @@ Ext.define('MoMo.admin.model.Application', {
         name: 'language',
         type: 'string'
     }, {
+        name: 'layerTree',
+        type: 'string'
+    }, {
         name: 'url',
         type: 'string',
         calculate: function (data) {
