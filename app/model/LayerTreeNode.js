@@ -4,9 +4,7 @@ Ext.define('MoMo.admin.model.LayerTreeNode', {
         'Ext.data.proxy.Rest',
 
         'BasiGX.util.Url',
-        'BasiGX.util.CSRF',
-
-        'MoMo.admin.data.identifier.Null'
+        'BasiGX.util.CSRF'
     ],
 
     proxy: {
