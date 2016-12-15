@@ -41,11 +41,11 @@ Ext.define('MoMo.admin.view.grid.UserListController', {
 
     handleCellClick: function(gridview, td, cellIndex){
         switch(cellIndex) {
-        case 2:
-            Ext.toast("Edit user-settings");
-            break;
-        default:
-            return;
+            case 2:
+                Ext.toast("Edit user-settings");
+                break;
+            default:
+                return;
         }
     }
 

@@ -45,20 +45,20 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
 
     handleCellClick: function(gridview, td, cellIndex){
         switch(cellIndex) {
-        case 2:
-            Ext.toast("Edit general-settings");
-            break;
-        case 3:
-            Ext.toast("Edit style-settings");
-            break;
-        case 4:
-            Ext.toast("Download layerdata");
-            break;
-        case 5:
-            Ext.toast("Show Layer preview");
-            break;
-        default:
-            return;
+            case 2:
+                Ext.toast("Edit general-settings");
+                break;
+            case 3:
+                Ext.toast("Edit style-settings");
+                break;
+            case 4:
+                Ext.toast("Download layerdata");
+                break;
+            case 5:
+                Ext.toast("Show Layer preview");
+                break;
+            default:
+                return;
         }
     }
 
