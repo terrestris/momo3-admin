@@ -51,8 +51,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
     }, {
         xtype: 'momo-application-start-view'
     }, {
-        xtype: 'momo-application-layer',
-        disabled: true
+        xtype: 'momo-application-layer'
     }]
 
 });
