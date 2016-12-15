@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralModel', {
     alias: 'viewmodel.momo-layer-general',
 
     data: {
-        name: 'Mapmavin.admin',
+        name: 'MoMo.admin',
 
         layer: null,
 

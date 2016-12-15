@@ -4,10 +4,10 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
     xtype: 'momo-layer-style',
 
     requires: [
-        'Mapmavin.admin.view.panel.layer.StyleController',
-        'Mapmavin.admin.view.panel.layer.StyleModel'
+        'MoMo.admin.view.panel.layer.StyleController',
+        'MoMo.admin.view.panel.layer.StyleModel',
 
-//        'Mapmavin.admin.view.panel.sld.Styler'
+        'MoMo.admin.view.panel.style.Styler'
     ],
 
     controller: 'momo-layer-style',
@@ -26,13 +26,13 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
 
     items: [{
         xtype: 'fieldset',
-        title: 'Generate Style for Layer'
-//        items: [{
-//            xtype: 'momo-panel-sld-styler',
-//            bind: {
-//                dspLayerName: 'DSP {layer.name}'
-//            },
-//            layerUrl: '/momo/geoserver.action'
-//        }]
+        title: 'Generate Style for Layer',
+        items: [{
+            xtype: 'momo-panel-style-styler',
+            bind: {
+                dspLayerName: 'DSP {layer.name}'
+            },
+            layerUrl: '/momo/geoserver.action'
+        }]
     }]
 });

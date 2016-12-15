@@ -2,10 +2,9 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-mainviewport',
 
-    require: [
+    requires: [
         'MoMo.admin.view.tab.CreateOrEditApplication',
-        'MoMo.admin.view.tab.CreateOrEditLayer',
-        'MoMo.admin.view.tab.CreateOrEditUser'
+        'MoMo.admin.view.tab.CreateOrEditLayer'
     ],
 
     listen : {
@@ -23,8 +22,7 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
 
     componentMap: {
         'applications': 'MoMo.admin.view.tab.CreateOrEditApplication',
-        'layers': 'MoMo.admin.view.tab.CreateOrEditLayer',
-        'users': 'MoMo.admin.view.tab.CreateOrEditUser'
+        'layers': 'MoMo.admin.view.tab.CreateOrEditLayer'
     },
 
     /**
