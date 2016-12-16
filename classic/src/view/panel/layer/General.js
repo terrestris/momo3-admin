@@ -13,16 +13,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
 
     controller: 'momo-layer-general',
 
-//    viewModel: {
-//        type: 'momo-layer-general'
-//    },
-
     routeId: 'general',
 
     title: 'General', // TODO use title formula from viewmodel
-//    bind: {
-//        title: '{title}'
-//    },
 
     scrollable: 'y',
 
@@ -47,7 +40,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     value: '{layer.name}'
                 }
             }, {
-                xtype: 'momo-form-submitform', // TODO
+                xtype: 'momo-form-submitform',
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                         'import/create-layer.action',
                 // set to hidden:true initially to avoid ugly blinking onRender
@@ -87,9 +80,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     }
                 }, {
                     xtype: 'hiddenfield',
-                    name: 'layerType',
+                    name: 'dataType',
                     bind: {
-                        value: '{upload.layerType}'
+                        value: '{upload.dataType}'
                     }
                 }, {
                     xtype: 'hiddenfield',
@@ -103,7 +96,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                 name: 'layerDescription',
                 bind: {
                     value: '{layer.description}',
-                    hidden: '{isNewLayer}'
+                    hidden: true //'{isNewLayer}'
                 }
             },{
                 xtype: 'fieldcontainer',
@@ -157,7 +150,6 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     xtype: 'button',
                     text: 'Available Attributes',
                     handler: 'onAttributesButtonClicked'
-//                    ui: 'mapmavin' // TODO
                 }]
             }]
         },{

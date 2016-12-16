@@ -40,10 +40,6 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     viewModel.set('layer', record);
                     view.down('momo-panel-style-styler')
                             .setLayerName(record.getSource().get('layerNames'));
-//                    var panel = view.up('panel');
-//                    if(record.get('name')){
-//                        panel.setTitle(record.get('name'));
-//                    }
                 },
                 failure: function() {
                     Ext.toast('Error loading Layer Data.');
@@ -57,12 +53,19 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
         var allFieldsValid = me.validateFields();
         var view = me.getView();
         var viewModel = me.getViewModel();
+        var stylerPanel = view.down('momo-panel-style-styler');
         var layer = viewModel.get('layer');
         var appearance = layer.getAppearance();
 
         if (allFieldsValid) {
 
             view.setLoading(true);
+
+            if (stylerPanel && layer.get('dataType').toLowerCase() !==
+                    'raster') {
+                var stylerPanelCtrl = stylerPanel.getController();
+                stylerPanelCtrl.applyAndSave();
+            }
 
             if (layer && layer.getId()) {
                 layer.save({
@@ -73,7 +76,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 });
             }
 
-            if(layer && layer.getId() && appearance && appearance.getId()){
+            if (layer && layer.getId() && appearance && appearance.getId()) {
                 appearance.save({
                     success: function(){
                         view.setLoading(false);

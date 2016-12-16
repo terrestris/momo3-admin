@@ -187,7 +187,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 taskId: respObj.tasksWithoutProjection[0].id,
                 fileProjection: combo.getValue(),
                 layerName: layer.get('name'),
-                layerType: layer.get('dataType'),
+                dataType: layer.get('dataType'),
                 layerDescription: layer.get('description'),
                 layerHoverTemplate: layer.get('hoverFieldTemplate'),
                 layerOpacity: layer.getAppearance().get('opacity')
@@ -284,7 +284,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var containsRaster = false;
         var lowerFileName;
 
-        // Determine layertype
+        // Determine datatype of the layer
         zip.forEach(function(relativePath, zipEntry) {
             if(zipEntry.name.indexOf(".shp") > -1){
                 containsShape = true;
@@ -308,19 +308,19 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
 
         if(containsShape){
-            viewModel.set('upload.layerType', 'Vector');
+            viewModel.set('upload.dataType', 'Vector');
             viewModel.set('layer.dataType', 'Vector');
         } else if (containsRaster){
-            viewModel.set('upload.layerType', 'Raster');
+            viewModel.set('upload.dataType', 'Raster');
             viewModel.set('layer.dataType', 'Raster');
         } else {
-            viewModel.set('upload.layerType', null);
+            viewModel.set('upload.dataType', null);
             viewModel.set('layer.dataType', null);
         }
-        var layerType = viewModel.get('upload.layerType');
+        var dataType = viewModel.get('upload.dataType');
 
         // Check for prj, shx, dbf
-        if(layerType === "Vector"){
+        if(dataType === "Vector"){
             viewModel.set('upload.vector.hasShp', true);
             zip.forEach(function(relativePath, zipEntry) {
                 lowerFileName = zipEntry.name.toLowerCase();
@@ -334,7 +334,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                     viewModel.set('upload.vector.hasPrj', true);
                 }
             });
-        } else if (layerType === "Raster"){
+        } else if (dataType === "Raster"){
             zip.forEach(function(relativePath, zipEntry) {
                 lowerFileName = zipEntry.name.toLowerCase();
                 if(lowerFileName.indexOf(".prj") > -1){
@@ -366,11 +366,11 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                             'class="fa fa-exclamation-triangle"></i> ',
                             'Skipped preprocessing because of large file.',
                     '<tpl else>',
-                        '{layerType}',
+                        '{dataType}',
                     '</tpl>',
                 '</p>',
                 '<p><b>Filesize</b>: {[this.prettyFileSize(values)]} MB</p>',
-                '<tpl if="layerType == \'Vector\'">',
+                '<tpl if="dataType == \'Vector\'">',
                     '<p><b>*.shp: </b>',
                     '<tpl if="vector.hasShp">',
                         '<i style="color:green;" class="fa fa-check"></i>',
@@ -401,7 +401,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                         'A projection file is recommended. You can choose a ',
                         'projectionsystem from the combo alternatively.',
                     '</tpl></p>',
-                '<tpl elseif="layerType == \'Raster\'">',
+                '<tpl elseif="dataType == \'Raster\'">',
                     '<tpl if="raster.hasGeoTiff">',
                         '<p><b>*.geoTiff: </b>',
                         '<i style="color:green;" class="fa fa-check"></i>',
@@ -443,7 +443,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                         '<tpl else>',
                             '<b>Error: </b>',
                             '<i style="color:red;" class="fa fa-times"></i> ',
-                                'A layertype could not be determined.',
+                                'Type of the layer could not be determined.',
                         '</tpl>',
                     '</p>',
                 '</tpl>',

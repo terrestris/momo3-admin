@@ -17,7 +17,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
         upload: {
             fileName: null,
             fileSize: null,
-            layerType: null,
+            dataType: null,
             vector: {
                 hasShp: false,
                 hasShx: false,

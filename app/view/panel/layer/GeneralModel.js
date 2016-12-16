@@ -14,7 +14,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralModel', {
         upload: {
             fileName: null,
             fileSize: null,
-            layerType: null,
+            dataType: null,
             vector: {
                 hasShp: false,
                 hasShx: false,
