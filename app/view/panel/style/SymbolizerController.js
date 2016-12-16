@@ -16,12 +16,6 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         var view = me.getView();
         var viewModel = me.getViewModel();
         var sldUtil = MoMo.admin.util.Sld;
-        if(!view.getSymbolizer()){
-            var geometryType = view.up('momo-panel-style-styler').geometryType;
-            view.setSymbolizer(
-                sldUtil.getDefaultSymbolizerForGeometryType(geometryType)
-            );
-        }
         var jsonixSymb = view.getSymbolizer();
         var olStyle = sldUtil.styleFromSymbolizers(jsonixSymb);
         var symbolType = sldUtil.symbolTypeFromSymbolizer(jsonixSymb);
@@ -125,7 +119,7 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         var win = Ext.ComponentQuery.query('[name=symbolizer-edit-window]')[0];
 
         var styleEditor = {
-            xtype: 'mm_container_styleditor',
+            xtype: 'momo-container-styleditor',
             backendUrls: {
                 pictureList: {
                     url: 'images/getImagesForImagePool.action?' +
@@ -147,20 +141,20 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         };
 
         switch(symbolType) {
-        case "Point":
-            styleEditor.redlinePointStyle = Ext.isArray(olStyle) ?
-                    olStyle[0] : olStyle;
-            break;
-        case "Line":
-            styleEditor.redlineLineStringStyle = Ext.isArray(olStyle) ?
-                    olStyle[0] : olStyle;
-            break;
-        case "Polygon":
-            styleEditor.redlinePolygonStyle = Ext.isArray(olStyle) ?
-                    olStyle[0] : olStyle;
-            break;
-        default:
-            break;
+            case "Point":
+                styleEditor.redlinePointStyle = Ext.isArray(olStyle) ?
+                        olStyle[0] : olStyle;
+                break;
+            case "Line":
+                styleEditor.redlineLineStringStyle = Ext.isArray(olStyle) ?
+                        olStyle[0] : olStyle;
+                break;
+            case "Polygon":
+                styleEditor.redlinePolygonStyle = Ext.isArray(olStyle) ?
+                        olStyle[0] : olStyle;
+                break;
+            default:
+                break;
         }
 
         if(!win){
@@ -171,13 +165,11 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
                 items: [styleEditor],
                 bbar: [{
                     text: 'Cancel',
-                    ui: 'MoMo-cancel',
                     handler: function(btn){
                         btn.up('[name=symbolizer-edit-window]').close();
                     }
                 },{
                     text: 'Apply',
-                    ui: 'MoMo',
                     handler: me.applyStyle,
                     scope: me
                 }]
