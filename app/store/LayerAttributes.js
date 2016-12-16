@@ -46,9 +46,11 @@ Ext.define('MoMo.admin.store.LayerAttributes', {
             'gml:PointPropertyType',
             'gml:LineStringPropertyType',
             'gml:SurfacePropertyType',
+            'gml:PolygonPropertyType',
             'gml:MultiPointPropertyType',
             'gml:MultiLineStringPropertyType',
-            'gml:MultiSurfacePropertyType'
+            'gml:MultiSurfacePropertyType',
+            'gml:MultiPolygonPropertyType'
         ];
 
         return !Ext.Array.contains(ignoreTypes, item.get('type'));
