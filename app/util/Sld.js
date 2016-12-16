@@ -135,22 +135,22 @@ Ext.define('MoMo.admin.util.Sld', {
             var operator = filter.comparisonOps.name.localPart;
             var propertyName;
             switch(operator) {
-            case "PropertyIsNull":
-                propertyName = filter.comparisonOps.value.propertyName
-                        .content[0];
-                break;
-            case "PropertyIsLike":
-                propertyName = filter.comparisonOps.value.propertyName
-                        .content[0];
-                break;
-            case "PropertyIsBetween":
-                propertyName = filter.comparisonOps.value.expression.value
-                        .content[0];
-                break;
-            default:
-                propertyName = filter.comparisonOps.value.expression[0]
-                        .value.content[0];
-                break;
+                case "PropertyIsNull":
+                    propertyName = filter.comparisonOps.value.propertyName
+                            .content[0];
+                    break;
+                case "PropertyIsLike":
+                    propertyName = filter.comparisonOps.value.propertyName
+                            .content[0];
+                    break;
+                case "PropertyIsBetween":
+                    propertyName = filter.comparisonOps.value.expression.value
+                            .content[0];
+                    break;
+                default:
+                    propertyName = filter.comparisonOps.value.expression[0]
+                            .value.content[0];
+                    break;
             }
             return propertyName;
         },
@@ -159,23 +159,23 @@ Ext.define('MoMo.admin.util.Sld', {
             var operator = filter.comparisonOps.name.localPart;
             var literalValues = [];
             switch(operator) {
-            case "PropertyIsNull":
-                literalValues = null;
-                break;
-            case "PropertyIsLike":
-                literalValues.push(
-                        filter.comparisonOps.value.literal.content[0]);
-                break;
-            case "PropertyIsBetween":
-                literalValues.push(filter.comparisonOps.value.lowerBoundary
-                        .expression.value.content[0]);
-                literalValues.push(filter.comparisonOps.value.upperBoundary
-                        .expression.value.content[0]);
-                break;
-            default:
-                literalValues.push(filter.comparisonOps.value
-                        .expression[1].value.content[0]);
-                break;
+                case "PropertyIsNull":
+                    literalValues = null;
+                    break;
+                case "PropertyIsLike":
+                    literalValues.push(
+                            filter.comparisonOps.value.literal.content[0]);
+                    break;
+                case "PropertyIsBetween":
+                    literalValues.push(filter.comparisonOps.value.lowerBoundary
+                            .expression.value.content[0]);
+                    literalValues.push(filter.comparisonOps.value.upperBoundary
+                            .expression.value.content[0]);
+                    break;
+                default:
+                    literalValues.push(filter.comparisonOps.value
+                            .expression[1].value.content[0]);
+                    break;
             }
             return literalValues;
         },
@@ -201,24 +201,24 @@ Ext.define('MoMo.admin.util.Sld', {
 
             var style;
             switch(symbolType) {
-            case 'Point':
-                style = sldUtil.pointStyleFromSymbolizer(symbolizer);
-                break;
-            case 'Line':
-                style = sldUtil.lineStyleFromSymbolizer(symbolizer);
-                break;
-            case 'Polygon':
-                style = sldUtil.polygonStyleFromSymbolizer(symbolizer);
-                break;
-            case 'Text':
-                style = sldUtil.textStyleFromSymbolizer(symbolizer);
-                break;
-            case 'Raster':
-                // IDK…
-                Ext.log.warn('Unimplemented symbolType "Raster"');
-                break;
-            default:
-                Ext.log.warn('Unexpected symbolType "' + symbolType + '"');
+                case 'Point':
+                    style = sldUtil.pointStyleFromSymbolizer(symbolizer);
+                    break;
+                case 'Line':
+                    style = sldUtil.lineStyleFromSymbolizer(symbolizer);
+                    break;
+                case 'Polygon':
+                    style = sldUtil.polygonStyleFromSymbolizer(symbolizer);
+                    break;
+                case 'Text':
+                    style = sldUtil.textStyleFromSymbolizer(symbolizer);
+                    break;
+                case 'Raster':
+                    // IDK…
+                    Ext.log.warn('Unimplemented symbolType "Raster"');
+                    break;
+                default:
+                    Ext.log.warn('Unexpected symbolType "' + symbolType + '"');
             }
             return style;
         },
@@ -300,88 +300,88 @@ Ext.define('MoMo.admin.util.Sld', {
                 var stroke = sldUtil.strokeFromObj(firstGraphicOrMark);
 
                 switch(wellKnownName) {
-                case "circle":
-                    style = new ol.style.Style({
-                        image: new ol.style.Circle({
-                            radius: size,
-                            fill: fill,
-                            stroke: stroke
-                        })
-                    });
-                    break;
-                case "square":
-                    style = new ol.style.Style({
-                        image: new ol.style.RegularShape({
-                            fill: fill,
-                            stroke: stroke,
-                            points: 4,
-                            radius: size,
-                            angle: Math.PI / 4
-                        })
-                    });
-                    break;
-                case "triangle":
-                    style = new ol.style.Style({
-                        image: new ol.style.RegularShape({
-                            fill: fill,
-                            stroke: stroke,
-                            points: 3,
-                            radius: size,
-                            rotation: Math.PI / 4,
-                            angle: 0
-                        })
-                    });
-                    break;
-                case "star":
-                    style = new ol.style.Style({
-                        image: new ol.style.RegularShape({
-                            fill: fill,
-                            stroke: stroke,
-                            points: 5,
-                            radius: size,
-                            radius2: size/2,
-                            angle: 0
-                        })
-                    });
-                    break;
-                case "cross":
-                    style = new ol.style.Style({
-                        image: new ol.style.RegularShape({
-                            fill: fill,
-                            stroke: stroke,
-                            points: 4,
-                            radius: size,
-                            radius2: size/2,
-                            angle: 0
-                        })
-                    });
-                    break;
-                case "x":
-                    style = new ol.style.Style({
-                        image: new ol.style.RegularShape({
-                            fill: fill,
-                            stroke: stroke,
-                            points: 4,
-                            radius: size,
-                            radius2: size/2,
-                            angle: Math.PI / 4
-                        })
-                    });
-                    break;
-                default:
-                    style = new ol.style.Style({
-                        image: new ol.style.Circle({
-                            radius: 10,
-                            fill: new ol.style.Fill({
-                                color: '#3399CC'
-                            }),
-                            stroke: new ol.style.Stroke({
-                                color: '#FFFFFF',
-                                width: 1.25
+                    case "circle":
+                        style = new ol.style.Style({
+                            image: new ol.style.Circle({
+                                radius: size,
+                                fill: fill,
+                                stroke: stroke
                             })
-                        })
-                    });
-                    break;
+                        });
+                        break;
+                    case "square":
+                        style = new ol.style.Style({
+                            image: new ol.style.RegularShape({
+                                fill: fill,
+                                stroke: stroke,
+                                points: 4,
+                                radius: size,
+                                angle: Math.PI / 4
+                            })
+                        });
+                        break;
+                    case "triangle":
+                        style = new ol.style.Style({
+                            image: new ol.style.RegularShape({
+                                fill: fill,
+                                stroke: stroke,
+                                points: 3,
+                                radius: size,
+                                rotation: Math.PI / 4,
+                                angle: 0
+                            })
+                        });
+                        break;
+                    case "star":
+                        style = new ol.style.Style({
+                            image: new ol.style.RegularShape({
+                                fill: fill,
+                                stroke: stroke,
+                                points: 5,
+                                radius: size,
+                                radius2: size/2,
+                                angle: 0
+                            })
+                        });
+                        break;
+                    case "cross":
+                        style = new ol.style.Style({
+                            image: new ol.style.RegularShape({
+                                fill: fill,
+                                stroke: stroke,
+                                points: 4,
+                                radius: size,
+                                radius2: size/2,
+                                angle: 0
+                            })
+                        });
+                        break;
+                    case "x":
+                        style = new ol.style.Style({
+                            image: new ol.style.RegularShape({
+                                fill: fill,
+                                stroke: stroke,
+                                points: 4,
+                                radius: size,
+                                radius2: size/2,
+                                angle: Math.PI / 4
+                            })
+                        });
+                        break;
+                    default:
+                        style = new ol.style.Style({
+                            image: new ol.style.Circle({
+                                radius: 10,
+                                fill: new ol.style.Fill({
+                                    color: '#3399CC'
+                                }),
+                                stroke: new ol.style.Stroke({
+                                    color: '#FFFFFF',
+                                    width: 1.25
+                                })
+                            })
+                        });
+                        break;
                 }
             } else if ((/Graphic/).test(firstTypeName)) {
                 // … ol.style.Icon
@@ -690,114 +690,115 @@ Ext.define('MoMo.admin.util.Sld', {
             };
 
             switch(filterValues.operatorCombo){
-            case "PropertyIsEqualTo":
-                break;
-            case "PropertyIsNotEqualTo":
-                break;
-            case "PropertyIsBetween":
-                sldFilter.comparisonOps.value = {
-                    TYPE_NAME: "Filter_1_0_0.PropertyIsBetweenType",
-                    expression: {
+                case "PropertyIsEqualTo":
+                    break;
+                case "PropertyIsNotEqualTo":
+                    break;
+                case "PropertyIsBetween":
+                    sldFilter.comparisonOps.value = {
+                        TYPE_NAME: "Filter_1_0_0.PropertyIsBetweenType",
+                        expression: {
+                            name: {
+                                namespaceURI: "http://www.opengis.net/ogc",
+                                localPart: "PropertyName",
+                                prefix: "ogc",
+                                key: "{http://www.opengis.net/ogc}PropertyName",
+                                string: "{http://www.opengis.net/ogc}" +
+                                        "ogc:PropertyName",
+                                CLASS_NAME: "Jsonix.XML.QName"
+                            },
+                            value: {
+                                TYPE_NAME: "Filter_1_0_0.PropertyNameType",
+                                content: [filterValues.attributeCombo]
+                            }
+                        },
+                        lowerBoundary: {
+                            TYPE_NAME: "Filter_1_0_0.LowerBoundaryType",
+                            expression: {
+                                name: {
+                                    namespaceURI: "http://www.opengis.net/ogc",
+                                    localPart: "Literal",
+                                    prefix: "ogc",
+                                    key: "{http://www.opengis.net/ogc}Literal",
+                                    string: "{http://www.opengis.net/ogc}" +
+                                            "ogc:Literal",
+                                    CLASS_NAME: "Jsonix.XML.QName"
+                                },
+                                value: {
+                                    TYPE_NAME: "Filter_1_0_0.LiteralType",
+                                    content: [filterValues.literalNumberField1
+                                              .toString()]
+                                }
+                            }
+                        },
+                        upperBoundary: {
+                            TYPE_NAME: "Filter_1_0_0.UpperBoundaryType",
+                            expression: {
+                                name: {
+                                    namespaceURI: "http://www.opengis.net/ogc",
+                                    localPart: "Literal",
+                                    prefix: "ogc",
+                                    key: "{http://www.opengis.net/ogc}Literal",
+                                    string: "{http://www.opengis.net/ogc}" +
+                                            "ogc:Literal",
+                                    CLASS_NAME: "Jsonix.XML.QName"
+                                },
+                                value: {
+                                    TYPE_NAME: "Filter_1_0_0.LiteralType",
+                                    content: [filterValues.literalNumberField2
+                                            .toString()]
+                                }
+                            }
+                        }
+                    };
+                    break;
+                case "PropertyIsLike":
+                    sldFilter.comparisonOps.value = {
+                        TYPE_NAME: "Filter_1_0_0.PropertyIsLikeType",
+                        wildCard: "*",
+                        singleChar: "%",
+                        escape: "!",
+                        propertyName: {
+                            TYPE_NAME: "Filter_1_0_0.PropertyNameType",
+                            content: [filterValues.attributeCombo]
+                        },
+                        literal: {
+                            TYPE_NAME: "Filter_1_0_0.LiteralType",
+                            content: [filterValues.literalTextField]
+                        }
+                    };
+                    break;
+                case "PropertyIsNull":
+                    sldFilter.comparisonOps.value = {
+                        TYPE_NAME: "Filter_1_0_0.PropertyIsNullType",
+                        propertyName: {
+                            TYPE_NAME: "Filter_1_0_0.PropertyNameType",
+                            content: ["fid"]
+                        }
+                    };
+                    break;
+                case "PropertyIsLessThan":
+                case "PropertyIsLessThanOrEqualTo":
+                case "PropertyIsGreaterThan":
+                case "PropertyIsGreaterThanOrEqualTo":
+                    sldFilter.comparisonOps.value.expression[1] = {
                         name: {
                             namespaceURI: "http://www.opengis.net/ogc",
-                            localPart: "PropertyName",
+                            localPart: "Literal",
                             prefix: "ogc",
-                            key: "{http://www.opengis.net/ogc}PropertyName",
-                            string: "{http://www.opengis.net/ogc}" +
-                                    "ogc:PropertyName",
+                            key: "{http://www.opengis.net/ogc}Literal",
+                            string: "{http://www.opengis.net/ogc}ogc:Literal",
                             CLASS_NAME: "Jsonix.XML.QName"
                         },
                         value: {
-                            TYPE_NAME: "Filter_1_0_0.PropertyNameType",
-                            content: [filterValues.attributeCombo]
+                            TYPE_NAME: "Filter_1_0_0.LiteralType",
+                            content: [filterValues
+                                    .literalNumberField2.toString()]
                         }
-                    },
-                    lowerBoundary: {
-                        TYPE_NAME: "Filter_1_0_0.LowerBoundaryType",
-                        expression: {
-                            name: {
-                                namespaceURI: "http://www.opengis.net/ogc",
-                                localPart: "Literal",
-                                prefix: "ogc",
-                                key: "{http://www.opengis.net/ogc}Literal",
-                                string: "{http://www.opengis.net/ogc}" +
-                                        "ogc:Literal",
-                                CLASS_NAME: "Jsonix.XML.QName"
-                            },
-                            value: {
-                                TYPE_NAME: "Filter_1_0_0.LiteralType",
-                                content: [filterValues.literalNumberField1
-                                          .toString()]
-                            }
-                        }
-                    },
-                    upperBoundary: {
-                        TYPE_NAME: "Filter_1_0_0.UpperBoundaryType",
-                        expression: {
-                            name: {
-                                namespaceURI: "http://www.opengis.net/ogc",
-                                localPart: "Literal",
-                                prefix: "ogc",
-                                key: "{http://www.opengis.net/ogc}Literal",
-                                string: "{http://www.opengis.net/ogc}" +
-                                        "ogc:Literal",
-                                CLASS_NAME: "Jsonix.XML.QName"
-                            },
-                            value: {
-                                TYPE_NAME: "Filter_1_0_0.LiteralType",
-                                content: [filterValues.literalNumberField2
-                                        .toString()]
-                            }
-                        }
-                    }
-                };
-                break;
-            case "PropertyIsLike":
-                sldFilter.comparisonOps.value = {
-                    TYPE_NAME: "Filter_1_0_0.PropertyIsLikeType",
-                    wildCard: "*",
-                    singleChar: "%",
-                    escape: "!",
-                    propertyName: {
-                        TYPE_NAME: "Filter_1_0_0.PropertyNameType",
-                        content: [filterValues.attributeCombo]
-                    },
-                    literal: {
-                        TYPE_NAME: "Filter_1_0_0.LiteralType",
-                        content: [filterValues.literalTextField]
-                    }
-                };
-                break;
-            case "PropertyIsNull":
-                sldFilter.comparisonOps.value = {
-                    TYPE_NAME: "Filter_1_0_0.PropertyIsNullType",
-                    propertyName: {
-                        TYPE_NAME: "Filter_1_0_0.PropertyNameType",
-                        content: ["fid"]
-                    }
-                };
-                break;
-            case "PropertyIsLessThan":
-            case "PropertyIsLessThanOrEqualTo":
-            case "PropertyIsGreaterThan":
-            case "PropertyIsGreaterThanOrEqualTo":
-                sldFilter.comparisonOps.value.expression[1] = {
-                    name: {
-                        namespaceURI: "http://www.opengis.net/ogc",
-                        localPart: "Literal",
-                        prefix: "ogc",
-                        key: "{http://www.opengis.net/ogc}Literal",
-                        string: "{http://www.opengis.net/ogc}ogc:Literal",
-                        CLASS_NAME: "Jsonix.XML.QName"
-                    },
-                    value: {
-                        TYPE_NAME: "Filter_1_0_0.LiteralType",
-                        content: [filterValues.literalNumberField2.toString()]
-                    }
-                };
-                break;
-            default:
-                break;
+                    };
+                    break;
+                default:
+                    break;
             }
             return sldFilter;
         }
