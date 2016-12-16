@@ -76,9 +76,10 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         Ext.toast("Delete layer");
     },
 
-    handleCellClick: function(gridview, td, cellIndex){
+    handleCellClick: function(gridview, td, cellIndex, record){
         switch(cellIndex) {
             case 2:
+                this.redirectTo('layers/createOrEdit/' + record.get('id'));
                 Ext.toast("Edit general-settings");
                 break;
             case 3:
