@@ -69,7 +69,7 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         // TODO CREATE ?
         newView = Ext.create(viewToCreate, {
             // if in edit mode we pass the entityId to our createOrEdit view
-            entityId: parseInt(id, 10)
+            entityId: id ? parseInt(id, 10) : null
         });
 
         Ext.suspendLayouts();
