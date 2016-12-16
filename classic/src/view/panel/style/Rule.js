@@ -117,7 +117,7 @@ Ext.define('MoMo.admin.view.panel.style.Rule', {
                     symbolizerschanged: 'onSymbolizersChanged'
                 }
             },{
-                xtype: 'momo-panel-style-symbolizer',
+                xtype: 'momo-panel-style-filter',
                 filter: this.filter,
                 flex: 1,
                 margin: '0 10px 0 0',

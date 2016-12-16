@@ -13,9 +13,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
 
     controller: 'momo-layer-general',
 
-    viewModel: {
-        type: 'momo-layer-general'
-    },
+//    viewModel: {
+//        type: 'momo-layer-general'
+//    },
 
     routeId: 'general',
 

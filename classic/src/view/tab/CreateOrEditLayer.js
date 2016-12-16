@@ -16,8 +16,6 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
         type: 'momo-create-or-edit-layer'
     },
 
-    routeId: 'createOrEdit',
-
     /**
      * It is important to set this to false to assure that the DOM of all
      * tabs will be build immediately to assure that the databinding is
@@ -45,6 +43,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
         xtype: 'momo-layer-general'
     }, {
         xtype: 'momo-layer-style'
-    }]
+    }],
+
+    listeners: {
+        boxready: 'onAfterRender'
+    }
 
 });

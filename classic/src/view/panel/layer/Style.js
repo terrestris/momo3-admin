@@ -11,9 +11,6 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
     ],
 
     controller: 'momo-layer-style',
-    viewModel: {
-        type: 'momo-layer-style'
-    },
 
     routeId: 'style',
 

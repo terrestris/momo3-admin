@@ -225,23 +225,23 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
     },
 
-    onUploadSucess: function(/*respObj*/){
+    onUploadSucess: function(respObj){
         Ext.toast('TODO: Implement on Upload success logic.');
-//        var view = this.getView();
-//        var coeLayerPanel = view.up('momo-create-or-edit-layer');
-//        var coeLayerController = coeLayerPanel.getController();
-//
-//        Ext.toast('Successfully uploaded the layer.');
-//
-//        // reload the layer stores
+        var view = this.getView();
+        var coeLayerPanel = view.up('momo-create-or-edit-layer');
+        var coeLayerController = coeLayerPanel.getController();
+
+        Ext.toast('Successfully uploaded the layer.');
+
+        // reload the layer stores
 //        var layerComponents = Ext.ComponentQuery.query(
-//                'mm_tree_managedatalayers, mm_view_layergroupsdataview');
-//
+//                'momo_tree_managedatalayers, momo_view_layergroupsdataview');
+
 //        Ext.each(layerComponents, function(comp){
 //            comp.getStore().load();
 //        });
-//
-//        coeLayerController.loadLayerData(respObj.data.id);
+
+        coeLayerController.loadLayerData(respObj.data.id);
     },
 
     onFileUploafFieldChanged: function(field){

@@ -66,7 +66,6 @@ Ext.define('MoMo.admin.view.panel.style.Styler', {
         },
         items: [{
             xtype: 'button',
-            ui: 'MoMo',
             bind: {
                 text: '{btnTextReloadCurrentStyle}'
             },
@@ -75,7 +74,6 @@ Ext.define('MoMo.admin.view.panel.style.Styler', {
         '->',
         {
             xtype: 'button',
-            ui: 'MoMo',
             bind: {
                 text: '{btnTextApplyAndSave}'
             },
