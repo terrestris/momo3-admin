@@ -19,6 +19,8 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
 //        title: '{title}'
 //    },
 
+    scrollable: 'y',
+
     padding: 20,
 
     items: [{

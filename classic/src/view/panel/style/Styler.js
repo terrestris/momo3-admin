@@ -59,28 +59,6 @@ Ext.define('MoMo.admin.view.panel.style.Styler', {
      * @event layerNameChange
      */
 
-    bbar: {
-        reference: 'styler-toolbar',
-        bodyStyle: {
-            background: '#f6f6f6'
-        },
-        items: [{
-            xtype: 'button',
-            bind: {
-                text: '{btnTextReloadCurrentStyle}'
-            },
-            handler: 'reloadCurrentStyle'
-        },
-        '->',
-        {
-            xtype: 'button',
-            bind: {
-                text: '{btnTextApplyAndSave}'
-            },
-            handler: 'applyAndSave'
-        }]
-    },
-
     /**
      * Initializes the SLD styler. Will check if the required configuration
      * option `layerName` is passed and valid.

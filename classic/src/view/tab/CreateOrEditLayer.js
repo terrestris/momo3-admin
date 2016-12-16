@@ -34,7 +34,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
     }, {
         xtype: 'button',
         bind: {
-            text: '{saveBtnText}'
+            text: '{saveBtnText}',
+            disabled: '{isNewLayer}'
         },
         handler: 'onSaveClick'
     }],

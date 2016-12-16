@@ -34,7 +34,6 @@ Ext.define('MoMo.admin.view.panel.style.Rules', {
         },
         items: [{
             xtype: 'button',
-            ui: 'MoMo',
             bind: {
                 text: '{addRuleButtonText}',
                 iconCls: '{addRuleButtonIconCls}'

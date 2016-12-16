@@ -90,7 +90,6 @@ Ext.define('MoMo.admin.view.panel.style.Rule', {
                     }
                 }, {
                     xtype: 'button',
-                    ui: 'MoMo',
                     bind: {
                         text: '{removeRuleButtonText}',
                         iconCls: '{removeRuleButtonIconCls}'
