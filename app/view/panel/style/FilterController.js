@@ -31,14 +31,22 @@ Ext.define('MoMo.admin.view.panel.style.FilterController', {
     },
 
     attributeComboBoxReady: function(combo){
-        var styler = combo.up('momo-panel-style-style');
+        var styler = combo.up('momo-panel-style-styler');
         var store = combo.getStore();
         var proxy = store.getProxy();
         var layerUrl = styler.getLayerUrl();
         var layerName = styler.getLayerName();
 
-        var url = layerUrl +
-            '?service=WFS&request=DescribeFeatureType&typeName=' + layerName;
+        var queryParams = {
+            service: 'WFS',
+            request: 'DescribeFeatureType',
+            version: '1.1.0',
+            outputFormat: 'XMLSCHEMA',
+            typeName: layerName
+        };
+
+        var url = Ext.String.format('{0}?{1}', layerUrl,
+                Ext.Object.toQueryString(queryParams));
 
         proxy.setUrl(url);
         store.load();
@@ -88,81 +96,81 @@ Ext.define('MoMo.admin.view.panel.style.FilterController', {
         var literalValues;
 
         switch(newValue) {
-        case "PropertyIsEqualTo":
-            if(filter){
-                literalValues = MoMo.admin.util.Sld
-                        .getLiteralValuesFromFilter(filter);
-                if(literalValues){
-                    literalTextField.setValue(literalValues[0]);
+            case "PropertyIsEqualTo":
+                if(filter){
+                    literalValues = MoMo.admin.util.Sld
+                            .getLiteralValuesFromFilter(filter);
+                    if(literalValues){
+                        literalTextField.setValue(literalValues[0]);
+                    }
                 }
-            }
-            literalNumberField1.hide();
-            literalNumberField2.hide();
-            literalTextField.show();
-            break;
-        case "PropertyIsNotEqualTo":
-            if(filter){
-                literalValues = MoMo.admin.util.Sld
-                        .getLiteralValuesFromFilter(filter);
-                if(literalValues){
-                    literalTextField.setValue(literalValues[0]);
+                literalNumberField1.hide();
+                literalNumberField2.hide();
+                literalTextField.show();
+                break;
+            case "PropertyIsNotEqualTo":
+                if(filter){
+                    literalValues = MoMo.admin.util.Sld
+                            .getLiteralValuesFromFilter(filter);
+                    if(literalValues){
+                        literalTextField.setValue(literalValues[0]);
+                    }
                 }
-            }
-            literalNumberField1.hide();
-            literalNumberField2.hide();
-            literalTextField.show();
-            break;
-        case "PropertyIsLike":
-            if(filter){
-                literalValues = MoMo.admin.util.Sld
-                        .getLiteralValuesFromFilter(filter);
-                if(literalValues){
-                    literalTextField.setValue(literalValues[0]);
+                literalNumberField1.hide();
+                literalNumberField2.hide();
+                literalTextField.show();
+                break;
+            case "PropertyIsLike":
+                if(filter){
+                    literalValues = MoMo.admin.util.Sld
+                            .getLiteralValuesFromFilter(filter);
+                    if(literalValues){
+                        literalTextField.setValue(literalValues[0]);
+                    }
                 }
-            }
-            literalNumberField1.hide();
-            literalNumberField2.hide();
-            literalTextField.show();
-            break;
-        case "PropertyIsNull":
-            literalNumberField1.hide();
-            literalNumberField2.hide();
-            literalTextField.hide();
-            break;
-        case "PropertyIsBetween":
-            if(filter){
-                literalValues = MoMo.admin.util.Sld
-                        .getLiteralValuesFromFilter(filter);
-                if(literalValues && Ext.isNumeric(literalValues[0]) &&
-                        Ext.isNumeric(literalValues[1])){
-                    literalNumberField1.setValue(literalValues[0]);
-                    literalNumberField2.setValue(literalValues[1]);
+                literalNumberField1.hide();
+                literalNumberField2.hide();
+                literalTextField.show();
+                break;
+            case "PropertyIsNull":
+                literalNumberField1.hide();
+                literalNumberField2.hide();
+                literalTextField.hide();
+                break;
+            case "PropertyIsBetween":
+                if(filter){
+                    literalValues = MoMo.admin.util.Sld
+                            .getLiteralValuesFromFilter(filter);
+                    if(literalValues && Ext.isNumeric(literalValues[0]) &&
+                            Ext.isNumeric(literalValues[1])){
+                        literalNumberField1.setValue(literalValues[0]);
+                        literalNumberField2.setValue(literalValues[1]);
+                    }
                 }
-            }
-            literalNumberField1.show();
-            literalNumberField2.show();
-            literalTextField.hide();
-            viewModel.set('literalNumberField2Label', 'Upper boundary');
-            break;
-        case "PropertyIsLessThan":
-        case "PropertyIsLessThanOrEqualTo":
-        case "PropertyIsGreaterThan":
-        case "PropertyIsGreaterThanOrEqualTo":
-            if(filter){
-                literalValues = MoMo.admin.util.Sld
-                        .getLiteralValuesFromFilter(filter);
+                literalNumberField1.show();
+                literalNumberField2.show();
+                literalTextField.hide();
+                viewModel.set('literalNumberField2Label', 'Upper boundary');
+                break;
+            case "PropertyIsLessThan":
+            case "PropertyIsLessThanOrEqualTo":
+            case "PropertyIsGreaterThan":
+            case "PropertyIsGreaterThanOrEqualTo":
+                if(filter){
+                    literalValues = MoMo.admin.util.Sld
+                            .getLiteralValuesFromFilter(filter);
 
-                if(literalValues && Ext.isNumeric(literalValues[0])){
-                    literalNumberField2.setValue(literalValues[0]);
+                    if(literalValues && Ext.isNumeric(literalValues[0])){
+                        literalNumberField2.setValue(literalValues[0]);
+                    }
                 }
-            }
-            literalNumberField2.show();
-            literalNumberField1.hide();
-            literalTextField.hide();
-            viewModel.set('literalNumberField2Label', 'Value');
-            break;
-        default:
-            break;
+                literalNumberField2.show();
+                literalNumberField1.hide();
+                literalTextField.hide();
+                viewModel.set('literalNumberField2Label', 'Value');
+                break;
+            default:
+                break;
         }
 
         if(filter){
