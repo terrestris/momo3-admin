@@ -17,7 +17,8 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
 
     routes: {
         ':node': 'onRouteChange',
-        ':clazz/createOrEdit': 'switchToView'
+        ':node/createOrEdit': 'switchToView',
+        ':node/createOrEdit/:id': 'switchToView'
     },
 
     componentMap: {
@@ -58,16 +59,17 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         });
     },
 
-    switchToView: function(clazz) {
+    switchToView: function(node, id) {
         var refs = this.getReferences(),
             mainCard = refs.mainCardPanel,
             mainLayout = mainCard.getLayout(),
-            viewToCreate = this.componentMap[clazz],
+            viewToCreate = this.componentMap[node],
             newView;
 
         // TODO CREATE ?
         newView = Ext.create(viewToCreate, {
-            routeId: clazz
+            // if in edit mode we pass the entityId to our createOrEdit view
+            entityId: parseInt(id, 10)
         });
 
         Ext.suspendLayouts();
