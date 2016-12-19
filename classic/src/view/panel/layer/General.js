@@ -4,6 +4,8 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
     xtype: 'momo-layer-general',
 
     requires: [
+        'Ext.form.FieldContainer',
+
         'MoMo.admin.view.panel.layer.GeneralController',
         'MoMo.admin.view.panel.layer.GeneralModel',
 
