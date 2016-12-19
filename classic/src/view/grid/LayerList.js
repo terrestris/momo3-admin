@@ -26,7 +26,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         showDeleteButton: true,
         showFilterField: true,
         showLayerSettingsColumn: true,
-        showLayerStyleColumn: true,
+        showLayerStyleColumn: false,
         showLayerMetadataColumn: true,
         showLayerPreviewColumn: true
     },

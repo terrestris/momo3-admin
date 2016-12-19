@@ -2,10 +2,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-applicationlist',
 
-    requires: [
-        'MoMo.admin.view.tab.CreateOrEditApplication'
-    ],
-
     loadStore: function(){
         this.getView().getStore().load();
     },

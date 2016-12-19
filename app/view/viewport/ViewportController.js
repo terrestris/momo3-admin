@@ -2,6 +2,11 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-mainviewport',
 
+    requires: [
+        'MoMo.admin.view.tab.CreateOrEditApplication',
+        'MoMo.admin.view.tab.CreateOrEditLayer'
+    ],
+
     listen : {
         controller : {
             '#': {
@@ -12,11 +17,13 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
 
     routes: {
         ':node': 'onRouteChange',
-        'applications/:createOrEdit': 'switchToView'
+        ':node/createOrEdit': 'switchToView',
+        ':node/createOrEdit/:id': 'switchToView'
     },
 
     componentMap: {
-        'createOrEdit': 'MoMo.admin.view.tab.CreateOrEditApplication'
+        'applications': 'MoMo.admin.view.tab.CreateOrEditApplication',
+        'layers': 'MoMo.admin.view.tab.CreateOrEditLayer'
     },
 
     /**
@@ -52,16 +59,17 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         });
     },
 
-    switchToView: function(hashTag) {
-        var me = this,
-            refs = me.getReferences(),
+    switchToView: function(node, id) {
+        var refs = this.getReferences(),
             mainCard = refs.mainCardPanel,
             mainLayout = mainCard.getLayout(),
-            viewToCreate = me.componentMap[hashTag],
+            viewToCreate = this.componentMap[node],
             newView;
 
+        // TODO CREATE ?
         newView = Ext.create(viewToCreate, {
-            routeId: hashTag
+            // if in edit mode we pass the entityId to our createOrEdit view
+            entityId: id ? parseInt(id, 10) : null
         });
 
         Ext.suspendLayouts();
