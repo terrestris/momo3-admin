@@ -73,7 +73,25 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     },
 
     onDeleteClick: function() {
-        Ext.toast("Delete layer");
+        var me = this;
+        var view = me.getView();
+        view.setLoading(true);
+        var selection = view.getSelectionModel().getSelection();
+        Ext.each(selection, function(rec) {
+            rec.erase({
+                callback: function(record,operation,success) {
+                    view.setLoading(false);
+                    view.getStore().load();
+                    if (success) {
+                        Ext.toast("Layer " + rec.get('name') + " deleted.");
+                    } else {
+                        Ext.toast("Layer " + rec.get('name') +
+                            " could not be deleted.");
+                        return false;
+                    }
+                }
+            });
+        });
     },
 
     handleCellClick: function(gridview, td, cellIndex, record){
