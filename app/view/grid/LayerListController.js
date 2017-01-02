@@ -2,6 +2,10 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-layerlist',
 
+    requires: [
+        'MoMo.admin.util.LayerParser'
+    ],
+
     /**
      *
      */
@@ -76,6 +80,26 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         Ext.toast("Delete layer");
     },
 
+    handleCellClick: function(gridview, td, cellIndex, record){
+        switch(cellIndex) {
+            case 2:
+                this.redirectTo('layers/createOrEdit/' + record.get('id'));
+                Ext.toast("Edit general-settings");
+                break;
+            case 3:
+                Ext.toast("Edit style-settings");
+                break;
+            case 4:
+                this.downloadLayerdata([record.get('id')]);
+                break;
+            case 5:
+                this.showLayerPreview(record);
+                break;
+            default:
+                return;
+        }
+    },
+
     downloadLayerdata: function(layerIdArray){
         if (layerIdArray) {
             Ext.toast('Download will start shortly, please wait...');
@@ -93,7 +117,8 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
                     name: 'layerIds',
                     value: layerIdArray.toString()
                 }],
-                action : BasiGX.util.Url.getWebProjectBaseUrl() + 'momolayers/download.action'
+                action : BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'momolayers/download.action'
             });
             document.body.appendChild(form);
             form.submit();
@@ -103,25 +128,69 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         }
     },
 
-    handleCellClick: function(gridview, td, cellIndex, record){
-        switch(cellIndex) {
-            case 2:
-                this.redirectTo('layers/createOrEdit/' + record.get('id'));
-                Ext.toast("Edit general-settings");
-                break;
-            case 3:
-                Ext.toast("Edit style-settings");
-                break;
-            case 4:
-                this.downloadLayerdata([record.get('id')]);
-                Ext.toast("Download layerdata");
-                break;
-            case 5:
-                Ext.toast("Show Layer preview");
-                break;
-            default:
-                return;
+    showLayerPreview: function(record) {
+        var me = this;
+        if(Ext.isNumber(record.get('id'))){
+            var previewWindow = this.getView().previewWindow;
+            var previewMap = previewWindow.down('gx_component_map').getMap();
+
+            Ext.Ajax.request({
+                url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'rest/layers/' + record.get('id'),
+                success: function(response) {
+                    var title = Ext.String.format('Preview of "{0}"',
+                            record.get('name'));
+                    var obj = Ext.decode(response.responseText);
+                    var layer = MoMo.admin.util.LayerParser.
+                            createOlLayer(obj);
+
+                    var dataExtentUrl = BasiGX.util.Url.getWebProjectBaseUrl() +
+                        'momolayers/getLayerExtent.action?layerId=' +
+                        record.get('id');
+
+                    previewWindow.setTitle(title);
+                    previewWindow.show();
+                    previewMap.getLayers().clear();
+                    previewMap.addLayer(layer);
+
+                    me.setExtentForLayer(layer, dataExtentUrl, previewMap);
+                },
+                failure: function(response) {
+                    Ext.raise('server-side failure with status code ' +
+                        response.status);
+                }
+            });
         }
+    },
+
+        /**
+     * Request the layers data extent and set it in the map
+     */
+    setExtentForLayer: function(layer, dataExtentUrl, previewMap) {
+        var defaultBounds = [-17992664, 2837342, -3218916, 6594375];//USA
+        Ext.Ajax.request({
+            url: dataExtentUrl,
+            success: function(response) {
+                var obj = Ext.decode(response.responseText);
+                if (obj.success && obj.data) {
+                    var extent = obj.data.split(",");
+                    var minx = parseFloat(extent[0]);
+                    var miny = parseFloat(extent[1]);
+                    var maxx = parseFloat(extent[2]);
+                    var maxy = parseFloat(extent[3]);
+                    previewMap.getView().fit([minx, miny, maxx, maxy],
+                        previewMap.getSize());
+                } else {
+                    previewMap.getView().fit(defaultBounds,
+                        previewMap.getSize());
+                }
+            },
+            failure: function(response) {
+                Ext.raise('server-side failure with status code ' +
+                    response.status);
+                previewMap.getView().fit(defaultBounds, previewMap.getSize());
+            }
+        });
     }
 
 });
