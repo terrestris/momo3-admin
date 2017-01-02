@@ -44,10 +44,14 @@ Ext.define('MoMo.admin.view.panel.style.Rules', {
 
     initComponent: function() {
         var me = this;
-        this.sldObj = MoMo.admin.util.Sld.toSldObject(this.getSld());
-        this.rules = MoMo.admin.util.Sld.rulesFromSldObject(this.sldObj);
         me.callParent();
-        me.initRuleComponents();
+        this.sldObj = MoMo.admin.util.Sld.toSldObject(this.getSld());
+        if (this.sldObj) {
+            this.rules = MoMo.admin.util.Sld.rulesFromSldObject(this.sldObj);
+            me.initRuleComponents();
+        } else {
+            me.setDisabled(true);
+        }
     },
 
     initRuleComponents: function() {

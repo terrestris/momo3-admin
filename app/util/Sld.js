@@ -70,7 +70,11 @@ Ext.define('MoMo.admin.util.Sld', {
          *
          */
         toSldObject: function(sldStr) {
-            return MoMo.admin.util.Sld.unmarshaller.unmarshalString(sldStr);
+            try {
+                return MoMo.admin.util.Sld.unmarshaller.unmarshalString(sldStr);
+            } catch(e) {
+                return null;
+            }
         },
 
         /**
