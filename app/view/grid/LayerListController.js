@@ -76,6 +76,33 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         Ext.toast("Delete layer");
     },
 
+    downloadLayerdata: function(layerIdArray){
+        if (layerIdArray) {
+            Ext.toast('Download will start shortly, please wait...');
+            var form = Ext.DomHelper.append(document.body, {
+                tag : 'form',
+                method : 'post',
+                children: [{
+                    tag: 'input',
+                    type:'hidden',
+                    name: '_csrf',
+                    value: BasiGX.util.CSRF.getValue()
+                },{
+                    tag: 'input',
+                    type:'hidden',
+                    name: 'layerIds',
+                    value: layerIdArray.toString()
+                }],
+                action : BasiGX.util.Url.getWebProjectBaseUrl() + 'momolayers/download.action'
+            });
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        } else {
+            Ext.toast('Could not download Layerdata!');
+        }
+    },
+
     handleCellClick: function(gridview, td, cellIndex, record){
         switch(cellIndex) {
             case 2:
@@ -86,6 +113,7 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
                 Ext.toast("Edit style-settings");
                 break;
             case 4:
+                this.downloadLayerdata([record.get('id')]);
                 Ext.toast("Download layerdata");
                 break;
             case 5:
