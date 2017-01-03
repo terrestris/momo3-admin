@@ -2,6 +2,39 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-create-or-edit-application',
 
+    onAfterRender: function() {
+        var me = this;
+        var view = me.getView();
+
+        if (!Ext.isEmpty(view.entityId)) {
+            me.loadApplicationData(view.entityId);
+        } else {
+            var layerTab = me.getView().down('momo-application-layer');
+            var layerTreePanel = layerTab.down('momo-layertree');
+            layerTreePanel.getController().loadStoreData();
+        }
+
+    },
+
+    /**
+     *
+     */
+    loadApplicationData: function(applicationId){
+        var me = this;
+
+        if (applicationId) {
+            MoMo.admin.model.Application.load(applicationId, {
+                scope: this,
+                success: function(record) {
+                    me.setAppData(record);
+                },
+                failure: function() {
+                    Ext.toast('Error loading Application Data.');
+                }
+            });
+        }
+    },
+
     onSaveClick: function() {
         var me = this;
         var viewport = me.getView().up('viewport');
@@ -72,6 +105,41 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     /**
      *
      */
+    setAppData: function(applicationRecord) {
+        var me = this;
+        var generalTab = me.getView().down('momo-application-general');
+        var startViewTab = me.getView().down('momo-application-start-view');
+        var layerTab = me.getView().down('momo-application-layer');
+        var layerTreePanel = layerTab.down('momo-layertree');
+        var generalTabViewModel = generalTab.getViewModel();
+        var startViewTabViewModel = startViewTab.getViewModel();
+
+        var appData = applicationRecord.getData();
+
+        generalTabViewModel.set('appData', {
+            name: appData.name,
+            description: appData.description,
+            language: appData.language,
+            isPublic: appData.open,
+            isActive: appData.active
+        });
+
+        startViewTabViewModel.set('appData', {
+            mapProjection: 'EPSG:4326',
+            mapCenter: {
+                x: 31579292,
+                y: 6095394
+            },
+            mapZoom: 2
+        });
+
+        layerTreePanel.setTreeConfigId(appData.layerTree.id);
+        layerTreePanel.getController().loadStoreData();
+    },
+
+    /**
+     *
+     */
     collectAppData: function() {
         var me = this;
         var generalTab = me.getView().down('momo-application-general');
@@ -80,7 +148,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         var layerTreePanel = layerTab.down('momo-layertree');
 
         var generalData = generalTab.getViewModel().getData().appData;
-        var startViewData = startViewTab.getViewModel().getData();
+        var startViewData = startViewTab.getViewModel().getData().appData;
 
         var appData = {
             name: generalData.name,

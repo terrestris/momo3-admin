@@ -10,7 +10,6 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
 
         me.setOlMap();
         me.registerOnMapMoveEnd();
-
     },
 
     /**
@@ -20,7 +19,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
         var me = this,
             view = me.getView(),
             viewModel = me.getViewModel(),
-            defaultData = viewModel.getData(),
+            defaultData = viewModel.getData().appData,
             zoom = defaultData.mapZoom,
             x = defaultData.mapCenter.x,
             y = defaultData.mapCenter.y,
@@ -115,12 +114,14 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
                 maxX: mapExtent[2],
                 maxY: mapExtent[3]
             },
-            mapCenter: {
-                x: mapCenter[0],
-                y: mapCenter[1]
-            },
-            mapZoom: mapZoom,
-            mapProjection: mapProjection
+            appData: {
+                mapCenter: {
+                    x: mapCenter[0],
+                    y: mapCenter[1]
+                },
+                mapZoom: mapZoom,
+                mapProjection: mapProjection
+            }
         });
 
     },

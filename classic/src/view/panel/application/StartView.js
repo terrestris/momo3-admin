@@ -81,7 +81,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     queryMode: 'local',
                     bind: {
                         fieldLabel: 'Projection',
-                        value: '{mapProjection}'
+                        value: '{appData.mapProjection}'
                     },
                     listeners: {
                         select: 'onMapProjectionSelect'
@@ -96,13 +96,13 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     xtype: 'numberfield',
                     bind: {
                         fieldLabel: '{mapCenterXLabel}',
-                        value: '{mapCenter.x}'
+                        value: '{appData.mapCenter.x}'
                     }
                 }, {
                     name: 'mapCenterY',
                     bind: {
                         fieldLabel: '{mapCenterYLabel}',
-                        value: '{mapCenter.y}'
+                        value: '{appData.mapCenter.y}'
                     }
                 }]
             }, {
@@ -116,7 +116,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     name: 'mapZoom',
                     bind: {
                         fieldLabel: '{mapZoomLabel}',
-                        value: '{mapZoom}'
+                        value: '{appData.mapZoom}'
                     }
                 }, {
                     columnWidth: 1/3,

@@ -108,16 +108,20 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     handleCellClick: function(gridview, td, cellIndex, record){
         switch(cellIndex) {
             case 2: // general-settings
-                Ext.toast("Edit general-settings");
+                this.redirectTo('applications/createOrEdit/' +
+                        record.get('id'));
                 break;
             case 3: //tool-settings
-                Ext.toast("Edit tool-settings");
+                this.redirectTo('applications/createOrEdit/' +
+                        record.get('id'));
                 break;
             case 4: //layer-settings
-                Ext.toast("Edit layer-settings");
+                this.redirectTo('applications/createOrEdit/' +
+                        record.get('id'));
                 break;
             case 5: //share-settings
-                Ext.toast("Edit share-settings");
+                this.redirectTo('applications/createOrEdit/' +
+                        record.get('id'));
                 break;
             case 6: // shwo preview
                 window.open('/momo/client?id=' + record.get('id'));

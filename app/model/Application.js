@@ -24,7 +24,7 @@ Ext.define('MoMo.admin.model.Application', {
         type: 'string'
     }, {
         name: 'layerTree',
-        type: 'string'
+        type: 'auto'
     }, {
         name: 'url',
         type: 'string',

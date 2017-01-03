@@ -25,6 +25,7 @@ Ext.define('MoMo.admin.model.LayerTreeNode', {
         }
     },
 
+    clientIdProperty: 'id',
     idProperty: 'clientId',
 
     fields: [{

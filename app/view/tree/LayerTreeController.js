@@ -15,11 +15,11 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
     /**
      *
      */
-    loadStoreData: function(panel) {
+    loadStoreData: function() {
         var me = this;
         var view = me.getView();
         var treeConfigId = view.getTreeConfigId();
-        var store = panel.getStore();
+        var store = view.getStore();
 
         view.setLoading(true);
 
