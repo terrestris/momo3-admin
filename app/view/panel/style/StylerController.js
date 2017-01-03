@@ -125,6 +125,9 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
         var me = this;
         var view = me.getView();
         var rulesPanel = view.down('momo-panel-style-rules');
+        if (!rulesPanel) {
+            return;
+        }
         var rules = rulesPanel.rules;
         var sldObj = rulesPanel.sldObj;
 
