@@ -15,8 +15,6 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
 
         panel.down('button[name=create-layer-button]').setVisible(
                 view.getShowCreateButton());
-        panel.down('button[name=copy-layer-button]').setVisible(
-                view.getShowCopyButton());
         panel.down('button[name=delete-layer-button]').setVisible(
                 view.getShowDeleteButton());
         panel.down('textfield[name=filter-layer-list-field]').setVisible(
@@ -70,10 +68,6 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
 
     onCreateClick: function() {
         this.redirectTo('layers/createOrEdit');
-    },
-
-    onCopyClick: function() {
-        Ext.toast("Copy layer");
     },
 
     onDeleteClick: function() {
