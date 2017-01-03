@@ -48,7 +48,11 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
         Ext.each(selection, function(app) {
             app.erase({
                 callback: function(rec,operation,success) {
-                    Ext.toast("Application deleted");
+                    if (success) {
+                        Ext.toast("Application deleted");
+                    } else {
+                        Ext.toast("Application deletion failed");
+                    }
                 }
             });
         });
