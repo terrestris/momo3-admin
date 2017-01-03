@@ -7,7 +7,14 @@ Ext.define('MoMo.admin.model.Application', {
         headers: BasiGX.util.CSRF.getHeader()
     },
 
+    idProperty: 'clientId',
+    clientIdProperty: 'id',
+
     fields: [{
+        name: 'clientId',
+        type: 'auto',
+        persist: false
+    }, {
         name: 'name',
         type: 'string'
     }, {

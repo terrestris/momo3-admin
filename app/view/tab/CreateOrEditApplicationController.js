@@ -21,12 +21,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
      */
     loadApplicationData: function(applicationId){
         var me = this;
+        var viewModel = me.getViewModel();
 
         if (applicationId) {
             MoMo.admin.model.Application.load(applicationId, {
                 scope: this,
                 success: function(record) {
-                    me.setAppData(record);
+                    viewModel.set('application', record);
+                    var layerTab = me.getView().down('momo-application-layer');
+                    var layerTreePanel = layerTab.down('momo-layertree');
+                    layerTreePanel.getController().loadStoreData();
                 },
                 failure: function() {
                     Ext.toast('Error loading Application Data.');
@@ -61,20 +65,24 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     saveApplication: function() {
         var me = this;
         var viewport = me.getView().up('viewport');
+        var appId = me.getViewModel().get('application.id');
+        var action = Ext.isEmpty(appId) ? 'create' : 'update';
 
+        // We have a new application
         Ext.Ajax.request({
             url: BasiGX.util.Url.getWebProjectBaseUrl() +
-                    'momoapps/create.action',
+                    'momoapps/' + action + '.action',
             method: 'POST',
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             jsonData: me.collectAppData(),
             scope: me,
+            // TODO fix messages
             callback: function() {
                 viewport.setLoading(false);
             },
             success: function(response) {
                 var json = JSON.parse(response.responseText);
-                Ext.toast('Successfully created the application "'
+                Ext.toast('Successfully ' + action + 'd the application "'
                         + json.name + '"', null, 'b');
                 var appList = viewport.down('momo-applicationlist');
                 if (appList) {
@@ -83,21 +91,21 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                 this.redirectTo('applications');
             },
             failure: function(response) {
-                var errorPrefix = "Could not create application:<br>";
+                var errorPrefix = 'Could not ' + action + ' application:<br>';
                 var errorMessage = errorPrefix +
-                    "An unknown error occured.";
+                    'An unknown error occured.';
 
                 if(response.status && response.statusText) {
                     if(response.status === 500) {
                         var json = JSON.parse(response.responseText);
                         errorMessage = errorPrefix + json.message;
                     } else {
-                        errorMessage = errorPrefix + "HTTP-Status: " +
-                        response.statusText + " (" + response.status + ")";
+                        errorMessage = errorPrefix + 'HTTP-Status: ' +
+                        response.statusText + ' (' + response.status + ')';
                     }
                 }
 
-                Ext.Msg.alert("Error", errorMessage);
+                Ext.Msg.alert('Error', errorMessage);
             }
         });
     },
@@ -113,7 +121,6 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         var layerTreePanel = layerTab.down('momo-layertree');
         var generalTabViewModel = generalTab.getViewModel();
         var startViewTabViewModel = startViewTab.getViewModel();
-
         var appData = applicationRecord.getData();
 
         generalTabViewModel.set('appData', {
@@ -142,23 +149,25 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
      */
     collectAppData: function() {
         var me = this;
-        var generalTab = me.getView().down('momo-application-general');
-        var startViewTab = me.getView().down('momo-application-start-view');
         var layerTab = me.getView().down('momo-application-layer');
         var layerTreePanel = layerTab.down('momo-layertree');
-
-        var generalData = generalTab.getViewModel().getData().appData;
-        var startViewData = startViewTab.getViewModel().getData().appData;
+        var viewModel = me.getViewModel();
+        var application = viewModel.get('application');
+        var startView = viewModel.get('startview.values');
 
         var appData = {
-            name: generalData.name,
-            description: generalData.description,
-            language: generalData.language,
-            isPublic: generalData.isPublic,
-            isActive: generalData.isActive,
-            projection: startViewData.mapProjection,
-            center: startViewData.mapCenter,
-            zoom: startViewData.mapZoom,
+            id: application.get('id') || null,
+            name: application.get('name'),
+            description: application.get('description'),
+            language: application.get('language'),
+            isPublic: application.get('open'),
+            isActive: application.get('active'),
+            projection: startView.projection,
+            center: {
+                x: startView.center.x,
+                y: startView.center.y
+            },
+            zoom: startView.zoom,
             layerTree: layerTreePanel.getTreeConfigId()
         };
 

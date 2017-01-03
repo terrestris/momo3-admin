@@ -20,11 +20,12 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
         var view = me.getView();
         var treeConfigId = view.getTreeConfigId();
         var store = view.getStore();
+        var layerTree = this.getViewModel().get('application.layerTree');
 
         view.setLoading(true);
 
         // We're in create mode
-        if (!treeConfigId) {
+        if (Ext.isEmpty(layerTree)) {
             // We don't track any removed node in create mode, otherwise not
             // yet persisted records are attempted to be deleted via REST
             // TODO: I'm not sure if this solution is correct as soon as we've
@@ -36,12 +37,32 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
             store.setTrackRemoved(true);
             // TODO: Set ID via view.setTreeConfigId() if we're in application
             // edit mode otherwise we'll never reach this block
-            MoMo.admin.model.LayerTreeNode.load(treeConfigId, {
-                success: function(record) {
-                    store.setRoot(record);
-                    view.setLoading(false);
-                }
+            var rootNode = Ext.create('MoMo.admin.model.LayerTreeNode', layerTree);
+
+            store.setRoot(rootNode);
+            store.each(function(rec){
+                rec.phantom = false;
+            }, {
+                collapsed: true
             });
+
+            view.setLoading(false);
+            rootNode.phantom = false;
+
+            view.setLoading(false);
+
+//            MoMo.admin.model.LayerTreeNode.load(treeConfigId, {
+//                success: function(record) {
+//                    store.setRoot(record);
+//                    store.each(function(rec){
+//                        rec.phantom = false;
+//                    }, {
+//                        collapsed: true
+//                    });
+//                    view.setLoading(false);
+//                    record.phantom = false;
+//                }
+//            });
         }
     },
 
@@ -52,6 +73,11 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
         var me = this;
         var view = me.getView();
         var store = view.getStore();
+
+        if(Ext.isEmpty(store.getModifiedRecords())){
+            cbFn.call(cbScope);
+            return;
+        }
 
         store.sync({
             success: function(batch) {
@@ -74,7 +100,7 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
                 // TODO: reload store with id?
                 view.setTreeConfigId(treeConfigId);
 
-                cbFn.call(cbScope, [treeConfigId]);
+                cbFn.call(cbScope);
             }
         });
     },

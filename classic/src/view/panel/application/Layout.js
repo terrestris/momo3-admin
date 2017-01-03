@@ -5,19 +5,19 @@ Ext.define('MoMo.admin.view.panel.application.Layout', {
 
     requires: [
         'MoMo.admin.view.panel.application.LayoutController',
-        'MoMo.admin.view.panel.application.LayoutModel',
+//        'MoMo.admin.view.panel.application.LayoutModel',
         'Ext.form.field.ComboBox',
         'Ext.tree.Panel'
     ],
 
     controller: 'momo-application-layout',
 
-    viewModel: {
-        type: 'momo-application-layout'
-    },
+//    viewModel: {
+//        type: 'momo-application-layout'
+//    },
 
     bind: {
-        title: '{title}'
+        title: '{layout.title}'
     },
 
     padding: 20,
@@ -26,7 +26,7 @@ Ext.define('MoMo.admin.view.panel.application.Layout', {
         xtype: 'fieldset',
         autoScroll: true,
         bind: {
-            title: '{title}'
+            title: '{layout.title}'
         },
         defaults: {
             width: '100%'
@@ -37,8 +37,8 @@ Ext.define('MoMo.admin.view.panel.application.Layout', {
             items: [{
                 xtype: 'combo',
                 bind: {
-                    fieldLabel: '{layoutFieldLabel}',
-                    emptyText: '{layoutEmptyText}'
+                    fieldLabel: '{layout.layoutFieldLabel}',
+                    emptyText: '{layout.layoutEmptyText}'
                 },
                 allowBlank: false,
                 msgTarget: 'side',
@@ -120,7 +120,7 @@ Ext.define('MoMo.admin.view.panel.application.Layout', {
                     collapseDirection: 'right',
                     flex: 1,
                     bind: {
-                        html: '{availableModulesDescription}'
+                        html: '{layout.availableModulesDescription}'
                     }
                 }]
             }]

@@ -5,7 +5,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
 
     requires: [
         'MoMo.admin.view.panel.application.StartViewController',
-        'MoMo.admin.view.panel.application.StartViewModel',
+//        'MoMo.admin.view.panel.application.StartViewModel',
         'Ext.form.field.ComboBox',
 
         'GeoExt.component.Map'
@@ -13,14 +13,14 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
 
     controller: 'momo-application-start-view',
 
-    viewModel: {
-        type: 'momo-application-start-view'
-    },
+//    viewModel: {
+//        type: 'momo-application-start-view'
+//    },
 
     routeId: 'start-view',
 
     bind: {
-        title: '{title}'
+        title: '{startview.title}'
     },
 
     padding: 20,
@@ -30,7 +30,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
     items: [{
         xtype: 'fieldset',
         bind: {
-            title: '{title}'
+            title: '{startview.title}'
         },
         layout: {
             type: 'vbox',
@@ -81,7 +81,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     queryMode: 'local',
                     bind: {
                         fieldLabel: 'Projection',
-                        value: '{appData.mapProjection}'
+                        value: '{startview.values.projection}'
                     },
                     listeners: {
                         select: 'onMapProjectionSelect'
@@ -89,25 +89,25 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                 }]
             }, {
                 bind: {
-                    title: '{mapCenterTitle}'
+                    title: '{startview.mapCenterTitle}'
                 },
                 items: [{
                     name: 'mapCenterX',
                     xtype: 'numberfield',
                     bind: {
-                        fieldLabel: '{mapCenterXLabel}',
-                        value: '{appData.mapCenter.x}'
+                        fieldLabel: '{startview.mapCenterXLabel}',
+                        value: '{startview.values.center.x}'
                     }
                 }, {
                     name: 'mapCenterY',
                     bind: {
-                        fieldLabel: '{mapCenterYLabel}',
-                        value: '{appData.mapCenter.y}'
+                        fieldLabel: '{startview.mapCenterYLabel}',
+                        value: '{startview.values.center.y}'
                     }
                 }]
             }, {
                 bind: {
-                    title: '{mapZoomTitle}'
+                    title: '{startview.mapZoomTitle}'
                 },
                 items: [{
                     columnWidth: 1/3,
@@ -115,8 +115,8 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     minValue: 0,
                     name: 'mapZoom',
                     bind: {
-                        fieldLabel: '{mapZoomLabel}',
-                        value: '{appData.mapZoom}'
+                        fieldLabel: '{startview.mapZoomLabel}',
+                        value: '{startview.values.zoom}'
                     }
                 }, {
                     columnWidth: 1/3,
@@ -124,8 +124,8 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     minValue: 0,
                     name: 'mapZoomMax',
                     bind: {
-                        fieldLabel: '{mapZoomMaxLabel}',
-                        value: '{mapZoomMax}'
+                        fieldLabel: '{startview.mapZoomMaxLabel}',
+                        value: '{startview.mapZoomMax}'
                     }
                 }, {
                     columnWidth: 1/3,
@@ -133,37 +133,37 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     minValue: 0,
                     name: 'mapZoomMin',
                     bind: {
-                        fieldLabel: '{mapZoomMinLabel}',
-                        value: '{mapZoomMin}'
+                        fieldLabel: '{startview.mapZoomMinLabel}',
+                        value: '{startview.mapZoomMin}'
                     }
                 }]
             }, {
                 bind: {
-                    title: '{mapExtentTitle}'
+                    title: '{startview.mapExtentTitle}'
                 },
                 items: [{
                     readOnly: true,
                     bind: {
-                        fieldLabel: '{mapExtentMinXLabel}',
-                        value: '{mapExtent.minX}'
+                        fieldLabel: '{startview.mapExtentMinXLabel}',
+                        value: '{startview.mapExtent.minX}'
                     }
                 }, {
                     readOnly: true,
                     bind: {
-                        fieldLabel: '{mapExtentMinYLabel}',
-                        value: '{mapExtent.minY}'
+                        fieldLabel: '{startview.mapExtentMinYLabel}',
+                        value: '{startview.mapExtent.minY}'
                     }
                 }, {
                     readOnly: true,
                     bind: {
-                        fieldLabel: '{mapExtentMaxXLabel}',
-                        value: '{mapExtent.maxX}'
+                        fieldLabel: '{startview.mapExtentMaxXLabel}',
+                        value: '{startview.mapExtent.maxX}'
                     }
                 }, {
                     readOnly: true,
                     bind: {
-                        fieldLabel: '{mapExtentMaxYLabel}',
-                        value: '{mapExtent.maxY}'
+                        fieldLabel: '{startview.mapExtentMaxYLabel}',
+                        value: '{startview.mapExtent.maxY}'
                     }
                 }]
             }]

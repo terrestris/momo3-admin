@@ -25,14 +25,16 @@ Ext.define('MoMo.admin.model.LayerTreeNode', {
         }
     },
 
-    clientIdProperty: 'id',
     idProperty: 'clientId',
+    clientIdProperty: 'id',
 
-    fields: [{
+    fields: [
+        {
         name: 'clientId',
         type: 'auto',
         persist: false
-    }, {
+    },
+    {
         name: 'id',
         type: 'string',
         allowNull: true
