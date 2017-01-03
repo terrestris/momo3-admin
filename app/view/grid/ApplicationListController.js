@@ -36,7 +36,22 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     },
 
     onDeleteClick: function() {
-        Ext.toast("Delete application");
+        var view = this.getView();
+        var selection = view.getSelectionModel().getSelection();
+        if (selection.length < 1) {
+            Ext.Msg.alert(
+                'Error',
+                'Please select at least one application before!'
+            );
+            return;
+        }
+        Ext.each(selection, function(app) {
+            app.erase({
+                callback: function(rec,operation,success) {
+                    Ext.toast("Application deleted");
+                }
+            });
+        });
     },
 
     handleCellClick: function(gridview, td, cellIndex, record){
