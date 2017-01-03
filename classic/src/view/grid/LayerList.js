@@ -31,6 +31,8 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         showLayerPreviewColumn: true
     },
 
+    previewWindow: null,
+
     bind: {
         title: '{title}'
     },
@@ -140,6 +142,23 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         this.getView().on('cellclick', 'handleCellClick');
 //        this.getView().on('selectionchange', 'selectionChanged');
         this.getView().on('render', 'loadStore');
+
+        this.previewWindow = Ext.create('Ext.window.Window', {
+            name: 'layer_preview_window',
+            closeAction: 'hide',
+            items: [{
+                xtype: 'gx_component_map',
+                width: 400,
+                height: 400,
+                map: new ol.Map({
+                    controls: [],
+                    view: new ol.View({
+                        center: [11545048, 5938851],
+                        zoom: 3
+                    })
+                })
+            }]
+        });
     }
 
 });
