@@ -68,10 +68,6 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         this.redirectTo('layers/createOrEdit');
     },
 
-    onCopyClick: function() {
-        Ext.toast("Copy layer");
-    },
-
     onDeleteClick: function() {
         Ext.toast("Delete layer");
     },

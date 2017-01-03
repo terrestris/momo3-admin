@@ -101,14 +101,6 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         handler: 'onCreateClick'
     }, {
         xtype: 'button',
-        name: 'copy-layer-button',
-        text: 'Copy',
-        scale: 'large',
-        ui: 'momo',
-        iconCls: 'fa fa-copy fa-2x',
-        handler: 'onCopyClick'
-    }, {
-        xtype: 'button',
         name: 'delete-layer-button',
         text: 'Delete',
         scale: 'large',

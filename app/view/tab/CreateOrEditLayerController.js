@@ -69,22 +69,33 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
 
             if (layer && layer.getId()) {
                 layer.save({
-                    success: function() {
+                    callback: function(rec,operation,success) {
                         view.setLoading(false);
-                        Ext.toast("Layer " + layer.get('name') + " saved.");
+                        if (success) {
+                            Ext.toast("Layer " + layer.get('name') + " saved.");
+                        } else {
+                            Ext.toast("Layer " + layer.get('name') +
+                                " could not be saved.");
+                        }
                     }
                 });
             }
 
             if (layer && layer.getId() && appearance && appearance.getId()) {
                 appearance.save({
-                    success: function(){
+                    callback: function(rec,operation,success) {
                         view.setLoading(false);
-                        Ext.toast("Layerappearance for layer " +
-                            layer.get('name') + " saved.");
+                        if (success) {
+                            Ext.toast("Layerappearance for layer " +
+                                    layer.get('name') + " saved.");
+                        } else {
+                            Ext.toast("Layerappearance for layer " +
+                                    layer.get('name') + " could not be saved.");
+                        }
                     }
                 });
             }
+            me.redirectTo('layers');
         } else {
             Ext.toast("Please fill out the required fields.");
         }
