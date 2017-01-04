@@ -34,6 +34,9 @@ Ext.define('MoMo.admin.model.Layer', {
             unique: true
         }
     }, {
+        name: 'metadataIdentifier',
+        type: 'string'
+    }, {
         name: 'appearanceId',
         reference: {
             type: 'LayerAppearance',

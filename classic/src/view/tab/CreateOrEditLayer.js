@@ -7,6 +7,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
         'MoMo.admin.view.tab.CreateOrEditLayerController',
         'MoMo.admin.view.tab.CreateOrEditLayerModel',
         'MoMo.admin.view.panel.layer.General',
+        'MoMo.admin.view.panel.layer.Metadata',
         'MoMo.admin.view.panel.layer.Style'
     ],
 
@@ -28,13 +29,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
     }, {
         xtype: 'button',
         bind: {
-            text: '{cancelBtnText}'
+            text: '{i18n.cancelBtnText}'
         },
         handler: 'onCancelClick'
     }, {
         xtype: 'button',
         bind: {
-            text: '{saveBtnText}',
+            text: '{i18n.saveBtnText}',
             disabled: '{isNewLayer}'
         },
         handler: 'onSaveClick'
@@ -42,6 +43,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
 
     items: [{
         xtype: 'momo-layer-general'
+    }, {
+        xtype: 'momo-layer-metadata'
     }, {
         xtype: 'momo-layer-style'
     }],
