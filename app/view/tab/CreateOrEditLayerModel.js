@@ -42,7 +42,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
             return get('layer.name') || 'New Layer';
         },
         isHoverable: function(get){
-            var isVector = get('layer.dataType').toLowerCase() === "vector";
+            var isVector = get('layer.dataType').toLowerCase() !== "raster";
             return !get('isNewLayer') && isVector;
         }
     }

@@ -189,7 +189,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 layerName: layer.get('name'),
                 dataType: layer.get('dataType'),
                 layerDescription: layer.get('description'),
-                layerHoverTemplate: layer.get('hoverFieldTemplate'),
+                layerHoverTemplate: layer.getAppearance().get('hoverTemplate'),
                 layerOpacity: layer.getAppearance().get('opacity')
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),

@@ -146,7 +146,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     margin: '0 5px 0 0',
                     flex: 1,
                     bind: {
-                        value: '{layer.hoverFieldTemplate}'
+                        value: '{layer.appearance.hoverTemplate}'
                     }
                 }, {
                     xtype: 'button',
