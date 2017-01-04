@@ -64,11 +64,11 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
      */
     saveApplication: function() {
         var me = this;
+        var viewModel = me.getViewModel();
         var viewport = me.getView().up('viewport');
-        var appId = me.getViewModel().get('application.id');
-        var action = Ext.isEmpty(appId) ? 'create' : 'update';
+        var appId = viewModel.get('application.id');
+        var action = Ext.isNumber(appId) ? 'update' : 'create';
 
-        // We have a new application
         Ext.Ajax.request({
             url: BasiGX.util.Url.getWebProjectBaseUrl() +
                     'momoapps/' + action + '.action',

@@ -1,5 +1,6 @@
 Ext.define('MoMo.admin.model.LayerTreeNode', {
     extend: 'Ext.data.TreeModel',
+
     requires: [
         'Ext.data.proxy.Rest',
 
@@ -22,19 +23,33 @@ Ext.define('MoMo.admin.model.LayerTreeNode', {
                 }
                 return data;
             }
+        },
+        writer: {
+            type: 'json',
+            transform: function(data, request) {
+                var rec = request.getRecords()[0];
+                if(request.getAction() === "create"){
+                    delete data.id;
+                }
+                if(data.extId){
+                    data.id = rec.get('id');
+                    delete data.extId;
+                }
+                if(data.parentId && !Ext.isNumber(data.parentId)){
+                    data.parentId = rec.parentNode.get('id');
+                }
+                return data;
+            }
         }
     },
 
-    idProperty: 'clientId',
-    clientIdProperty: 'id',
+    idProperty: 'extId',
 
-    fields: [
-        {
-        name: 'clientId',
+    fields: [{
+        name: 'extId',
         type: 'auto',
         persist: false
-    },
-    {
+    }, {
         name: 'id',
         type: 'string',
         allowNull: true

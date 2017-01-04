@@ -18,7 +18,6 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
     loadStoreData: function() {
         var me = this;
         var view = me.getView();
-        var treeConfigId = view.getTreeConfigId();
         var store = view.getStore();
         var layerTree = this.getViewModel().get('application.layerTree');
 
@@ -37,7 +36,8 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
             store.setTrackRemoved(true);
             // TODO: Set ID via view.setTreeConfigId() if we're in application
             // edit mode otherwise we'll never reach this block
-            var rootNode = Ext.create('MoMo.admin.model.LayerTreeNode', layerTree);
+            var rootNode = Ext.create('MoMo.admin.model.LayerTreeNode',
+                    layerTree);
 
             store.setRoot(rootNode);
             store.each(function(rec){
@@ -50,19 +50,6 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
             rootNode.phantom = false;
 
             view.setLoading(false);
-
-//            MoMo.admin.model.LayerTreeNode.load(treeConfigId, {
-//                success: function(record) {
-//                    store.setRoot(record);
-//                    store.each(function(rec){
-//                        rec.phantom = false;
-//                    }, {
-//                        collapsed: true
-//                    });
-//                    view.setLoading(false);
-//                    record.phantom = false;
-//                }
-//            });
         }
     },
 

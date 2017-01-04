@@ -20,12 +20,12 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
             languageFieldLabel: 'Language',
             languageEmptyText: 'Select the language of the application*',
             publicFieldLabel: 'Public',
-            publicBoxToastText: '<b>Note:</b> This application will be set to ' +
-                    'public and will be visible even for non logged-in users ' +
-                    'afterwards!',
+            publicBoxToastText: '<b>Note:</b> This application will be set ' +
+                    'to public and will be visible even for non logged-in ' +
+                    'users afterwards!',
             activeFieldLabel: 'Active',
             activeBoxToastText: '<b>Note:</b> This application will be ' +
-                    'deactivated and will not be visible to anyone afterwards!',
+                    'deactivated and will not be visible to anyone afterwards!'
         },
         layer: {
             title: 'Layer',

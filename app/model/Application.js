@@ -4,14 +4,22 @@ Ext.define('MoMo.admin.model.Application', {
     proxy: {
         type: 'rest',
         url: BasiGX.util.Url.getWebProjectBaseUrl() + 'rest/momoapps',
-        headers: BasiGX.util.CSRF.getHeader()
+        headers: BasiGX.util.CSRF.getHeader(),
+        writer: {
+            type: 'json',
+            transform: function(data, request) {
+                if(request.getAction() === "create"){
+                    delete data.id;
+                }
+                return data;
+            }
+        }
     },
 
-    idProperty: 'clientId',
-    clientIdProperty: 'id',
+    idProperty: 'extId',
 
     fields: [{
-        name: 'clientId',
+        name: 'extId',
         type: 'auto',
         persist: false
     }, {
