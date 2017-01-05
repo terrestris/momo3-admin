@@ -111,19 +111,7 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
                 this.redirectTo('applications/createOrEdit/' +
                         record.get('id'));
                 break;
-            case 3: //tool-settings
-                this.redirectTo('applications/createOrEdit/' +
-                        record.get('id'));
-                break;
-            case 4: //layer-settings
-                this.redirectTo('applications/createOrEdit/' +
-                        record.get('id'));
-                break;
-            case 5: //share-settings
-                this.redirectTo('applications/createOrEdit/' +
-                        record.get('id'));
-                break;
-            case 6: // shwo preview
+            case 3: // show preview
                 window.open('/momo/client?id=' + record.get('id'));
                 break;
             default:

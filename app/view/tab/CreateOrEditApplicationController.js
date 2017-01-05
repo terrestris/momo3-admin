@@ -1,6 +1,9 @@
 Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-create-or-edit-application',
+    requires: [
+        'BasiGX.util.Object'
+    ],
 
     onAfterRender: function() {
         var me = this;
@@ -28,6 +31,15 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                 scope: this,
                 success: function(record) {
                     viewModel.set('application', record);
+                    var mapConfig = BasiGX.util.Object.getValue(
+                        'mapConfig', record);
+                    viewModel.set('startview.values', mapConfig);
+                    var proj = viewModel.get('startview.values.projection') ||
+                        'EPSG:3857';
+                    if (proj.indexOf('EPSG') < 0) {
+                        viewModel.set('startview.values.projection', 'EPSG:' +
+                            proj);
+                    }
                     var layerTab = me.getView().down('momo-application-layer');
                     var layerTreePanel = layerTab.down('momo-layertree');
                     layerTreePanel.getController().loadStoreData();

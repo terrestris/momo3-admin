@@ -8,6 +8,8 @@ Ext.define('MoMo.admin.model.Application', {
         writer: {
             type: 'json',
             transform: function(data, request) {
+                // new applications may not have an id when calling
+                // create in our backend
                 if(request.getAction() === "create"){
                     delete data.id;
                 }

@@ -19,10 +19,10 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
         var me = this,
             view = me.getView(),
             viewModel = view.lookupViewModel(),
-            zoom = viewModel.getData('startview.values.zoom'),
-            x = viewModel.getData('startview.values.zoom.x'),
-            y = viewModel.getData('startview.values.zoom.y'),
-            projCode = viewModel.getData('startview.values.projection');
+            zoom = viewModel.get('startview').values.zoom,
+            x = viewModel.get('startview').values.center.x,
+            y = viewModel.get('startview').values.center.y,
+            projCode = viewModel.get('startview').values.projection;
 
         var olMap = new ol.Map({
             layers: [

@@ -33,7 +33,10 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
             store.setTrackRemoved(false);
             me.requestAndSetDefaultRootNode();
         } else {
-            store.setTrackRemoved(true);
+            // We don't track any removed node in edit mode, as every node
+            // seems to be in delete mode after the setRoot call........
+            // we will handle deletions by calling rec.erase() manually
+            store.setTrackRemoved(false);
             // TODO: Set ID via view.setTreeConfigId() if we're in application
             // edit mode otherwise we'll never reach this block
             var rootNode = Ext.create('MoMo.admin.model.LayerTreeNode',
@@ -261,7 +264,7 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
                             record.get('text')),
             function (btn) {
                 if (btn === 'yes') {
-                    record.remove();
+                    record.erase();
                 }
             }
         );
