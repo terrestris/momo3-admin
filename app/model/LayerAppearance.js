@@ -11,6 +11,9 @@ Ext.define('MoMo.admin.model.LayerAppearance', {
         name: 'name',
         type: 'string'
     }, {
+        name: 'hoverTemplate',
+        type: 'string'
+    }, {
         name: 'attribution',
         type: 'string'
     }, {
