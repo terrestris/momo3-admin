@@ -226,7 +226,6 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
     },
 
     onUploadSucess: function(respObj){
-        Ext.toast('TODO: Implement on Upload success logic.');
         var view = this.getView();
         var coeLayerPanel = view.up('momo-create-or-edit-layer');
         var coeLayerController = coeLayerPanel.getController();
@@ -234,12 +233,12 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         Ext.toast('Successfully uploaded the layer.');
 
         // reload the layer stores
-//        var layerComponents = Ext.ComponentQuery.query(
-//                'momo_tree_managedatalayers, momo_view_layergroupsdataview');
+        var layerComponents = Ext.ComponentQuery.query(
+            'momo_tree_managedatalayers, momo_view_layergroupsdataview, momo-layerlist');
 
-//        Ext.each(layerComponents, function(comp){
-//            comp.getStore().load();
-//        });
+        Ext.each(layerComponents, function(comp){
+            comp.getStore().load();
+        });
 
         coeLayerController.loadLayerData(respObj.data.id);
     },
