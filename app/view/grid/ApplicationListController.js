@@ -32,7 +32,54 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     },
 
     onCopyClick: function() {
-        Ext.toast("Copy application");
+        var view = this.getView();
+        var selection = view.getSelectionModel().getSelection();
+        if (selection.length !== 1) {
+            Ext.Msg.alert(
+                'Error',
+                'Please select a single application before!'
+            );
+            return;
+        }
+        var appId = selection[0].get('id');
+        BasiGX.prompt('Enter a new name for the application to be copied', {
+            fn: function(decision, appName) {
+                if (decision === "ok" && appName !== "") {
+                    view.setLoading(true);
+                    var url = BasiGX.util.Url.getWebProjectBaseUrl() +
+                        'momoapps/copy.action';
+                    Ext.Ajax.request({
+                        url: url,
+                        method: 'POST',
+                        defaultHeaders: BasiGX.util.CSRF.getHeader(),
+                        params: {
+                            appId: appId,
+                            appName: appName
+                        },
+                        success: function(response) {
+                            view.setLoading(false);
+                            if (response && response.status === 201) {
+                                view.getStore().load();
+                                Ext.toast("Application has been copied " +
+                                    "successfull");
+                            } else {
+                                Ext.Msg.alert(
+                                    'Error',
+                                    'Could not copy the application.'
+                                );
+                            }
+                        },
+                        failure: function() {
+                            view.setLoading(false);
+                            Ext.Msg.alert(
+                                'Error',
+                                'Could not copy the application.'
+                            );
+                        }
+                    });
+                }
+            }
+        });
     },
 
     onDeleteClick: function() {
