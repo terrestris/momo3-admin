@@ -15,7 +15,7 @@ Ext.define('MoMo.overrides.Ext.data.proxy.Rest', {
             params;
 
         if (record && !record.phantom) {
-            id = record.getId();
+            id = record.get('id');
         } else {
             id = operation.getId();
         }

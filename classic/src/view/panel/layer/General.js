@@ -7,7 +7,6 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
         'Ext.form.FieldContainer',
 
         'MoMo.admin.view.panel.layer.GeneralController',
-        'MoMo.admin.view.panel.layer.GeneralModel',
 
         'MoMo.admin.view.form.SubmitForm',
         'MoMo.admin.store.Epsg'

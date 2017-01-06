@@ -10,7 +10,6 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
 
         me.setOlMap();
         me.registerOnMapMoveEnd();
-
     },
 
     /**
@@ -19,15 +18,13 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
     setOlMap: function() {
         var me = this,
             view = me.getView(),
-            viewModel = me.getViewModel(),
-            defaultData = viewModel.getData(),
-            zoom = defaultData.mapZoom,
-            x = defaultData.mapCenter.x,
-            y = defaultData.mapCenter.y,
-            projCode = defaultData.mapProjection,
-            olMap;
+            viewModel = view.lookupViewModel(),
+            zoom = viewModel.get('startview').values.zoom,
+            x = viewModel.get('startview').values.center.x,
+            y = viewModel.get('startview').values.center.y,
+            projCode = viewModel.get('startview').values.projection;
 
-        olMap = new ol.Map({
+        var olMap = new ol.Map({
             layers: [
                 new ol.layer.Tile({
                     source: new ol.source.Stamen({
@@ -100,7 +97,7 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
      */
     onMapMoveEnd: function(evt) {
         var me = this,
-            viewModel = me.getViewModel(),
+            viewModel = me.getView().lookupViewModel(),
             map = evt.map,
             mapView = map.getView(),
             mapExtent = mapView.calculateExtent(map.getSize()),
@@ -108,19 +105,19 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
             mapZoom = mapView.getZoom(),
             mapProjection = mapView.getProjection().getCode();
 
-        viewModel.setData({
-            mapExtent: {
-                minX: mapExtent[0],
-                minY: mapExtent[1],
-                maxX: mapExtent[2],
-                maxY: mapExtent[3]
-            },
-            mapCenter: {
+        viewModel.set('startview.mapExtent',{
+            minX: mapExtent[0],
+            minY: mapExtent[1],
+            maxX: mapExtent[2],
+            maxY: mapExtent[3]
+        });
+        viewModel.set('startview.values', {
+            center: {
                 x: mapCenter[0],
                 y: mapCenter[1]
             },
-            mapZoom: mapZoom,
-            mapProjection: mapProjection
+            zoom: mapZoom,
+            projection: mapProjection
         });
 
     },

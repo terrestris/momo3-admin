@@ -5,20 +5,20 @@ Ext.define('MoMo.admin.view.panel.application.General', {
 
     requires: [
         'MoMo.admin.view.panel.application.GeneralController',
-        'MoMo.admin.view.panel.application.GeneralModel',
+//        'MoMo.admin.view.panel.application.GeneralModel',
         'Ext.form.field.ComboBox'
     ],
 
     controller: 'momo-application-general',
 
-    viewModel: {
-        type: 'momo-application-general'
-    },
+//    viewModel: {
+//        type: 'momo-application-general'
+//    },
 
     routeId: 'general',
 
     bind: {
-        title: '{title}'
+        title: '{general.title}'
     },
 
     padding: 20,
@@ -28,7 +28,7 @@ Ext.define('MoMo.admin.view.panel.application.General', {
     items: [{
         xtype: 'fieldset',
         bind: {
-            title: '{title}'
+            title: '{general.title}'
         },
         defaults: {
             width: '100%',
@@ -38,16 +38,16 @@ Ext.define('MoMo.admin.view.panel.application.General', {
             xtype: 'textfield',
             allowBlank: false,
             bind: {
-                fieldLabel: '{nameFieldLabel}',
-                emptyText: '{nameEmptyText}',
-                value: '{appData.name}'
+                fieldLabel: '{general.nameFieldLabel}',
+                emptyText: '{general.nameEmptyText}',
+                value: '{application.name}'
             }
         }, {
             xtype: 'textarea',
             bind: {
-                fieldLabel: '{descriptionFieldLabel}',
-                emptyText: '{descriptionEmptyText}',
-                value: '{appData.description}'
+                fieldLabel: '{general.descriptionFieldLabel}',
+                emptyText: '{general.descriptionEmptyText}',
+                value: '{application.description}'
             }
         }, {
             xtype: 'combo',
@@ -58,15 +58,15 @@ Ext.define('MoMo.admin.view.panel.application.General', {
             forceSelection: true,
             editable: false,
             bind: {
-                fieldLabel: '{languageFieldLabel}',
-                emptyText: '{languageEmptyText}',
-                value: '{appData.language}'
+                fieldLabel: '{general.languageFieldLabel}',
+                emptyText: '{general.languageEmptyText}',
+                value: '{application.language}'
             }
         }, {
             xtype: 'checkbox',
             bind: {
-                fieldLabel: '{publicFieldLabel}',
-                value: '{appData.isPublic}'
+                fieldLabel: '{general.publicFieldLabel}',
+                value: '{application.open}'
             },
             listeners: {
                 change: 'onPublicCheckboxChange'
@@ -75,8 +75,8 @@ Ext.define('MoMo.admin.view.panel.application.General', {
             xtype: 'checkbox',
             checked: true,
             bind: {
-                fieldLabel: '{activeFieldLabel}',
-                value: '{appData.isActive}'
+                fieldLabel: '{general.activeFieldLabel}',
+                value: '{application.active}'
             },
             listeners: {
                 change: 'onActiveCheckboxChange'

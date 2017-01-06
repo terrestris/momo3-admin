@@ -59,7 +59,7 @@ Ext.define('MoMo.admin.view.tree.LayerTree',{
     },
 
     listeners: {
-        afterrender: 'loadStoreData',
+//        afterrender: 'loadStoreData',
         itemcontextmenu: 'onItemContextMenu',
         containercontextmenu: 'onContainerContextMenu',
         beforedrop: 'onBeforeDrop'

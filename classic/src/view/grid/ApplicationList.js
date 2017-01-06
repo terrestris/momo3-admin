@@ -66,34 +66,6 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         flex: 1,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-wrench fa-2x" data-qtip="Interface Settings">' +
-            '</i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
-    },{
-        xtype: 'templatecolumn',
-        flex: 1,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-list fa-2x" data-qtip="Layers Settings"></i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
-    },{
-        xtype: 'templatecolumn',
-        flex: 1,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-users fa-2x" data-qtip="Share Web Map"></i>',
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
-        }
-    },{
-        xtype: 'templatecolumn',
-        flex: 1,
-        align: "center",
-        tdCls: "column-tool",
         tpl: '<i class="fa fa-eye fa-2x" data-qtip="Show Preview"></i>'
     }],
 

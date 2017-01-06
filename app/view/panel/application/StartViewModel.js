@@ -17,20 +17,23 @@ Ext.define('MoMo.admin.view.panel.application.StartViewModel', {
         mapZoomMaxLabel: 'Max',
         mapZoomMinLabel: 'Min',
 
-        mapCenter: {
-            x: 11579292,
-            y: 6095394
-        },
         mapExtent: {
             minX: 0,
             minY: 0,
             maxX: 0,
             maxY: 0
         },
-        mapProjection: 'EPSG:3857',
-        mapZoom: 5,
         mapZoomMax: 28,
-        mapZoomMin: 0
+        mapZoomMin: 0,
+
+        appData: {
+            mapCenter: {
+                x: 11579292,
+                y: 6095394
+            },
+            mapProjection: 'EPSG:3857',
+            mapZoom: 5
+        }
     }
 
 });

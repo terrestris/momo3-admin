@@ -5,21 +5,16 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
 
     requires: [
         'MoMo.admin.view.panel.application.LayerController',
-        'MoMo.admin.view.panel.application.LayerModel',
 
         'MoMo.admin.view.tree.LayerTree'
     ],
 
     controller: 'momo-application-layer',
 
-    viewModel: {
-        type: 'momo-application-layer'
-    },
-
     routeId: 'layer',
 
     bind: {
-        title: '{title}'
+        title: '{layer.title}'
     },
 
     padding: 20,
@@ -29,7 +24,7 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
     items: [{
         xtype: 'fieldset',
         bind: {
-            title: '{title}'
+            title: '{layer.title}'
         },
         layout: {
             type: 'hbox',
@@ -40,7 +35,7 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
             scrollable: 'y',
             flex: 1,
             bind: {
-                title: '{availableLayersGridTitle}'
+                title: '{layer.availableLayersGridTitle}'
             },
             viewConfig: {
                 plugins: {
