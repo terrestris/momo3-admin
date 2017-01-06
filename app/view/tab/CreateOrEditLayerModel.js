@@ -33,7 +33,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
                 timeExtent: 'Zeitraum',
                 start: 'Von',
                 end: 'Bis',
-                epsg: 'Projektionssystem',
+                projection: 'Projektionssystem',
                 format: 'Format',
                 limitations: 'Beschränkungen',
                 onlineResource: 'Online Resource',

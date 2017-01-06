@@ -236,8 +236,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 }, {
                     xtype: 'combobox',
                     name: 'metadata-geography-projection',
+                    labelWidth: 150,
                     bind: {
-                        fieldLabel: '{i18n.metadata.geography.projection}',
+                        fieldLabel: '{i18n.metadata.projection}',
                         value: '{metadata.geography.projection}'
                     },
                     displayField: 'name',

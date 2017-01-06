@@ -9,7 +9,7 @@ Ext.define('MoMo.admin.store.MetadataTopics', {
         type: 'string'
     }],
 
-    data : [ {
+    data : [{
         value : 'administration'
     }, {
         value : 'climate'
