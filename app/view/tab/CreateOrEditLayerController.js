@@ -2,6 +2,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-create-or-edit-layer',
 
+    requires: [
+        'MoMo.admin.util.Metadata'
+    ],
+
     /**
      *
      */
@@ -30,6 +34,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
     loadLayerData: function(layerId){
         var me = this;
         var view = me.getView();
+        var metadataPanel = view.down('momo-layer-metadata');
 
         if (layerId) {
             var viewModel = me.getViewModel();
@@ -40,12 +45,38 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     viewModel.set('layer', record);
                     view.down('momo-panel-style-styler')
                             .setLayerName(record.getSource().get('layerNames'));
+                    var uuid = record.get('metadataIdentifier');
+                    if(uuid){
+                        me.loadMetadata(uuid);
+                    }
                 },
                 failure: function() {
                     Ext.toast('Error loading Layer Data.');
                 }
             });
         }
+    },
+
+    /**
+     * 
+     */
+    loadMetadata: function(uuid){
+        var me = this;
+        var view = me.getView();
+        var viewModel = me.getViewModel();
+        Ext.Ajax.request({
+            url: BasiGX.util.Url.getWebProjectBaseUrl() + 'metadata/csw.action',
+            method: "POST",
+            params: {
+                xml: MoMo.admin.util.Metadata.getLoadXml(uuid)
+            },
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            success: function(response){
+                var responseObj = Ext.decode(response.responseText);
+                var metadataObj = MoMo.admin.util.Metadata.parseMetadataXml(responseObj.data);
+                viewModel.set('metadata', metadataObj);
+            }
+        });
     },
 
     onSaveClick: function() {

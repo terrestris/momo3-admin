@@ -16,6 +16,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
                 abstract: 'Abstract',
                 organisation: 'Organisation',
                 address: 'Anschrift',
+                deliveryPoint: 'Straße und Hausnr.',
+                city: 'Stadt',
+                postalCode: 'Postleitzahl',
+                country: 'Land',
                 website: 'Website',
                 person: 'Verantwortlicher',
                 name: 'Name',
@@ -46,7 +50,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
             title: null,
             abstract: null,
             organisation: {
-                address: null,
+                name: null,
+                address: {
+                    deliveryPoint: null,
+                    city: null,
+                    postalCode: null,
+                    country: null
+                },
                 website: null
             },
             person: {

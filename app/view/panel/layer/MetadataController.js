@@ -7,7 +7,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     ],
 
     /**
-     * 
+     *
      */
     createMetadataEntry: function(){
         var me = this;
@@ -39,12 +39,13 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     },
 
     /**
-     * 
+     *
      */
     updateMetadataEntry: function(){
         var me = this;
         var viewModel = me.getView().lookupViewModel();
-        var uuid = viewModel.get('layer.metadataIdentifier')
+        var layer = viewModel.get('layer');
+        var uuid = layer.get('metadataIdentifier')
         var metadata = viewModel.get('metadata');
 
         // TODO Handle update for layer without metadata UUID

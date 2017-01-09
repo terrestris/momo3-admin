@@ -43,8 +43,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     value: '{metadata.title}'
                 }
             }, {
-                xtype: 'textfield',
+                xtype: 'textarea',
                 name: 'metadata-abstract',
+                maxLength: 2000,
                 bind: {
                     fieldLabel: '{i18n.metadata.abstract}',
                     value: '{metadata.abstract}'
@@ -66,6 +67,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
             }, {
                 xtype: 'datefield',
                 name: 'metadata-referenceDate',
+                format: 'Y-m-d',
                 bind: {
                     fieldLabel: '{i18n.metadata.referenceDate}',
                     value: '{metadata.referenceDate}'
@@ -94,6 +96,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
             }, {
                 xtype: 'textfield',
                 name: 'metadata-dataSource',
+                disabled: true,
                 bind: {
                     fieldLabel: '{i18n.metadata.dataSource}',
                     value: '{metadata.dataSource}'
@@ -101,6 +104,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
             }, {
                 xtype: 'textfield',
                 name: 'metadata-publications',
+                disabled: true,
                 bind: {
                     fieldLabel: '{i18n.metadata.publications}',
                     value: '{metadata.publications}'
@@ -125,18 +129,57 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 },
                 items: [{
                     xtype: 'textfield',
-                    name: 'metadata-organisation-address',
+                    name: 'metadata-organisation-name',
                     bind: {
-                        fieldLabel: '{i18n.metadata.address}',
-                        value: '{metadata.address}'
+                        fieldLabel: '{i18n.metadata.name}',
+                        value: '{metadata.organisation.name}'
                     }
                 }, {
                     xtype: 'textfield',
                     name: 'metadata-organisation-website',
                     bind: {
                         fieldLabel: '{i18n.metadata.website}',
-                        value: '{metadata.website}'
+                        value: '{metadata.organisation.website}'
                     }
+                }, {
+                    xtype: 'fieldset',
+                    name: 'metadata-organisation',
+                    width: '100%',
+                    bind: {
+                        title: '{i18n.metadata.address}'
+                    },
+                    defaults: {
+                        width: '100%'
+                    },
+                    items: [{
+                        xtype: 'textfield',
+                        name: 'metadata-organisation-address-deliveryPoint',
+                        bind: {
+                            fieldLabel: '{i18n.metadata.deliveryPoint}',
+                            value: '{metadata.organisation.address.deliveryPoint}'
+                        }
+                    }, {
+                        xtype: 'textfield',
+                        name: 'metadata-organisation-address-postalCode',
+                        bind: {
+                            fieldLabel: '{i18n.metadata.postalCode}',
+                            value: '{metadata.organisation.address.postalCode}'
+                        }
+                    }, {
+                        xtype: 'textfield',
+                        name: 'metadata-organisation-address-city',
+                        bind: {
+                            fieldLabel: '{i18n.metadata.city}',
+                            value: '{metadata.organisation.address.city}'
+                        }
+                    }, {
+                        xtype: 'textfield',
+                        name: 'metadata-organisation-address-country',
+                        bind: {
+                            fieldLabel: '{i18n.metadata.country}',
+                            value: '{metadata.organisation.address.country}'
+                        }
+                    }]
                 }]
             }, {
                 xtype: 'fieldset',
@@ -153,14 +196,14 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     name: 'metadata-person-name',
                     bind: {
                         fieldLabel: '{i18n.metadata.name}',
-                        value: '{metadata.name}'
+                        value: '{metadata.person.name}'
                     }
                 }, {
                     xtype: 'textfield',
                     name: 'metadata-person-email',
                     bind: {
                         fieldLabel: '{i18n.metadata.email}',
-                        value: '{metadata.email}'
+                        value: '{metadata.person.email}'
                     }
                 }]
             }, {
@@ -176,6 +219,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 items: [{
                     xtype: 'datefield',
                     name: 'metadata-timeExtent-start',
+                    format: 'Y-m-d',
                     bind: {
                         fieldLabel: '{i18n.metadata.start}',
                         value: '{metadata.timeExtent.start}'
@@ -183,6 +227,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 }, {
                     xtype: 'datefield',
                     name: 'metadata-timeExtent-end',
+                    format: 'Y-m-d',
                     bind: {
                         fieldLabel: '{i18n.metadata.end}',
                         value: '{metadata.timeExtent.end}'
