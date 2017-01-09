@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 /**
  * Metadata Util
  *
@@ -39,7 +41,7 @@ Ext.define('MoMo.admin.util.Metadata', {
             },
             timeExtent: {
                 start: 'gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition',
-                end: 'gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition',
+                end: 'gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition'
             },
             format: 'gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gco:CharacterString',
             limitations: 'gmd:metadataConstraints/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString',
@@ -193,9 +195,7 @@ Ext.define('MoMo.admin.util.Metadata', {
          *
          */
         parseMetadataXml: function(xmlString){
-            var obj = Ext.clone(this.keyXpathMapper);
             var xml = this.parseXml(xmlString);
-
             var metadata = {
                 title: this.getTextContentsViaQuerySelector(xml, 'title > CharacterString')[0],
                 abstract: this.getTextContentsViaQuerySelector(xml, 'abstract > CharacterString')[0],
@@ -251,10 +251,10 @@ Ext.define('MoMo.admin.util.Metadata', {
          */
         getTextContentsViaQuerySelector: function(xml, selectorString) {
             if(!xml){
-                throw "No xml document given."
+                throw "No xml document given.";
             }
             if(!selectorString){
-                throw "No selectorString given."
+                throw "No selectorString given.";
             }
 
             var elements = xml.documentElement.querySelectorAll(selectorString);

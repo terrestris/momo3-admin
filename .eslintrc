@@ -12,6 +12,7 @@
         "XLink_1_0": true,
         "ol": true,
         "document": true,
+        "DOMParser": false,
         "FileReader": false,
         "JSZip": true,
         "GeoTIFF": true

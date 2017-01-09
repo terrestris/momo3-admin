@@ -11,7 +11,6 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
      */
     createMetadataEntry: function(){
         var me = this;
-        var layer = me.getView().lookupViewModel().get('layer');
         var xml = MoMo.admin.util.Metadata.getInsertBlankXml();
 
         Ext.Ajax.request({
@@ -28,8 +27,9 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 var uuid;
                 if (response && response.responseText) {
                     responseObj = Ext.decode(response.responseText);
-                    uuid = MoMo.admin.util.Metadata.uuidFromXmlString(responseObj.data);
-                    var layer = me.getView().lookupViewModel().get('layer')
+                    uuid = MoMo.admin.util.Metadata.uuidFromXmlString(
+                            responseObj.data);
+                    var layer = me.getView().lookupViewModel().get('layer');
                     layer.set('metadataIdentifier', uuid);
                     layer.save();
                 }
@@ -45,7 +45,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
         var me = this;
         var viewModel = me.getView().lookupViewModel();
         var layer = viewModel.get('layer');
-        var uuid = layer.get('metadataIdentifier')
+        var uuid = layer.get('metadataIdentifier');
         var metadata = viewModel.get('metadata');
 
         // TODO Handle update for layer without metadata UUID
@@ -60,8 +60,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 },
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 scope: this,
-                success: function(response) {
-                    var uuid = layer.get('metadataIdentifier');
+                success: function() {
                     Ext.toast('Updated MetadataSet with UUID: ' + uuid);
                 }
             });
