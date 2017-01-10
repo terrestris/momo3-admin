@@ -69,6 +69,17 @@ fi
 # Set the ExtJS library as it is not present in the git repository
 $SENCHA_CMD app upgrade $DOWN_DIR/ext-$SENCHA_EXTJS_VERSION
 
+# load the shared files
+# append other needed files here or the build will fail because of different repos
+cd ..
+echo pwd
+mkdir shared
+cd shared
+wget 'https://raw.githubusercontent.com/terrestris/momo3-backend/master/src/main/webapp/shared/Metadata.js'
+cd ..
+cd admin
+echo pwd
+
 # Refresh the app
 $SENCHA_CMD app build
 
