@@ -8,7 +8,10 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
         'MoMo.admin.store.Epsg',
         'MoMo.admin.store.MetadataTopics',
 
-        'MoMo.admin.view.panel.layer.MetadataController'
+        'MoMo.admin.view.panel.layer.MetadataController',
+        'Ext.form.field.Date',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.TextArea'
     ],
 
     controller: 'momo-layer-metadata',
@@ -38,6 +41,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 xtype: 'textfield',
                 name: 'metadata-title',
                 margin: '20px 0 10px 0',
+                allowBlank: false,
                 bind: {
                     fieldLabel: '{i18n.metadata.title}',
                     value: '{metadata.title}'
@@ -46,6 +50,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 xtype: 'textarea',
                 name: 'metadata-abstract',
                 maxLength: 2000,
+                allowBlank: false,
                 bind: {
                     fieldLabel: '{i18n.metadata.abstract}',
                     value: '{metadata.abstract}'
@@ -57,6 +62,8 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 valueField: 'value',
                 anyMatch: true,
                 queryMode: 'local',
+                allowBlank: false,
+                forceSelection: true,
                 bind: {
                     fieldLabel: '{i18n.metadata.topic}',
                     value: '{metadata.topic}'
@@ -68,6 +75,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 xtype: 'datefield',
                 name: 'metadata-referenceDate',
                 format: 'Y-m-d',
+                allowBlank: false,
                 bind: {
                     fieldLabel: '{i18n.metadata.referenceDate}',
                     value: '{metadata.referenceDate}'
@@ -130,6 +138,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 items: [{
                     xtype: 'textfield',
                     name: 'metadata-organisation-name',
+                    allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.name}',
                         value: '{metadata.organisation.name}'
@@ -143,7 +152,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     }
                 }, {
                     xtype: 'fieldset',
-                    name: 'metadata-organisation',
+                    name: 'metadata-organisation-address',
                     width: '100%',
                     bind: {
                         title: '{i18n.metadata.address}'
@@ -154,6 +163,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     items: [{
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-deliveryPoint',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.deliveryPoint}',
                             value: '{metadata.organisation.address.deliveryPoint}'
@@ -161,6 +171,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     }, {
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-postalCode',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.postalCode}',
                             value: '{metadata.organisation.address.postalCode}'
@@ -168,6 +179,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     }, {
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-city',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.city}',
                             value: '{metadata.organisation.address.city}'
@@ -175,6 +187,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     }, {
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-country',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.country}',
                             value: '{metadata.organisation.address.country}'
@@ -194,6 +207,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 items: [{
                     xtype: 'textfield',
                     name: 'metadata-person-name',
+                    allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.name}',
                         value: '{metadata.person.name}'
@@ -201,6 +215,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 }, {
                     xtype: 'textfield',
                     name: 'metadata-person-email',
+                    allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.email}',
                         value: '{metadata.person.email}'
@@ -220,6 +235,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     xtype: 'datefield',
                     name: 'metadata-timeExtent-start',
                     format: 'Y-m-d',
+                    allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.start}',
                         value: '{metadata.timeExtent.start}'
@@ -228,6 +244,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     xtype: 'datefield',
                     name: 'metadata-timeExtent-end',
                     format: 'Y-m-d',
+                    allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.end}',
                         value: '{metadata.timeExtent.end}'
@@ -255,24 +272,28 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     },
                     items: [{
                         name: 'metadata-extent-minX',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.minX}',
                             value: '{metadata.geography.extent.minX}'
                         }
                     }, {
                         name: 'metadata-extent-minY',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.minY}',
                             value: '{metadata.geography.extent.minY}'
                         }
                     }, {
                         name: 'metadata-extent-maxX',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.maxX}',
                             value: '{metadata.geography.extent.maxX}'
                         }
                     }, {
                         name: 'metadata-extent-maxY',
+                        allowBlank: false,
                         bind: {
                             fieldLabel: '{i18n.metadata.maxY}',
                             value: '{metadata.geography.extent.maxY}'
@@ -282,6 +303,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     xtype: 'combobox',
                     name: 'metadata-geography-projection',
                     labelWidth: 150,
+                    allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.projection}',
                         value: '{metadata.geography.projection}'

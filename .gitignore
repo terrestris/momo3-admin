@@ -14,6 +14,8 @@ build/
 ext/
 packages/
 classic.json
+classic.jsonp
+bootstrap.jsonp
 sass/example/example.css
 sass/example/bootstrap.json
 sass/example/bootstrap.js
