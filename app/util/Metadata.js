@@ -187,8 +187,12 @@ Ext.define('MoMo.admin.util.Metadata', {
          */
         uuidFromXmlString: function(xmlString){
             var xml = this.parseXml(xmlString);
-            var identifierNode = xml.getElementsByTagName('identifier')[0];
-            return identifierNode.innerHTML;
+            var identifierNodes = xml.getElementsByTagName('identifier');
+            var uuid;
+            if(!Ext.isEmpty(identifierNodes) && identifierNodes[0].innerHTML){
+                uuid = identifierNodes[0].innerHTML;
+            }
+            return uuid;
         },
 
         /**
@@ -258,7 +262,11 @@ Ext.define('MoMo.admin.util.Metadata', {
             }
 
             var elements = xml.documentElement.querySelectorAll(selectorString);
-            return Ext.Array.pluck(elements, "textContent");
+            if(!Ext.isEmpty(elements)){
+                return Ext.Array.pluck(elements, "textContent");
+            } else {
+                return null;
+            }
         }
     }
 

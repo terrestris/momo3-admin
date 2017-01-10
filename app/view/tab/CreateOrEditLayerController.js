@@ -74,6 +74,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 var metadataObj = MoMo.admin.util.Metadata.parseMetadataXml(
                         responseObj.data);
                 viewModel.set('metadata', metadataObj);
+            },
+            failure: function(){
+                Ext.toast('Warning: Couldn\'t load Metadata for layer.');
             }
         });
     },

@@ -34,6 +34,9 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                     layer.save();
                 }
                 Ext.toast('Createad MetadataSet with UUID: ' + uuid);
+            },
+            failure: function(){
+                Ext.toast('Error: Couldn\'t create MetadaSet');
             }
         });
     },
@@ -62,6 +65,9 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 scope: this,
                 success: function() {
                     Ext.toast('Updated MetadataSet with UUID: ' + uuid);
+                },
+                failure: function(){
+                    Ext.toast('Error: Couldn\'t update MetadaSet');
                 }
             });
         }
