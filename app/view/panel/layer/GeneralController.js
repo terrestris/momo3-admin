@@ -229,6 +229,8 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var view = this.getView();
         var coeLayerPanel = view.up('momo-create-or-edit-layer');
         var coeLayerController = coeLayerPanel.getController();
+        var metadataPanel = coeLayerPanel.down('momo-layer-metadata');
+        var metadataController = metadataPanel.getController();
 
         Ext.toast('Successfully uploaded the layer.');
 
@@ -240,6 +242,10 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             comp.getStore().load();
         });
 
+        //Create MetadataEntry
+        metadataController.createMetadataEntry(respObj);
+
+        //Load newly created Layerdata
         coeLayerController.loadLayerData(respObj.data.id);
     },
 

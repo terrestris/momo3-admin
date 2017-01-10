@@ -16,9 +16,6 @@ Ext.define('MoMo.admin.model.Layer', {
         name: 'name',
         type: 'string'
     }, {
-        name: 'type',
-        type: 'string'
-    }, {
         name: 'hoverable',
         type: 'string'
     },{
@@ -33,6 +30,9 @@ Ext.define('MoMo.admin.model.Layer', {
             type: 'LayerSource',
             unique: true
         }
+    }, {
+        name: 'metadataIdentifier',
+        type: 'string'
     }, {
         name: 'appearanceId',
         reference: {

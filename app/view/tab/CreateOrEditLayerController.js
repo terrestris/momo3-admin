@@ -2,6 +2,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-create-or-edit-layer',
 
+    requires: [
+        'MoMo.admin.util.Metadata'
+    ],
+
     /**
      *
      */
@@ -40,6 +44,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     viewModel.set('layer', record);
                     view.down('momo-panel-style-styler')
                             .setLayerName(record.getSource().get('layerNames'));
+                    var uuid = record.get('metadataIdentifier');
+                    if(uuid){
+                        me.loadMetadata(uuid);
+                    }
                 },
                 failure: function() {
                     Ext.toast('Error loading Layer Data.');
@@ -48,12 +56,38 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
         }
     },
 
+    /**
+     *
+     */
+    loadMetadata: function(uuid){
+        var me = this;
+        var viewModel = me.getViewModel();
+        Ext.Ajax.request({
+            url: BasiGX.util.Url.getWebProjectBaseUrl() + 'metadata/csw.action',
+            method: "POST",
+            params: {
+                xml: MoMo.admin.util.Metadata.getLoadXml(uuid)
+            },
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            success: function(response){
+                var responseObj = Ext.decode(response.responseText);
+                var metadataObj = MoMo.admin.util.Metadata.parseMetadataXml(
+                        responseObj.data);
+                viewModel.set('metadata', metadataObj);
+            },
+            failure: function(){
+                Ext.toast('Warning: Couldn\'t load Metadata for layer.');
+            }
+        });
+    },
+
     onSaveClick: function() {
         var me = this;
         var allFieldsValid = me.validateFields();
         var view = me.getView();
         var viewModel = me.getViewModel();
         var stylerPanel = view.down('momo-panel-style-styler');
+        var metadataPanel = view.down('momo-layer-metadata');
         var layer = viewModel.get('layer');
         var appearance = layer.getAppearance();
 
@@ -65,6 +99,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     'raster') {
                 var stylerPanelCtrl = stylerPanel.getController();
                 stylerPanelCtrl.applyAndSave();
+            }
+
+            if (Ext.isEmpty(layer.get('metadataIdentifier'))){
+                // TODO Handle update for layer without metadata UUID
+                metadataPanel.getController().createMetadataEntry();
+            } else {
+                metadataPanel.getController().updateMetadataEntry();
             }
 
             if (layer && layer.getId()) {
