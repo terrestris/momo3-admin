@@ -174,10 +174,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 // set active tab where validation failed
                 var invalidPanel = field.up('panel[xtype^=momo\-layer\-]');
                 invalidPanel.up().setActiveTab(invalidPanel);
-
-                return false; // -> break Ext.each
             }
         });
+
         return valid;
     }
 
