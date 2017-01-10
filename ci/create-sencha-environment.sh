@@ -71,7 +71,7 @@ $SENCHA_CMD app upgrade $DOWN_DIR/ext-$SENCHA_EXTJS_VERSION
 
 # load the shared files
 # append other needed files here or the build will fail because of different repos
-cd ..
+cd ../..
 pwd
 mkdir shared
 cd shared
