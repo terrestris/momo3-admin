@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     alias: 'controller.momo-layer-metadata',
 
     requires: [
-        'MoMo.admin.util.Metadata'
+        'MoMo.shared.MetadataUtil'
     ],
 
     /**
@@ -11,7 +11,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
      */
     createMetadataEntry: function(){
         var me = this;
-        var xml = MoMo.admin.util.Metadata.getInsertBlankXml();
+        var xml = MoMo.shared.MetadataUtil.getInsertBlankXml();
 
         Ext.Ajax.request({
             url: BasiGX.util.Url.getWebProjectBaseUrl() +
@@ -27,7 +27,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 var uuid;
                 if (response && response.responseText) {
                     responseObj = Ext.decode(response.responseText);
-                    uuid = MoMo.admin.util.Metadata.uuidFromXmlString(
+                    uuid = MoMo.shared.MetadataUtil.uuidFromXmlString(
                             responseObj.data);
                     var layer = me.getView().lookupViewModel().get('layer');
                     layer.set('metadataIdentifier', uuid);
@@ -53,7 +53,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
 
         // TODO Handle update for layer without metadata UUID
         if(uuid && metadata){
-            var xml = MoMo.admin.util.Metadata.getUpdateXml(uuid, metadata);
+            var xml = MoMo.shared.MetadataUtil.getUpdateXml(uuid, metadata);
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                 'metadata/csw.action',

@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
     alias: 'controller.momo-create-or-edit-layer',
 
     requires: [
-        'MoMo.admin.util.Metadata'
+        'MoMo.shared.MetadataUtil'
     ],
 
     /**
@@ -66,12 +66,12 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             url: BasiGX.util.Url.getWebProjectBaseUrl() + 'metadata/csw.action',
             method: "POST",
             params: {
-                xml: MoMo.admin.util.Metadata.getLoadXml(uuid)
+                xml: MoMo.shared.MetadataUtil.getLoadXml(uuid)
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             success: function(response){
                 var responseObj = Ext.decode(response.responseText);
-                var metadataObj = MoMo.admin.util.Metadata.parseMetadataXml(
+                var metadataObj = MoMo.shared.MetadataUtil.parseMetadataXml(
                         responseObj.data);
                 viewModel.set('metadata', metadataObj);
             },
