@@ -15,10 +15,15 @@ ext/
 packages/
 classic.json
 classic.jsonp
+modern.json
+bootstrap.js
+bootstrap.css
 bootstrap.jsonp
 sass/example/example.css
 sass/example/bootstrap.json
+sass/example/bootstrap.jsonp
 sass/example/bootstrap.js
+index.html
 
 # Coverage
 .instrumented/
