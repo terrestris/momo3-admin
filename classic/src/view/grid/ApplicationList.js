@@ -17,7 +17,11 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     },
 
     store: {
-        type: 'applications'
+        type: 'applications',
+        sorters: [{
+            property: 'name',
+            direction: 'ASC'
+        }]
     },
 
     bind: {
