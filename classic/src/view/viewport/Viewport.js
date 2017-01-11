@@ -10,7 +10,10 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         'MoMo.admin.view.container.MainContainer',
         'MoMo.admin.view.grid.ApplicationList',
         'MoMo.admin.view.grid.LayerList',
-        'MoMo.admin.view.grid.UserList'
+        'MoMo.admin.view.grid.UserList',
+        'MoMo.admin.view.button.translation.ToMongolian',
+        'MoMo.admin.view.button.translation.ToGerman',
+        'MoMo.admin.view.button.translation.ToEnglish'
     ],
 
     controller: 'momo-mainviewport',
@@ -48,11 +51,19 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
             xtype: 'tbspacer',
             flex: 1
         }, {
+            xtype: 'momo-translation-de-button'
+        }, {
+            xtype: 'momo-translation-en-button'
+        }, {
+            xtype: 'momo-translation-mn-button'
+        }, {
+            xtype: 'button',
             cls: 'delete-focus-bg',
-            iconCls: 'x-fa fa-th-large',
-            href: '#profile',
-            hrefTarget: '_self',
-            tooltip: 'See your profile'
+            iconCls: 'x-fa fa-power-off',
+            bind: {
+                tooltip: '{i18n.logoutTitle}'
+            },
+            handler: 'logOut'
         }, {
             xtype: 'tbtext',
             cls: 'header-toolbar-text',
