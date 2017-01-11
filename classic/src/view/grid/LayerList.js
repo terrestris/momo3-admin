@@ -17,7 +17,11 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     },
 
     store: {
-        type: 'layers'
+        type: 'layers',
+        sorters: [{
+            property: 'name',
+            direction: 'ASC'
+        }]
     },
 
     config: {

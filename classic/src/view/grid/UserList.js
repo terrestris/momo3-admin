@@ -17,7 +17,11 @@ Ext.define('MoMo.admin.view.grid.UserList',{
     },
 
     store: {
-        type: 'users'
+        type: 'users',
+        sorters: [{
+            property: 'lastName',
+            direction: 'ASC'
+        }]
     },
 
     bind: {
