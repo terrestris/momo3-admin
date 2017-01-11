@@ -59,6 +59,36 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         });
     },
 
+    /**
+     *
+     */
+    logOut: function(){
+        var me = this;
+        var view = me.getView();
+        var viewModel = view.getViewModel();
+        Ext.MessageBox.confirm(viewModel.get('i18n.logoutTitle'),
+            viewModel.get('i18n.logoutMessage'),
+            function(confirmed){
+                if(confirmed === "yes"){
+                    Ext.Ajax.request({
+                        url: BasiGX.util.Url.getWebProjectBaseUrl() + 'logout',
+                        method: "POST",
+                        headers: BasiGX.util.CSRF.getHeader(),
+                        scope: me,
+                        success: function() {
+                            location.href = BasiGX.util.Url
+                                .getWebProjectBaseUrl() + "login/";
+                        },
+                        failure: function() {
+                            location.href = BasiGX.util.Url
+                                .getWebProjectBaseUrl() + "login/";
+                        }
+                    });
+                }
+            }
+        );
+    },
+
     switchToView: function(node, id) {
         var refs = this.getReferences(),
             mainCard = refs.mainCardPanel,

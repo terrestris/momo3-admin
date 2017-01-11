@@ -157,3 +157,13 @@ $wizard-button-background-color: #579ddb;
         color: #cccccc;
     }
 }
+
+/**
+ * The ui config for 'momo-header-tools' (login/logout, show docs, translation btns);
+ */
+@include extjs-button-small-ui(
+    $ui: 'momo-header-tools',
+    $background-color: $main-2nd-color,
+    $border-color:darken($main-2nd-color, 5%),
+    $border-radius:5px
+);
