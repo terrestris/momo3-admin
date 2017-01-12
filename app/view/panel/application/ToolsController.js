@@ -22,8 +22,8 @@ Ext.define('MoMo.admin.view.panel.application.ToolsController', {
                 };
                 if(!application.get('id')){
                     if(!Ext.Array.contains(
-                        application.data.activeTools, rec.get('id'))){
-                            application.data.activeTools.push(rec.get('id'));
+                            application.data.activeTools, rec.get('id'))){
+                        application.data.activeTools.push(rec.get('id'));
                     }
                 }
                 if(Ext.Array.contains(

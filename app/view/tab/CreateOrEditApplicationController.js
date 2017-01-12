@@ -6,7 +6,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     ],
 
     /**
-     * 
+     *
      */
     onAfterRender: function() {
         var me = this;
@@ -29,7 +29,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     onHide: function(){
         var me = this;
         var viewModel = me.getViewModel();
-        viewModel.set('application', Ext.create('MoMo.admin.model.Application'));
+        viewModel.set('application', Ext.create(
+                'MoMo.admin.model.Application'));
     },
 
     /**
