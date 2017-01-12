@@ -9,6 +9,70 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
+    onBoxReady: function(){
+        this.prefillEmptyFields();
+    },
+
+    /**
+     *
+     */
+    prefillEmptyFields: function(){
+        var view = this.getView();
+        var viewModel = view.lookupViewModel();
+        var title = viewModel.get('metadata.title');
+        var personName = viewModel.get('metadata.person.name');
+        var email = viewModel.get('metadata.person.email');
+        var extent = viewModel.get('metadata.geography.extent');
+
+        if(Ext.isEmpty(title)) {
+            viewModel.set('metadata.title', viewModel.get('layer.name'));
+        }
+
+        if(Ext.isEmpty(personName)) {
+            viewModel.set('metadata.person.name',
+                    viewModel.get('user.fullName'));
+        }
+
+        if(Ext.isEmpty(email)) {
+            viewModel.set('metadata.person.email', viewModel.get('user.email'));
+        }
+
+        if(Ext.isEmpty(extent.maxX) && Ext.isEmpty(extent.minX) &&
+                Ext.isEmpty(extent.maxY) && Ext.isEmpty(extent.minY)){
+            view.setLoading(true);
+            Ext.Ajax.request({
+                url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                        'momolayers/getLayerExtent.action?layerId=' +
+                        viewModel.get('layer.id'),
+                success: function(response) {
+                    var obj = Ext.decode(response.responseText);
+                    if (obj.success && obj.data) {
+                        var layerExtent = obj.data.split(",");
+                        var minX = parseFloat(layerExtent[0]);
+                        var minY = parseFloat(layerExtent[1]);
+                        var maxX = parseFloat(layerExtent[2]);
+                        var maxY = parseFloat(layerExtent[3]);
+
+                        viewModel.set('metadata.geography.extent',{
+                            minX: minX,
+                            minY: minY,
+                            maxX: maxX,
+                            maxY: maxY
+                        });
+                        view.setLoading(false);
+                    }
+                },
+                failure: function(response) {
+                    Ext.raise('server-side failure with status code ' +
+                        response.status);
+                }
+            });
+        }
+    },
+
+    /**
+     *
+     */
     createMetadataEntry: function(){
         var me = this;
         var xml = MoMo.shared.MetadataUtil.getInsertBlankXml();
