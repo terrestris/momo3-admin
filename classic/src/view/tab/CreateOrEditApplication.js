@@ -9,6 +9,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
         'MoMo.admin.view.panel.application.General',
         'MoMo.admin.view.panel.application.Layout',
         'MoMo.admin.view.panel.application.Layer',
+        'MoMo.admin.view.panel.application.Tools',
         'MoMo.admin.view.panel.application.StartView'
     ],
 
@@ -48,6 +49,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
     }, {
         xtype: 'momo-application-layout',
         disabled: true
+    }, {
+        xtype: 'momo-application-tools'
     }, {
         xtype: 'momo-application-start-view'
     }, {

@@ -174,6 +174,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             language: application.get('language'),
             isPublic: application.get('open'),
             isActive: application.get('active'),
+            activeTools: application.get('activeTools'),
             projection: startView.projection,
             center: {
                 x: startView.center.x,

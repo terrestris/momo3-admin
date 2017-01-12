@@ -67,6 +67,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
                 projection: 'EPSG:3857',
                 zoom: 5
             }
+        },
+        tools: {
+            title: 'Werkzeuge'
         }
     }
 

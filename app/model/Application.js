@@ -15,6 +15,15 @@ Ext.define('MoMo.admin.model.Application', {
                 }
                 return data;
             }
+        },
+        reader: {
+            type: 'json',
+            transform: function(data) {
+                if(data.activeTools){
+                    data.activeTools = Ext.Array.pluck(data.activeTools, 'id');
+                }
+                return data;
+            }
         }
     },
 
@@ -49,6 +58,9 @@ Ext.define('MoMo.admin.model.Application', {
             return BasiGX.util.Url.getWebProjectBaseUrl() +
                 'client/?id=' + data.id;
         }
+    }, {
+        name: 'activeTools',
+        type: 'auto'
     }]
 
 });
