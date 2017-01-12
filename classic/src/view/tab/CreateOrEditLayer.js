@@ -44,9 +44,15 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
     items: [{
         xtype: 'momo-layer-general'
     }, {
-        xtype: 'momo-layer-metadata'
+        xtype: 'momo-layer-metadata',
+        bind: {
+            disabled: '{isNewLayer}'
+        }
     }, {
-        xtype: 'momo-layer-style'
+        xtype: 'momo-layer-style',
+        bind: {
+            disabled: '{isNewLayer}'
+        }
     }],
 
     listeners: {

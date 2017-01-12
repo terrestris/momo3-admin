@@ -24,6 +24,10 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
 
     padding: 20,
 
+    listeners: {
+        boxReady: 'onBoxReady'
+    },
+
     items: [{
         xtype: 'fieldset',
         title: 'Metadata',
