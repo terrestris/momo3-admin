@@ -5,6 +5,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         'BasiGX.util.Object'
     ],
 
+    /**
+     * 
+     */
     onAfterRender: function() {
         var me = this;
         var view = me.getView();
@@ -17,6 +20,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             layerTreePanel.getController().loadStoreData();
         }
 
+    },
+
+    /**
+     * Cleanup Applicationdata to avoid artifacts when navigating through the
+     * admin frontend.
+     */
+    onHide: function(){
+        var me = this;
+        var viewModel = me.getViewModel();
+        viewModel.set('application', Ext.create('MoMo.admin.model.Application'));
     },
 
     /**

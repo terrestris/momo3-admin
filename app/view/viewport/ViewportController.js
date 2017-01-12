@@ -96,15 +96,22 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
             viewToCreate = this.componentMap[node],
             newView;
 
-        // TODO CREATE ?
-        newView = Ext.create(viewToCreate, {
-            // if in edit mode we pass the entityId to our createOrEdit view
-            entityId: id ? parseInt(id, 10) : null
-        });
+        var existingViews = Ext.ComponentQuery.query(
+                "[$className=" + viewToCreate + "]");
 
-        Ext.suspendLayouts();
-        mainLayout.setActiveItem(mainCard.add(newView));
-        Ext.resumeLayouts(true);
+        if(!Ext.isEmpty(existingViews)){
+            mainLayout.setActiveItem(existingViews[0]);
+        } else {
+            // TODO CREATE ?
+            newView = Ext.create(viewToCreate, {
+                // if in edit mode we pass the entityId to our createOrEdit view
+                entityId: id ? parseInt(id, 10) : null
+            });
+            Ext.suspendLayouts();
+            mainLayout.setActiveItem(mainCard.add(newView));
+            Ext.resumeLayouts(true);
+        }
+
     },
 
     setCurrentView: function(hashTag) {

@@ -27,8 +27,16 @@ Ext.define('MoMo.admin.view.panel.application.Tools', {
         items: []
     }],
 
-    listeners: {
-        boxReady: 'onBoxReady'
+    initComponent: function(){
+        this.callParent();
+        var me = this;
+        this.store = Ext.create('MoMo.admin.store.Tools', {
+            autoLoad: true,
+            listeners: {
+                scope: me,
+                load: me.getController().createToolButtons
+            }
+        });
     }
 
 });
