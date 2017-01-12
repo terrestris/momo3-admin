@@ -7,22 +7,11 @@ Ext.define('MoMo.admin.view.panel.application.ToolsController', {
         'MoMo.admin.view.button.ToolToggle'
     ],
 
-    onBoxReady: function() {
-        var me = this;
-        this.store = Ext.create('MoMo.admin.store.Tools', {
-            autoLoad: true,
-            listeners: {
-                scope: me,
-                load: me.createToolButtons
-            }
-        });
-    },
-
     createToolButtons: function(store, recs) {
-        var me = this;
-        var viewModel = me.getView().lookupViewModel();
+        var view = this;
+        var viewModel = view.lookupViewModel();
         var application = viewModel.get('application');
-        var fieldset = me.getView().down('fieldset');
+        var fieldset = view.down('fieldset');
         Ext.each(recs, function(rec) {
             if(rec.data.properties.ui === 'momo-tools') {
                 var btn = {
@@ -31,8 +20,14 @@ Ext.define('MoMo.admin.view.panel.application.ToolsController', {
                     tooltip: rec.get('name'),
                     toolId: rec.get('id')
                 };
-                if(Ext.Array.contains(application.data.activeTools,
-                        rec.get('id'))) {
+                if(!application.get('id')){
+                    if(!Ext.Array.contains(
+                            application.data.activeTools, rec.get('id'))){
+                        application.data.activeTools.push(rec.get('id'));
+                    }
+                }
+                if(Ext.Array.contains(
+                        application.data.activeTools, rec.get('id'))) {
                     btn.pressed = true;
                 }
                 fieldset.add(btn);

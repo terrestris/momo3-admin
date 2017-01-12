@@ -60,7 +60,8 @@ Ext.define('MoMo.admin.model.Application', {
         }
     }, {
         name: 'activeTools',
-        type: 'auto'
+        type: 'auto',
+        defaultValue: []
     }]
 
 });

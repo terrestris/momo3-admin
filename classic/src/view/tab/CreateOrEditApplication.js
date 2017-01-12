@@ -46,10 +46,12 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
 
     items: [{
         xtype: 'momo-application-general'
-    }, {
-        xtype: 'momo-application-layout',
-        disabled: true
-    }, {
+    },
+//    {
+//        xtype: 'momo-application-layout',
+//        disabled: true
+//    },
+    {
         xtype: 'momo-application-tools'
     }, {
         xtype: 'momo-application-start-view'
@@ -58,7 +60,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
     }],
 
     listeners: {
-        boxready: 'onAfterRender'
+        boxready: 'onAfterRender',
+        hide: 'onHide'
     }
 
 });
