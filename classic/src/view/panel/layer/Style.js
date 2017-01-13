@@ -9,7 +9,9 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
 
     routeId: 'style',
 
-    title: 'Style', // TODO use title formula from viewmodel
+    bind: {
+        title: '{i18n.style.title}'
+    },
 
     scrollable: 'y',
 
@@ -17,7 +19,9 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
 
     items: [{
         xtype: 'fieldset',
-        title: 'Generate Style for Layer',
+        bind: {
+            title: '{i18n.style.fieldsetTitle}'
+        },
         items: [{
             xtype: 'momo-panel-style-styler',
             bind: {

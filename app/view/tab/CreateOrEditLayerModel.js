@@ -11,6 +11,18 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
         i18n: {
             cancelBtnText: 'Cancel',
             saveBtnText: 'Save',
+            general: {
+                generalTitle: 'General',
+                layerName: 'Name',
+                layerNameEmptyText: 'Enter a layer name',
+                fileUploadFieldLabel: 'File',
+                fileUploadEmptyText: '*.zip',
+                fileUpladButtonText: 'Upload',
+                layerDescription: 'Layer Description',
+                layerOpacity: 'Layer Opacity',
+                hoverTemplate: 'Hover Template',
+                availableAttributes: 'Available Attributes'
+            },
             metadata: {
                 title: 'Titel',
                 abstract: 'Abstract',
@@ -42,6 +54,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
                 onlineResource: 'Online Resource',
                 dataSource: 'Quelle',
                 publications: 'Publikationen'
+            },
+            style: {
+                title: 'Style',
+                fieldsetTitle: 'Generate Style for Layer'
             }
         },
 

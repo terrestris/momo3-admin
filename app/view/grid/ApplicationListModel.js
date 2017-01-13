@@ -3,6 +3,10 @@ Ext.define('MoMo.admin.view.grid.ApplicationListModel', {
     alias: 'viewmodel.momo-applicationlist',
 
     data: {
-        title: 'All applications'
+        title: 'All applications',
+        createApp: 'Create',
+        copyApp: 'Copy',
+        deleteApp: 'Delete',
+        filterByName: 'Filter by name'
     }
 });

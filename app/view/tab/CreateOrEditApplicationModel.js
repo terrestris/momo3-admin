@@ -38,6 +38,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
             availableModulesDescription: 'Select a model to see its description'
         },
         startview: {
+            projectionTitle: 'Projection',
             title: 'Startview',
             mapCenterTitle: 'Center',
             mapExtentTitle: 'Extent',
