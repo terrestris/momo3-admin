@@ -505,11 +505,15 @@ Ext.define('MoMo.admin.util.Sld', {
             if(olSymbolizer.getImage() instanceof ol.style.Circle){
                 var fillColor = BasiGX.util.Color.rgbaToHex(
                         olSymbolizer.getImage().getFill().getColor());
+                var fillOpacity = BasiGX.util.Color.rgbaAsArray(
+                        olSymbolizer.getImage().getFill().getColor())[4];
                 var radius = olSymbolizer.getImage().getRadius().toString();
                 var strokeColor = BasiGX.util.Color.rgbaToHex(
                         olSymbolizer.getImage().getStroke().getColor());
                 var strokeWidth = olSymbolizer.getImage().getStroke()
                         .getWidth().toString();
+                var strokeOpacity = BasiGX.util.Color.rgbaAsArray(
+                        olSymbolizer.getImage().getStroke().getColor())[4];
 
                 sldSymbolizer.value.graphic.externalGraphicOrMark = [{
                     TYPE_NAME: "SLD_1_0_0.Mark",
@@ -523,6 +527,10 @@ Ext.define('MoMo.admin.util.Sld', {
                             TYPE_NAME: "SLD_1_0_0.CssParameter",
                             name: "fill",
                             content: [fillColor]
+                        }, {
+                            TYPE_NAME: "SLD_1_0_0.CssParameter",
+                            name: "fill-opacity",
+                            content: [fillOpacity]
                         }]
                     },
                     stroke: {
@@ -535,6 +543,10 @@ Ext.define('MoMo.admin.util.Sld', {
                             TYPE_NAME: "SLD_1_0_0.CssParameter",
                             name: "stroke-width",
                             content: [strokeWidth]
+                        }, {
+                            TYPE_NAME: "SLD_1_0_0.CssParameter",
+                            name: "stroke-opacity",
+                            content: [strokeOpacity]
                         }]
                     }
                 }];
@@ -566,10 +578,14 @@ Ext.define('MoMo.admin.util.Sld', {
         polygonSymbolizerToSld: function(olSymbolizer){
             var fillColor = BasiGX.util.Color.rgbaToHex(
                     olSymbolizer.getFill().getColor());
+            var fillOpacity = BasiGX.util.Color.rgbaAsArray(
+                    olSymbolizer.getFill().getColor())[4];
             var strokeColor = BasiGX.util.Color.rgbaToHex(
                     olSymbolizer.getStroke().getColor());
             var strokeWidth = olSymbolizer.getStroke()
                     .getWidth().toString();
+            var strokeOpacity = BasiGX.util.Color.rgbaAsArray(
+                    olSymbolizer.getStroke().getColor())[4];
 
             var sldSymbolizer = {
                 name: {
@@ -591,7 +607,7 @@ Ext.define('MoMo.admin.util.Sld', {
                         }, {
                             TYPE_NAME: "SLD_1_0_0.CssParameter",
                             name: "fill-opacity",
-                            content: ["1"]
+                            content: [fillOpacity]
                         }]
                     },
                     stroke: {
@@ -604,6 +620,10 @@ Ext.define('MoMo.admin.util.Sld', {
                             TYPE_NAME: "SLD_1_0_0.CssParameter",
                             name: "stroke-width",
                             content: [strokeWidth]
+                        }, {
+                            TYPE_NAME: "SLD_1_0_0.CssParameter",
+                            name: "stroke-opacity",
+                            content: [strokeOpacity]
                         }]
                     }
                 }
@@ -616,6 +636,9 @@ Ext.define('MoMo.admin.util.Sld', {
                     olSymbolizer.getStroke().getColor());
             var strokeWidth = olSymbolizer.getStroke()
                     .getWidth().toString();
+            var strokeOpacity = BasiGX.util.Color.rgbaAsArray(
+                    olSymbolizer.getStroke().getColor())[4];
+
             var sldSymbolizer = {
                 name: {
                     namespaceURI: "http://www.opengis.net/sld",
@@ -637,6 +660,10 @@ Ext.define('MoMo.admin.util.Sld', {
                             TYPE_NAME: "SLD_1_0_0.CssParameter",
                             name: "stroke-width",
                             content: [strokeWidth]
+                        }, {
+                            TYPE_NAME: "SLD_1_0_0.CssParameter",
+                            name: "stroke-opacity",
+                            content: [strokeOpacity]
                         }]
                     }
                 }
