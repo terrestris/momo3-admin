@@ -5,17 +5,12 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
 
     requires: [
         'MoMo.admin.view.panel.application.StartViewController',
-//        'MoMo.admin.view.panel.application.StartViewModel',
         'Ext.form.field.ComboBox',
 
         'GeoExt.component.Map'
     ],
 
     controller: 'momo-application-start-view',
-
-//    viewModel: {
-//        type: 'momo-application-start-view'
-//    },
 
     routeId: 'start-view',
 
@@ -66,7 +61,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
             },
             items: [{
                 bind: {
-                    title: 'Projection'
+                    title: '{startview.projectionTitle}'
                 },
                 items: [{
                     xtype: 'combo',
@@ -80,7 +75,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     columnWidth: 1,
                     queryMode: 'local',
                     bind: {
-                        fieldLabel: 'Projection',
+                        fieldLabel: '{startview.projectionTitle}',
                         value: '{startview.values.projection}'
                     },
                     listeners: {

@@ -3,6 +3,9 @@ Ext.define('MoMo.admin.view.grid.UserListModel', {
     alias: 'viewmodel.momo-userlist',
 
     data: {
-        title: 'All users'
+        title: 'All users',
+        createUser: 'Create',
+        deleteUser: 'Delete',
+        filterByName: 'Filter by name'
     }
 });

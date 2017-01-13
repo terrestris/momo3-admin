@@ -100,7 +100,9 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     tbar: [{
         xtype: 'button',
         name: 'create-layer-button',
-        text: 'Create',
+        bind: {
+            text: '{createLayer}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-plus fa-2x',
@@ -108,7 +110,9 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     }, {
         xtype: 'button',
         name: 'delete-layer-button',
-        text: 'Delete',
+        bind: {
+            text: '{deleteLayer}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-minus fa-2x',
@@ -116,7 +120,9 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     }, '->', {
         xtype: 'textfield',
         name: 'filter-layer-list-field',
-        fieldLabel: 'Filter by name',
+        bind: {
+            fieldLabel: '{filterByName}'
+        },
         labelWidth: undefined,
         triggers: {
             clear: {

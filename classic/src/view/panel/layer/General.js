@@ -16,7 +16,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
 
     routeId: 'general',
 
-    title: 'General', // TODO use title formula from viewmodel
+    bind: {
+        title: '{i18n.general.generalTitle}'
+    },
 
     scrollable: 'y',
 
@@ -24,7 +26,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
 
     items: [{
         xtype: 'fieldset',
-        title: 'General',
+        bind: {
+            title: '{i18n.general.generalTitle}'
+        },
         layout: 'column',
         scrollable: 'y',
         items: [{
@@ -32,14 +36,14 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
             columnWidth: 0.5,
             items: [{
                 xtype: 'textfield',
-                allowBlank: false,
-                fieldLabel: 'Name',
-                emptyText: 'Enter a layer name',
-                name: 'layerName',
-                width: '100%',
                 bind: {
-                    value: '{layer.name}'
-                }
+                    fieldLabel: '{i18n.general.layerName}',
+                    value: '{layer.name}',
+                    emptyText: '{i18n.general.layerNameEmptyText}'
+                },
+                allowBlank: false,
+                name: 'layerName',
+                width: '100%'
             }, {
                 xtype: 'momo-form-submitform',
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
@@ -57,8 +61,10 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     items: [{
                         xtype: 'fileuploadfield',
                         flex: 1,
-                        fieldLabel: 'File',
-                        emptyText: '*.zip',
+                        bind: {
+                            fieldLabel: '{i18n.general.fileUploadFieldLabel}',
+                            emptyText: '{i18n.general.fileUploadEmptyText}'
+                        },
                         name: 'file',
                         allowBlank: false,
                         required: true,
@@ -67,7 +73,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                         }
                     }, {
                         xtype: 'button',
-                        text: 'Upload',
+                        bind: {
+                            text: '{i18n.general.fileUpladButtonText}'
+                        },
                         formBind: true,
                         margin: '0 0 0 5px',
                         handler: 'uploadButtonPressed'
@@ -93,9 +101,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
             }, {
                 xtype: 'textarea',
                 width: '100%',
-                fieldLabel: 'Layer Description',
                 name: 'layerDescription',
                 bind: {
+                    fieldLabel: '{i18n.general.layerDescription}',
                     value: '{layer.description}',
                     hidden: true //'{isNewLayer}'
                 }
@@ -111,11 +119,11 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     decimalPrecision: 2,
                     submitValue: false,
                     bind:{
+                        fieldLabel: '{i18n.general.layerOpacity}',
                         value: '{layer.appearance.opacity}',
                         hidden: '{isNewLayer}'
                     },
-                    margin: '0 10px 0 0',
-                    fieldLabel: 'Opacity'
+                    margin: '0 10px 0 0'
                 }, {
                     xtype: 'numberfield',
                     hideTrigger: true,
@@ -140,16 +148,18 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                 items: [{
                     xtype: 'textfield',
                     width: 400,
-                    fieldLabel: 'Hover Template',
                     name: 'layerHoverTemplate',
                     margin: '0 5px 0 0',
                     flex: 1,
                     bind: {
+                        fieldLabel: '{i18n.general.hoverTemplate}',
                         value: '{layer.appearance.hoverTemplate}'
                     }
                 }, {
                     xtype: 'button',
-                    text: 'Available Attributes',
+                    bind: {
+                        text: '{i18n.general.availableAttributes}'
+                    },
                     handler: 'onAttributesButtonClicked'
                 }]
             }]

@@ -3,6 +3,9 @@ Ext.define('MoMo.admin.view.grid.LayerListModel', {
     alias: 'viewmodel.momo-layerlist',
 
     data: {
-        title: 'All layers'
+        title: 'All layers',
+        createLayer: 'Create',
+        deleteLayer: 'Delete',
+        filterByName: 'Filter by name'
     }
 });

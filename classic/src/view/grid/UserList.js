@@ -73,21 +73,27 @@ Ext.define('MoMo.admin.view.grid.UserList',{
 
     tbar: [{
         xtype: 'button',
-        text: 'Create',
+        bind: {
+            text: '{createUser}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-plus fa-2x',
         handler: 'onCreateClick'
     }, {
         xtype: 'button',
-        text: 'Delete',
+        bind: {
+            text: '{deleteUser}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-minus fa-2x',
         handler: 'onDeleteClick'
     }, '->', {
         xtype: 'textfield',
-        fieldLabel: 'Filter by name',
+        bind: {
+            fieldLabel: '{filterByName}'
+        },
         labelWidth: undefined,
         triggers: {
             clear: {

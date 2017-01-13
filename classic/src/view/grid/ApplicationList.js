@@ -75,28 +75,36 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
 
     tbar: [{
         xtype: 'button',
-        text: 'Create',
+        bind: {
+            text: '{createApp}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-plus fa-2x',
         handler: 'onCreateClick'
     }, {
         xtype: 'button',
-        text: 'Copy',
+        bind: {
+            text: '{copyApp}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-copy fa-2x',
         handler: 'onCopyClick'
     }, {
         xtype: 'button',
-        text: 'Delete',
+        bind: {
+            text: '{deleteApp}'
+        },
         scale: 'large',
         ui: 'momo',
         iconCls: 'fa fa-minus fa-2x',
         handler: 'onDeleteClick'
     }, '->', {
         xtype: 'textfield',
-        fieldLabel: 'Filter by name',
+        bind: {
+            fieldLabel: '{filterByName}'
+        },
         labelWidth: undefined,
         triggers: {
             clear: {
