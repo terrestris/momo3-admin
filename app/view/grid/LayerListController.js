@@ -28,8 +28,8 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
                 case 'layer-style-column':
                     column.setVisible(view.getShowLayerStyleColumn());
                     break;
-                case 'layer-metadata-column':
-                    column.setVisible(view.getShowLayerMetadataColumn());
+                case 'layer-download-column':
+                    column.setVisible(view.getShowLayerDownloadColumn());
                     break;
                 case 'layer-preview-column':
                     column.setVisible(view.getShowLayerPreviewColumn());
@@ -93,18 +93,19 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     },
 
     handleCellClick: function(gridview, td, cellIndex, record){
-        switch(cellIndex) {
-            case 2:
+        var clickedColumn = this.getView().getColumns()[cellIndex];
+        switch(clickedColumn.name) {
+            case 'layer-settings-column':
                 this.redirectTo('layers/createOrEdit/' + record.get('id'));
                 Ext.toast("Edit general-settings");
                 break;
-            case 3:
+            case 'layer-style-column':
                 Ext.toast("Edit style-settings");
                 break;
-            case 4:
+            case 'layer-download-column':
                 this.downloadLayerdata([record.get('id')]);
                 break;
-            case 5:
+            case 'layer-preview-column':
                 this.showLayerPreview(record);
                 break;
             default:

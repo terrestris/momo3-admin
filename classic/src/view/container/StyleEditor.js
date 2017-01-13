@@ -2,6 +2,15 @@ Ext.define("MoMo.admin.view.container.style.StyleEditor", {
     extend: "BasiGX.view.container.RedlineStyler",
     xtype: "momo-container-styleditor",
 
+    listeners: {
+        render: function(){
+            var iconTab = this.down('panel[name=pointgraphic]');
+            if(iconTab){
+                iconTab.disable();
+            }
+        }
+    },
+
     /**
      * @overwrite
      */
