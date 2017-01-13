@@ -6,29 +6,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     ],
 
     /**
-     *
-     */
-    onAfterRender: function() {
-        var me = this;
-        var view = me.getView();
-
-        if (!Ext.isEmpty(view.entityId)) {
-            me.loadApplicationData(view.entityId);
-        } else {
-            var layerTab = me.getView().down('momo-application-layer');
-            var layerTreePanel = layerTab.down('momo-layertree');
-            layerTreePanel.getController().loadStoreData();
-        }
-
-    },
-
-    /**
      * Cleanup Applicationdata to avoid artifacts when navigating through the
      * admin frontend.
      */
     onHide: function(){
         var me = this;
         var viewModel = me.getViewModel();
+        viewModel.set('entityId', null);
         viewModel.set('application', Ext.create(
                 'MoMo.admin.model.Application'));
     },
@@ -36,9 +20,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     /**
      *
      */
-    loadApplicationData: function(applicationId){
+    loadApplicationData: function(){
         var me = this;
         var viewModel = me.getViewModel();
+        var applicationId = viewModel.get('entityId');
 
         if (applicationId) {
             MoMo.admin.model.Application.load(applicationId, {
@@ -62,6 +47,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                     Ext.toast('Error loading Application Data.');
                 }
             });
+        } else {
+            var layerTab = me.getView().down('momo-application-layer');
+            var layerTreePanel = layerTab.down('momo-layertree');
+            layerTreePanel.getController().loadStoreData();
         }
     },
 

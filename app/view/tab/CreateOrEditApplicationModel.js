@@ -7,6 +7,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
     ],
 
     data: {
+
+        entityId: null,
+
         cancelBtnText: 'Cancel',
         saveBtnText: 'Save',
         application: Ext.create('MoMo.admin.model.Application'),
