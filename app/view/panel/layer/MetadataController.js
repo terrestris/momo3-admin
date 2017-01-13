@@ -39,7 +39,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
 
         if(Ext.isEmpty(extent.maxX) && Ext.isEmpty(extent.minX) &&
                 Ext.isEmpty(extent.maxY) && Ext.isEmpty(extent.minY)){
-            view.setLoading(true);
+//            view.setLoading(true);
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                         'momolayers/getLayerExtent.action?layerId=' +
@@ -59,7 +59,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                             maxX: maxX,
                             maxY: maxY
                         });
-                        view.setLoading(false);
+//                        view.setLoading(false);
                     }
                 },
                 failure: function(response) {
