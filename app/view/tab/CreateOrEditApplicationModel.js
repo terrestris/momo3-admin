@@ -73,7 +73,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
             }
         },
         tools: {
-            title: 'Werkzeuge'
+            title: 'Tools'
         }
     }
 
