@@ -31,7 +31,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         showFilterField: true,
         showLayerSettingsColumn: true,
         showLayerStyleColumn: false,
-        showLayerMetadataColumn: true,
+        showLayerDownloadColumn: true,
         showLayerPreviewColumn: true
     },
 
@@ -82,7 +82,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         tpl: '<i class="fa fa-paint-brush fa-2x" data-qtip="Layer Style"></i>'
     },{
         xtype: 'templatecolumn',
-        name: 'layer-metadata-column',
+        name: 'layer-download-column',
         width: 40,
         align: "center",
         tdCls: "column-tool",

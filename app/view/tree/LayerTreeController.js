@@ -19,7 +19,7 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
         var me = this;
         var view = me.getView();
         var store = view.getStore();
-        var layerTree = this.getViewModel().get('application.layerTree');
+        var layerTree = this.getViewModel().get('application').get('layerTree');
 
         view.setLoading(true);
 
@@ -45,7 +45,7 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
             store.setRoot(rootNode);
             store.each(function(rec){
                 rec.phantom = false;
-            }, {
+            }, this, {
                 collapsed: true
             });
 

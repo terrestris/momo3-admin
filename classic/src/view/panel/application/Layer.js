@@ -52,7 +52,9 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
             showCopyButton: false,
             showDeleteButton: false,
             showLayerSettingsColumn: false,
-            showLayerStyleColumn: false
+            showLayerStyleColumn: false,
+            showLayerPreviewColumn: true,
+            showLayerDownloadColumn: false
         }, {
             xtype: 'displayfield',
             width: 15

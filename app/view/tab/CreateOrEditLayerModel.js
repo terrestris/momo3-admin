@@ -6,6 +6,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
 
         name: 'MoMo.admin',
 
+        entityId: null,
+
         layer: null,
 
         i18n: {

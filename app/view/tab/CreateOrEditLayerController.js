@@ -7,36 +7,34 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
     ],
 
     /**
-     *
+     * Cleanup Layerdata to avoid artifacts when navigating through the
+     * admin frontend.
      */
-    onAfterRender: function() {
+    onHide: function(){
         var me = this;
-        var view = me.getView();
         var viewModel = me.getViewModel();
+        viewModel.set('entityId', null);
 
-        if (!Ext.isEmpty(view.entityId)) {
-            me.loadLayerData(view.entityId);
-        } else {
-            var cleanLayer = Ext.create('MoMo.admin.model.Layer');
-            var cleanLayerAppearance = Ext.create(
-                    'MoMo.admin.model.LayerAppearance');
+        var cleanLayer = Ext.create('MoMo.admin.model.Layer');
+        var cleanLayerAppearance = Ext.create(
+                'MoMo.admin.model.LayerAppearance');
 
-            cleanLayer.setAppearance(cleanLayerAppearance);
+        cleanLayer.setAppearance(cleanLayerAppearance);
 
-            viewModel.set('layer', cleanLayer);
-            viewModel.get('layer').set('id', undefined);
-        }
+        viewModel.set('layer', cleanLayer);
+        viewModel.get('layer').set('id', undefined);
     },
 
     /**
      *
      */
-    loadLayerData: function(layerId){
+    loadLayerData: function(){
         var me = this;
         var view = me.getView();
+        var viewModel = me.getViewModel();
+        var layerId = viewModel.get('entityId');
 
         if (layerId) {
-            var viewModel = me.getViewModel();
 
             MoMo.admin.model.Layer.load(layerId, {
                 scope: this,
@@ -53,6 +51,15 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     Ext.toast('Error loading Layer Data.');
                 }
             });
+        } else {
+            var cleanLayer = Ext.create('MoMo.admin.model.Layer');
+            var cleanLayerAppearance = Ext.create(
+                    'MoMo.admin.model.LayerAppearance');
+
+            cleanLayer.setAppearance(cleanLayerAppearance);
+
+            viewModel.set('layer', cleanLayer);
+            viewModel.get('layer').set('id', undefined);
         }
     },
 

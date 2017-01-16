@@ -60,7 +60,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
     }],
 
     listeners: {
-        boxready: 'onAfterRender',
+        afterrender: 'loadApplicationData',
+        show: 'loadApplicationData',
         hide: 'onHide'
     }
 

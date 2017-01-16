@@ -56,7 +56,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
     }],
 
     listeners: {
-        boxready: 'onAfterRender'
+        afterrender: 'loadLayerData',
+        show: 'loadLayerData',
+        hide: 'onHide'
     }
 
 });
