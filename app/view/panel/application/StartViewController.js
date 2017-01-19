@@ -27,13 +27,9 @@ Ext.define('MoMo.admin.view.panel.application.StartViewController', {
         var olMap = new ol.Map({
             layers: [
                 new ol.layer.Tile({
-                    source: new ol.source.Stamen({
-                        layer: 'watercolor'
-                    })
-                }),
-                new ol.layer.Tile({
-                    source: new ol.source.Stamen({
-                        layer: 'terrain-labels'
+                    source: new ol.source.TileWMS({
+                        url: 'https://ows.terrestris.de/osm-gray/service',
+                        params: {'LAYERS': 'OSM-WMS'}
                     })
                 })
             ],
