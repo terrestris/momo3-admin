@@ -73,7 +73,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
             }
         },
         tools: {
-            title: 'Tools'
+            title: 'Tools',
+            helpText: 'Green buttons / tools will be available in the' +
+                ' application, blue ones not'
         }
     }
 

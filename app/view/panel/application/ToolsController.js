@@ -16,6 +16,7 @@ Ext.define('MoMo.admin.view.panel.application.ToolsController', {
             if(rec.data.properties.ui === 'momo-tools') {
                 var btn = {
                     xtype: "momo-button-tooltoggle",
+                    cls: 'momo-tool-selection',
                     glyph: rec.get('glyph'),
                     tooltip: rec.get('name'),
                     toolId: rec.get('id')
