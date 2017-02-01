@@ -24,7 +24,12 @@ Ext.define('MoMo.admin.view.panel.application.Tools', {
         bind: {
             title: '{tools.title}'
         },
-        items: []
+        items: [{
+            xtype: 'displayfield',
+            bind: {
+                value: '{tools.helpText}'
+            }
+        }]
     }],
 
     initComponent: function(){
