@@ -23,6 +23,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
 
         viewModel.set('layer', cleanLayer);
         viewModel.get('layer').set('id', undefined);
+
+        // ATTENTION !!!
+        // We destroy the view in the onHide method for cleanup reasons.
+        me.getView().destroy();
     },
 
     /**
@@ -121,6 +125,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                         view.setLoading(false);
                         if (success) {
                             Ext.toast("Layer " + layer.get('name') + " saved.");
+
                         } else {
                             Ext.toast("Layer " + layer.get('name') +
                                 " could not be saved.");
@@ -143,6 +148,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     }
                 });
             }
+
             me.redirectTo('layers');
         } else {
             Ext.toast("Please fill out the required fields.");

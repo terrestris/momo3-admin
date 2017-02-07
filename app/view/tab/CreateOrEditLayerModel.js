@@ -138,5 +138,4 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
             return !get('isNewLayer') && isVector;
         }
     }
-
 });
