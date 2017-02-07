@@ -9,14 +9,16 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    onBoxReady: function(){
+    onShow: function(){
         this.prefillEmptyFields();
     },
 
     /**
      *
      */
+
     prefillEmptyFields: function(){
+
         var view = this.getView();
         var viewModel = view.lookupViewModel();
         var title = viewModel.get('metadata.title');
@@ -32,7 +34,6 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
             viewModel.set('metadata.person.name',
                     viewModel.get('user.fullName'));
         }
-
         if(Ext.isEmpty(email)) {
             viewModel.set('metadata.person.email', viewModel.get('user.email'));
         }
@@ -137,5 +138,4 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
         }
 
     }
-
 });
