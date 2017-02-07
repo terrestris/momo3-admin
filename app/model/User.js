@@ -16,7 +16,8 @@ Ext.define('MoMo.admin.model.User', {
         type: 'boolean'
     }, {
         name: 'email',
-        type: 'string'
+        type: 'string',
+        vtype: 'email' // requires value to be a valid email adress format
     }, {
         name: 'password',
         type: 'string'

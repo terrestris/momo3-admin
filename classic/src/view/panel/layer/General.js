@@ -54,6 +54,28 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                 bind: {
                     hidden: '{!isNewLayer}'
                 },
+                msgTarget: 'under',
+                validator: function(val) {
+                    var startsWith = val.startsWith(' ');
+                    var startsWithErrMsg = 'No whitespaces allowed at the beginning!';
+
+                    var containsTwoWhitespaces = val.indexOf('  ') > -1;
+                    var containsTwoWhitespacesErrMsg = 'Not more than one whitespaces allowed!';
+
+                    if(! startsWith && ! containsTwoWhitespaces) {
+                        return true;
+                    }
+                    else if((startsWith && ! containsTwoWhitespaces) || (!startsWith && containsTwoWhitespaces)) {
+
+                        return startsWithErrMsg || containsTwoWhitespacesErrMsg;
+                    }
+                    else if(!startsWith && containsTwoWhitespaces) {
+                        return containsTwoWhitespacesErrMsg;
+                    }
+                    else {
+                        return startsWithErrMsg +' '+ containsTwoWhitespacesErrMsg;
+                    }
+                },
                 items: [{
                     xtype: 'fieldcontainer',
                     layout: 'hbox',
@@ -69,7 +91,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                         allowBlank: false,
                         required: true,
                         listeners: {
-                            change: 'onFileUploafFieldChanged'
+                            change: 'onFileUploadFieldChanged'
                         }
                     }, {
                         xtype: 'button',

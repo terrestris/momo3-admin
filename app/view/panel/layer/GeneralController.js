@@ -67,7 +67,6 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             Ext.toast('Please enter a layer name.');
             return;
         }
-
         view.setLoading(true);
 
         Ext.iterate(fields, function(field) {
