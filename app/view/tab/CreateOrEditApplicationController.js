@@ -52,6 +52,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             var layerTreePanel = layerTab.down('momo-layertree');
             layerTreePanel.getController().loadStoreData();
         }
+        var generalTab = me.getView().down('momo-application-general');
+        me.getView().setActiveItem(generalTab);
     },
 
     onSaveClick: function() {

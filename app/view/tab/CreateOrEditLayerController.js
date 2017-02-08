@@ -61,6 +61,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             viewModel.set('layer', cleanLayer);
             viewModel.get('layer').set('id', undefined);
         }
+        var generalTab = me.getView().down('momo-layer-general');
+        me.getView().setActiveItem(generalTab);
     },
 
     /**
