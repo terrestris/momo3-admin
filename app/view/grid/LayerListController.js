@@ -73,8 +73,14 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     onDeleteClick: function() {
         var me = this;
         var view = me.getView();
-        view.setLoading(true);
         var selection = view.getSelectionModel().getSelection();
+        if (selection.length !== 1) {
+            Ext.Msg.alert(
+                'Error',
+                'Please select a single layer before!'
+            );
+            return;
+        }
         Ext.each(selection, function(rec) {
             rec.erase({
                 callback: function(record,operation,success) {
