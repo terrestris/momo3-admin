@@ -58,7 +58,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
     listeners: {
         afterrender: 'loadLayerData',
         show: 'loadLayerData',
-        // We destroy the view in the onHide method for cleanup reasons.
+        // TODO We destroy the view in the onHide method for cleanup reasons.
         hide: 'onHide'
     }
 
