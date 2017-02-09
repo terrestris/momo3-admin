@@ -11,7 +11,8 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
         'MoMo.admin.view.panel.layer.MetadataController',
         'Ext.form.field.Date',
         'Ext.form.field.ComboBox',
-        'Ext.form.field.TextArea'
+        'Ext.form.field.TextArea',
+        'MoMo.admin.util.TextfieldValidator'
     ],
 
     controller: 'momo-layer-metadata',
@@ -25,7 +26,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
     padding: 20,
 
     listeners: {
-        boxReady: 'onBoxReady'
+        show: 'onShow'
     },
 
     items: [{
@@ -143,6 +144,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     xtype: 'textfield',
                     name: 'metadata-organisation-name',
                     allowBlank: false,
+                    msgTarget: 'under',
+                    validator: MoMo.admin.util.TextfieldValidator.
+                        checkForWhiteSpaces,
                     bind: {
                         fieldLabel: '{i18n.metadata.name}',
                         value: '{metadata.organisation.name}'
@@ -150,6 +154,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                 }, {
                     xtype: 'textfield',
                     name: 'metadata-organisation-website',
+                    vtype: 'url',
                     bind: {
                         fieldLabel: '{i18n.metadata.website}',
                         value: '{metadata.organisation.website}'
@@ -168,6 +173,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-deliveryPoint',
                         allowBlank: false,
+                        msgTarget: 'under',
+                        validator: MoMo.admin.util.TextfieldValidator.
+                            checkForWhiteSpaces,
                         bind: {
                             fieldLabel: '{i18n.metadata.deliveryPoint}',
                             value: '{metadata.organisation.address.deliveryPoint}'
@@ -176,6 +184,11 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-postalCode',
                         allowBlank: false,
+                        minLength: 3,
+                        maxLength: 10,
+                        msgTarget: 'under',
+                        validator: MoMo.admin.util.TextfieldValidator.
+                            checkForWhiteSpaces,
                         bind: {
                             fieldLabel: '{i18n.metadata.postalCode}',
                             value: '{metadata.organisation.address.postalCode}'
@@ -184,6 +197,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-city',
                         allowBlank: false,
+                        msgTarget: 'under',
+                        validator: MoMo.admin.util.TextfieldValidator.
+                            checkForWhiteSpaces,
                         bind: {
                             fieldLabel: '{i18n.metadata.city}',
                             value: '{metadata.organisation.address.city}'
@@ -192,6 +208,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                         xtype: 'textfield',
                         name: 'metadata-organisation-address-country',
                         allowBlank: false,
+                        msgTarget: 'under',
+                        validator: MoMo.admin.util.TextfieldValidator.
+                            checkForWhiteSpaces,
                         bind: {
                             fieldLabel: '{i18n.metadata.country}',
                             value: '{metadata.organisation.address.country}'
@@ -220,6 +239,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     xtype: 'textfield',
                     name: 'metadata-person-email',
                     allowBlank: false,
+                    vtype: 'email',
                     bind: {
                         fieldLabel: '{i18n.metadata.email}',
                         value: '{metadata.person.email}'
@@ -251,7 +271,8 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     allowBlank: false,
                     bind: {
                         fieldLabel: '{i18n.metadata.end}',
-                        value: '{metadata.timeExtent.end}'
+                        value: '{metadata.timeExtent.end}',
+                        minValue: '{metadata.timeExtent.start}'
                     }
                 }]
             }, {
@@ -270,7 +291,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     defaults: {
                         xtype: 'numberfield',
                         hideTrigger: true,
-                        labelWidth: 40,
+                        labelWidth: 45,
                         margin: '0 5px 0 0',
                         flex: 1
                     },
@@ -278,7 +299,7 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                         name: 'metadata-extent-minX',
                         allowBlank: false,
                         bind: {
-                            fieldLabel: '{i18n.metadata.minX}',
+                            fieldLabel: '{i18n.metadata.minX }',
                             value: '{metadata.geography.extent.minX}'
                         }
                     }, {
@@ -320,7 +341,8 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                     },
                     anyMatch: true,
                     queryMode: 'local',
-                    triggerAction: 'all'
+                    triggerAction: 'all',
+                    forceSelection: true
                 }]
             }]
         }]

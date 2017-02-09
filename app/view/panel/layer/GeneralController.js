@@ -67,7 +67,6 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             Ext.toast('Please enter a layer name.');
             return;
         }
-
         view.setLoading(true);
 
         Ext.iterate(fields, function(field) {
@@ -90,6 +89,11 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 }
                 view.setLoading(false);
                 me.onUploadSucess(respObj);
+
+                // cleanup: delete the cloned items from the form
+                Ext.iterate(fieldsClone, function(field) {
+                    submitForm.remove(field);
+                });
             },
             failure: function(form, action) {
 
@@ -237,7 +241,8 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
 
         // reload the layer stores
         var layerComponents = Ext.ComponentQuery.query(
-            'momo_tree_managedatalayers, momo_view_layergroupsdataview, momo-layerlist');
+            'momo_tree_managedatalayers, momo_view_layergroupsdataview, '
+                +'momo-layerlist');
 
         Ext.each(layerComponents, function(comp){
             comp.getStore().load();
@@ -249,9 +254,11 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         //Load newly created Layerdata
         viewModel.set('entityId', respObj.data.id);
         coeLayerController.loadLayerData();
+        // reset data and gui
+        viewModel.set('upload', null);
     },
 
-    onFileUploafFieldChanged: function(field){
+    onFileUploadFieldChanged: function(field){
         var me = this;
         var viewModel = me.getViewModel();
         var file = field.getEl().query('input[type=file]')[0].files[0];

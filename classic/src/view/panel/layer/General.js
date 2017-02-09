@@ -9,7 +9,8 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
         'MoMo.admin.view.panel.layer.GeneralController',
 
         'MoMo.admin.view.form.SubmitForm',
-        'MoMo.admin.store.Epsg'
+        'MoMo.admin.store.Epsg',
+        'MoMo.admin.util.TextfieldValidator'
     ],
 
     controller: 'momo-layer-general',
@@ -41,6 +42,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     value: '{layer.name}',
                     emptyText: '{i18n.general.layerNameEmptyText}'
                 },
+                msgTarget: 'under',
+                validator: MoMo.admin.util.TextfieldValidator.
+                    checkForWhiteSpaces,
                 allowBlank: false,
                 name: 'layerName',
                 width: '100%'
@@ -69,7 +73,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                         allowBlank: false,
                         required: true,
                         listeners: {
-                            change: 'onFileUploafFieldChanged'
+                            change: 'onFileUploadFieldChanged'
                         }
                     }, {
                         xtype: 'button',
