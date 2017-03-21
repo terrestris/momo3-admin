@@ -84,6 +84,7 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
         var me = this;
         var view = me.getView();
         var viewModel = this.getViewModel();
+        view.isConfiguring = true;
 
         if(viewModel.get('layer.dataType') === "Raster"){
             view.update('Styler does not support layers with raster data.');
@@ -119,6 +120,7 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
         });
         view.geometryType = MoMo.admin.util.Sld
             .guessGeometryTypeFromSldString(sldString);
+        view.isConfiguring = false;
     },
 
     applyAndSave: function() {
