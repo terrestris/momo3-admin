@@ -122,16 +122,14 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
             xtype: 'momo-container-styleditor',
             backendUrls: {
                 pictureList: {
-                    url: 'images/getImagesForImagePool.action?' +
-                    'userGroupId=' + userGroupId +
-                    '&category=redliningimages'
+                    url: 'rest/images',
+                    method: 'GET'
                 },
                 pictureSrc: {
-                    url: 'images/getThumbnail.action?id='
+                    url: 'momoimage/getThumbnail.action?id='
                 },
                 pictureUpload: {
-                    url: 'images/uploadMoMoImage.action?' +
-                        'category=redliningimages'
+                    url: 'image/upload.action?'
                 },
                 graphicDelete: {
                     url: 'rest/images/',
