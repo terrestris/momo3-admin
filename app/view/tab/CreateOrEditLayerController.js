@@ -102,6 +102,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
         var stylerPanel = view.down('momo-panel-style-styler');
         var metadataPanel = view.down('momo-layer-metadata');
         var layer = viewModel.get('layer');
+        var metadata = viewModel.get('metadata');
         var appearance = layer.getAppearance();
 
         if (allFieldsValid) {
@@ -115,10 +116,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             }
 
             if (Ext.isEmpty(layer.get('metadataIdentifier'))){
-                // TODO Handle update for layer without metadata UUID
-                metadataPanel.getController().createMetadataEntry();
+                metadataPanel.getController().createMetadataEntry(layer, metadata);
             } else {
-                metadataPanel.getController().updateMetadataEntry();
+                metadataPanel.getController().updateMetadataEntry(layer, metadata);
             }
 
             if (layer && layer.getId()) {
