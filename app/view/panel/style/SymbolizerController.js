@@ -5,10 +5,11 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         'GeoExt.component.FeatureRenderer',
 
         'MoMo.admin.util.Sld',
-        "MoMo.admin.view.container.style.StyleEditor",
 
         'MoMo.admin.util.Sld',
-        'BasiGX.util.Color'
+        'BasiGX.util.Color',
+        'BasiGX.util.SLD',
+        'BasiGX.view.container.SLDStyler'
     ],
 
     setupInitialUI: function(){
@@ -17,92 +18,79 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         var viewModel = me.getViewModel();
         var sldUtil = MoMo.admin.util.Sld;
         var jsonixSymb = view.getSymbolizer();
-        var olStyle = sldUtil.styleFromSymbolizers(jsonixSymb);
         var symbolType = sldUtil.symbolTypeFromSymbolizer(jsonixSymb);
+        var sld = view.up('momo-panel-style-rules').sld;
+        var styler = view.up('momo-panel-style-styler');
+        var rule = view.up('momo-panel-style-rule').rule;
+        var layerName = styler.layerName;
+        var availableRules;
 
         viewModel.set({
-            olStyle: olStyle,
             symbolType: symbolType
         });
 
-        var added = view.add({
-            xtype: 'fieldset',
-            bind:{
-                title: '{title}',
-                html: '{symbolizerFieldSetHtml}'
-            },
-            height: 140,
-            name: 'symbolizer-fieldset',
-            layout: 'center',
-            items: [{
-                xtype: 'gx_renderer',
-                symbolizers: olStyle,
-                minWidth: 80,
-                minHeight: 80,
-                symbolType: symbolType,
-                cls: 'sld-gx-renderer',
-                listeners: {
-                    click: {
-                        element: 'el',
-                        fn: me.symbolizerClicked,
-                        scope: me
-                    }
-                }
-            }]
-        });
-        // if we were given a style with an image, we need to check the size…
-        Ext.each(olStyle, function(style){
-            me.checkAddResizeListener(style, added.down('gx_renderer'));
-        });
-    },
 
-    /**
-     * For every style that we gathered by evaluating the SLD, we need to check
-     * if the style contained an icon (`ol.style.Icon`). If that is the case, we
-     * have to ensure that the SLD handling of `<size>` is reflected in the
-     * ol.style.Icon. In SLD, for rectangular images, the `<size>` means height,
-     * the width will be set accordingly in the correct ratio. For OpenLayers,
-     * we can have the same effect f we set a new symbolizer, which has an
-     * approprooiate ratio.
-     *
-     * Here is how we achebve this:
-     * Render an image to the dom with the desired height (jsut as in SLD). Once
-     * the image has loaded, gather the rendered width. From these two
-     * dimensions, we calculate the ratio and set a nearly identical style, only
-     * this time with a ratio.
-     *
-     * TODO This needs t be checked with mutliple images stacked on top of each
-     *      other.
-     * TODO We also should check why there seems to be a max width for the
-     *      gx_renderer?
-     */
-    checkAddResizeListener: function(style, rendererCmp){
-        var img = style && style.getImage && style.getImage();
-        if (img && img instanceof ol.style.Icon) {
-            var size = img.getSize();
-            var height = size && size[1];
-            var src = img.getSrc();
-            if (!height || !src) {
-                return;
-            }
-            var imgElem = document.createElement('img');
-            imgElem.height = height + "";
-            imgElem.onload = function() {
-                var imgW = this.width;
-                var imgH = this.height;
-                rendererCmp.setSize(imgW, imgH);
-                var adjustedStyle = new ol.style.Style({
-                    image: new ol.style.Icon({
-                        src: src,
-                        scale: (imgH/imgW)
-                    })
-                });
-                rendererCmp.update({symbolizers:adjustedStyle});
-                // rendererCmp.setRendererDimensions();
-                imgElem = null;
-            };
-            imgElem.src = src;
+        // check if rule exists in sld. may not be the case when user adds
+        // a new rule
+        var sldObj = BasiGX.util.SLD.toSldObject(sld);
+        var ruleObj = BasiGX.util.SLD.getRuleByName(rule.name, sldObj);
+        if (!ruleObj) {
+            availableRules = BasiGX.util.SLD.rulesFromSldObject(sldObj);
         }
+
+        Ext.Ajax.request({
+            binary: true,
+            url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                'geoserver.action',
+            method: 'POST',
+            params: {
+                service: 'WMS',
+                request: 'GetLegendGraphic',
+                layer: layerName,
+                version: '1.1.1',
+                format: 'image/png',
+                width: 80,
+                height: 80,
+                rule: ruleObj ? rule.name : availableRules[0].name,
+                sld_body: sld
+            },
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            scope: this,
+            success: function(response) {
+                var blob = new Blob(
+                    [response.responseBytes],
+                    {type: 'image/png'}
+                );
+                var url = window.URL.createObjectURL(blob);
+                view.add({
+                    xtype: 'fieldset',
+                    bind:{
+                        title: '{title}',
+                        html: '{symbolizerFieldSetHtml}'
+                    },
+                    height: 140,
+                    name: 'symbolizer-fieldset',
+                    layout: 'center',
+                    items: [{
+                        xtype: 'image',
+                        alt: 'test',
+                        src: url,
+                        width: 80,
+                        minHeight: 80,
+                        listeners: {
+                            click: {
+                                element: 'el',
+                                fn: me.symbolizerClicked,
+                                scope: me
+                            }
+                        }
+                    }]
+                });
+            },
+            failure: function() {
+                Ext.toast('Error retrieving the Graphic preview');
+            }
+        });
     },
 
     /**
@@ -111,15 +99,17 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
     symbolizerClicked: function(){
         var me = this;
         var view = this.getView();
-        var userGroupId = view.getViewModel().get('selectedUserGroup');
         var viewModel = this.getViewModel();
         var symbolType = viewModel.get('symbolType');
-        var olStyle = viewModel.get('olStyle');
+        var sld = view.up('momo-panel-style-rules').sld;
+        var styler = view.up('momo-panel-style-styler');
+        var rule = view.up('momo-panel-style-rule').rule;
+        var layerName = styler.layerName;
 
         var win = Ext.ComponentQuery.query('[name=symbolizer-edit-window]')[0];
 
         var styleEditor = {
-            xtype: 'momo-container-styleditor',
+            xtype: 'basigx-container-sldstyler',
             backendUrls: {
                 pictureList: {
                     url: 'rest/images',
@@ -134,26 +124,19 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
                 graphicDelete: {
                     url: 'rest/images/',
                     method: 'DELETE'
-                }
-            }
+                },
+                geoServerUrl: BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'geoserver.action',
+                geoserverFontListUrl: BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'font/getGeoServerFontList.action',
+                geoserverFontUrl: BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'font/getGeoServerFont.action'
+            },
+            layer: layerName,
+            sld: sld,
+            ruleName: rule.name,
+            mode: symbolType.toLowerCase()
         };
-
-        switch(symbolType) {
-            case "Point":
-                styleEditor.redlinePointStyle = Ext.isArray(olStyle) ?
-                        olStyle[0] : olStyle;
-                break;
-            case "Line":
-                styleEditor.redlineLineStringStyle = Ext.isArray(olStyle) ?
-                        olStyle[0] : olStyle;
-                break;
-            case "Polygon":
-                styleEditor.redlinePolygonStyle = Ext.isArray(olStyle) ?
-                        olStyle[0] : olStyle;
-                break;
-            default:
-                break;
-        }
 
         if(!win){
             Ext.create('Ext.window.Window', {
@@ -177,30 +160,57 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         }
     },
 
-    applyStyle:function(btn){
+    applyStyle: function(btn){
         var view = this.getView();
-        var viewModel = this.getViewModel();
-
-        var symbolizerRenderer = view.down('gx_renderer');
         var win = btn.up('[name=symbolizer-edit-window]');
-        var editorRenderer = win.down('gx_renderer');
+        var sldStyler = win.down('basigx-container-sldstyler');
+        var sld = sldStyler.getSld();
+        var rule = sldStyler.getRule();
+        var rules = BasiGX.util.SLD.rulesFromSldObject(sldStyler.getSldObj());
 
-        view.symbolizer = [MoMo.admin.util.Sld
-                .olSymbolizerToSldSymbolizer(editorRenderer.getSymbolizers())];
+        // update parent components (who screwed this up btw?)
+        view.up('momo-panel-style-rules').setSld(sld);
+        view.up('momo-panel-style-rules').sldObj = sldStyler.getSldObj();
+        view.up('momo-panel-style-rules').rules = rules;
 
-        if(symbolizerRenderer && editorRenderer){
-            if(Ext.isArray(editorRenderer.getSymbolizers())){
-                symbolizerRenderer.setSymbolizers(
-                        editorRenderer.getSymbolizers());
-                viewModel.set('olStyle', editorRenderer.getSymbolizers());
-            } else {
-                symbolizerRenderer.setSymbolizers(
-                        [editorRenderer.getSymbolizers()]);
-                viewModel.set('olStyle', editorRenderer.getSymbolizers());
+        // preserve the filter
+        var oldRule = view.up('momo-panel-style-rule').getRule();
+        rule.filter = oldRule.filter;
+        view.up('momo-panel-style-rule').setRule(rule);
+
+        var styler = view.up('momo-panel-style-styler');
+        var layerName = styler.layerName;
+
+        Ext.Ajax.request({
+            binary: true,
+            url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                'geoserver.action',
+            method: 'POST',
+            params: {
+                service: 'WMS',
+                request: 'GetLegendGraphic',
+                layer: layerName,
+                version: '1.1.1',
+                format: 'image/png',
+                width: 80,
+                height: 80,
+                rule: rule.name,
+                sld_body: sld
+            },
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            scope: this,
+            success: function(response) {
+                var blob = new Blob(
+                    [response.responseBytes],
+                    {type: 'image/png'}
+                );
+                var url = window.URL.createObjectURL(blob);
+                view.down('image').setSrc(url);
+            },
+            failure: function() {
+                Ext.toast('Error retrieving the Graphic preview');
             }
-        }
-
-        view.fireEvent('symbolizerschanged', view.symbolizer);
+        });
         win.close();
     }
 });

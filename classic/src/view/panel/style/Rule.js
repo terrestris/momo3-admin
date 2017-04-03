@@ -67,6 +67,7 @@ Ext.define('MoMo.admin.view.panel.style.Rule', {
                     bind: {
                         value: '{rule.name}'
                     },
+                    allowBlank: false,
                     margin: '0 10px 0 0',
                     flex: 1,
                     listeners: {
