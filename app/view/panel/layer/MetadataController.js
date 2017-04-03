@@ -112,7 +112,6 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
      *
      */
     updateMetadataEntry: function(layer, metadata){
-        var me = this;
         var uuid = layer.get('metadataIdentifier');
 
         if(uuid && metadata){
