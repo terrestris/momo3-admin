@@ -74,7 +74,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    createMetadataEntry: function(){
+    createMetadataEntry: function(layer, metadata){
         var me = this;
         var xml = MoMo.shared.MetadataUtil.getInsertBlankXml();
 
@@ -94,9 +94,11 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                     responseObj = Ext.decode(response.responseText);
                     uuid = MoMo.shared.MetadataUtil.uuidFromXmlString(
                             responseObj.data);
-                    var layer = me.getView().lookupViewModel().get('layer');
                     layer.set('metadataIdentifier', uuid);
                     layer.save();
+                    // creation is an empty dataset, now update with the real
+                    // values from the form
+                    me.updateMetadataEntry(layer, metadata);
                 }
                 Ext.toast('Createad MetadataSet with UUID: ' + uuid);
             },
@@ -109,14 +111,9 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    updateMetadataEntry: function(){
-        var me = this;
-        var viewModel = me.getView().lookupViewModel();
-        var layer = viewModel.get('layer');
+    updateMetadataEntry: function(layer, metadata){
         var uuid = layer.get('metadataIdentifier');
-        var metadata = viewModel.get('metadata');
 
-        // TODO Handle update for layer without metadata UUID
         if(uuid && metadata){
             var xml = MoMo.shared.MetadataUtil.getUpdateXml(uuid, metadata);
             Ext.Ajax.request({
