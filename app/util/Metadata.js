@@ -62,13 +62,14 @@ Ext.define('MoMo.admin.util.Metadata', {
         /**
          *
          */
-        sendCswRequest: function(xmlString, successCallBack){
+        sendCswRequest: function(layerId, xmlString, successCallBack){
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                     'metadata/csw.action',
                 method: "POST",
                 params: {
-                    xml: xmlString
+                    xml: xmlString,
+                    layerId: layerId
                 },
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 scope: this,

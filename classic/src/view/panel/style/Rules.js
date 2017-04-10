@@ -47,6 +47,8 @@ Ext.define('MoMo.admin.view.panel.style.Rules', {
         me.callParent();
         this.sldObj = MoMo.admin.util.Sld.toSldObject(this.getSld());
         if (this.sldObj) {
+            // TODO: If the sldObj contains multiple sld:UserStyle elements,
+            // only the first one will be returned by rulesFromSldObject()
             this.rules = MoMo.admin.util.Sld.rulesFromSldObject(this.sldObj);
             me.initRuleComponents();
         } else {

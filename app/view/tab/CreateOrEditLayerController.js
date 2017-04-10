@@ -79,7 +79,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             url: BasiGX.util.Url.getWebProjectBaseUrl() + 'metadata/csw.action',
             method: "POST",
             params: {
-                xml: MoMo.shared.MetadataUtil.getLoadXml(uuid)
+                xml: MoMo.shared.MetadataUtil.getLoadXml(uuid),
+                layerId: viewModel.get('layer').getId()
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             success: function(response){
