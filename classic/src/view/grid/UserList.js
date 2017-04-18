@@ -68,7 +68,7 @@ Ext.define('MoMo.admin.view.grid.UserList',{
         width: 40,
         align: "center",
         tdCls: "column-tool",
-        tpl: '<i class="fa fa-gear fa-2x" data-qtip="Layer Settings">'
+        tpl: '<i class="fa fa-gear fa-2x" data-qtip="User Settings">'
     }],
 
     tbar: [{
