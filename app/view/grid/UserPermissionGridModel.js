@@ -3,9 +3,9 @@ Ext.define('MoMo.admin.view.grid.UserPermissionGridModel', {
     alias: 'viewmodel.momo-userpermissiongrid',
 
     data: {
-        groupColumnName: 'Group',
-        subadminColumnName: 'Sub-Admin',
-        editorColumnName: 'Editor',
-        userColumnName: 'User'
+        userPermissionGridPanelGroupColumnName: 'Group',
+        userPermissionGridPanelSubadminColumnName: 'Sub-Admin',
+        userPermissionGridPanelEditorColumnName: 'Editor',
+        userPermissionGridPanelUserColumnName: 'User'
     }
 });

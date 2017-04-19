@@ -128,6 +128,57 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                     if (loginBtn){
                         loginBtn.getController().setCurrentUserAccountName();
                     }
+
+                    // adjust main navigation menu translation, as its initial
+                    // records cannot be bound to the viewmodel...
+                    var treeList = Ext.ComponentQuery.query(
+                        'treelist[reference=navigationTreeList]')[0];
+                    var vm = me.getViewModel();
+                    if (treeList) {
+                        var store = treeList.getStore();
+                        var root = {
+                            expanded: true,
+                            children: [{
+                                text: vm.get('i18n').applicationsMenuTitle,
+                                view: 'grid.ApplicationList',
+                                iconCls: 'right-icon x-fa fa-desktop',
+                                routeId: 'applications',
+                                leaf: true
+                            }, {
+                                text: vm.get('i18n').layersMenuTitle,
+                                view: 'grid.LayerList',
+                                leaf: true,
+                                iconCls: 'x-fa fa-list',
+                                routeId: 'layers'
+                            }, {
+                                text: vm.get('i18n').groupsMenuTitle,
+                                view: 'grid.UserList',
+                                leaf: true,
+                                iconCls: 'x-fa fa-users',
+                                routeId: 'users'
+                            }, {
+                                text: vm.get('i18n').profileMenuTitle,
+                                view: 'panel.ProfilePanel',
+                                leaf: true,
+                                iconCls: 'x-fa fa-user',
+                                routeId: 'profile'
+                            }]
+                        };
+                        // need to reset the root node as ext is buggy here
+                        store.setRootNode(root);
+                    }
+
+                    // adjust the tooltips in the grids by refreshing the view
+                    var layerList = Ext.ComponentQuery.query(
+                        'momo-layerlist')[0];
+                    if (layerList) {
+                        layerList.getView().refresh();
+                    }
+                    var appList = Ext.ComponentQuery.query(
+                        'momo-applicationlist')[0];
+                    if (appList) {
+                        appList.getView().refresh();
+                    }
                 }
             }
         }

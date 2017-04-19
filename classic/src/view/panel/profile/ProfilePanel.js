@@ -19,7 +19,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
     },
 
     bind: {
-        title: '{title}'
+        title: '{i18n.profilepanelTitle}'
     },
     height: 400,
     scrollable: 'y',
@@ -27,7 +27,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
     tbar: [{
         xtype: 'button',
         bind: {
-            text: '{deleteUser}'
+            text: '{i18n.profilepanelDeleteUser}'
         },
         scale: 'large',
         ui: 'momo',
@@ -42,7 +42,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             xtype: 'fieldset',
             minHeight: 350,
             bind: {
-                title: '{editDetailsTitle}'
+                title: '{i18n.profilepanelEditDetailsTitle}'
             },
             flex: 1,
             defaults: {
@@ -51,7 +51,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             items: [{
                 xtype: 'textfield',
                 bind: {
-                    fieldLabel: '{firstNameLabel}',
+                    fieldLabel: '{i18n.profilepanelFirstNameLabel}',
                     value: '{user.firstName}'
                 },
                 name: 'firstName',
@@ -59,7 +59,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             }, {
                 xtype: 'textfield',
                 bind: {
-                    fieldLabel: '{lastNameLabel}',
+                    fieldLabel: '{i18n.profilepanelLastNameLabel}',
                     value: '{user.lastName}'
                 },
                 name: 'lastName',
@@ -67,7 +67,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             }, {
                 xtype: 'textfield',
                 bind: {
-                    fieldLabel: '{emailLabel}',
+                    fieldLabel: '{i18n.profilepanelEmailLabel}',
                     value: '{user.email}'
                 },
                 name: 'email',
@@ -75,7 +75,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             }, {
                 xtype: 'textfield',
                 bind: {
-                    fieldLabel: '{departmentLabel}',
+                    fieldLabel: '{i18n.profilepanelDepartmentLabel}',
                     value: '{user.department}'
                 },
                 name: 'department',
@@ -83,7 +83,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             }, {
                 xtype: 'textfield',
                 bind: {
-                    fieldLabel: '{telephoneLabel}',
+                    fieldLabel: '{i18n.profilepanelTelephoneLabel}',
                     value: '{user.telephone}'
                 },
                 name: 'telephone',
@@ -106,7 +106,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
                 displayField: 'name',
                 valueField: 'value',
                 bind: {
-                    fieldLabel: '{languageLabel}',
+                    fieldLabel: '{i18n.profilepanelLanguageLabel}',
                     value: '{user.language}'
                 },
                 name: 'language',
@@ -117,7 +117,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
                 items: [{
                     xtype: 'displayfield',
                     bind: {
-                        fieldLabel: '{profileImageLabel}'
+                        fieldLabel: '{i18n.profilepanelProfileImageLabel}'
                     },
                     name: 'profileImage'
                 },
@@ -133,7 +133,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
                     xtype: 'button',
                     margin: 20,
                     bind: {
-                        text: '{selectImageText}'
+                        text: '{i18n.profilepanelSelectImageText}'
                     },
                     handler: 'showGraphicPool'
                 }]
@@ -143,12 +143,12 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
             flex: 1,
             minHeight: 350,
             bind: {
-                title: '{editPermissionsTitle}'
+                title: '{i18n.profilepanelEditPermissionsTitle}'
             },
             items: [{
                 xtype: 'displayfield',
                 bind: {
-                    value: '{permissionGridDescription}'
+                    value: '{i18n.profilepanelPermissionGridDescription}'
                 }
             }, {
                 xtype: 'momo-userpermissiongrid'
@@ -161,7 +161,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
         xtype: 'button',
         formBind: true,
         bind: {
-            text: '{saveUser}'
+            text: '{i18n.profilepanelSaveUser}'
         },
         scale: 'large',
         ui: 'momo',

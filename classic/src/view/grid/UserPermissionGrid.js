@@ -25,28 +25,28 @@ Ext.define('MoMo.admin.view.grid.UserPermissionGrid',{
 
     columns: [{
         bind: {
-            text: '{groupColumnName}'
+            text: '{i18n.userPermissionGridPanelGroupColumnName}'
         },
         dataIndex: 'groupname',
         width: '25%'
     }, {
         xtype: 'checkcolumn',
         bind: {
-            text: '{subadminColumnName}'
+            text: '{i18n.userPermissionGridPanelSubadminColumnName}'
         },
         dataIndex: 'subadminpermissionactive',
         width: '25%'
     }, {
         xtype: 'checkcolumn',
         bind: {
-            text: '{editorColumnName}'
+            text: '{i18n.userPermissionGridPanelEditorColumnName}'
         },
         dataIndex: 'editorpermissionactive',
         width: '25%'
     }, {
         xtype: 'checkcolumn',
         bind: {
-            text: '{userColumnName}'
+            text: '{i18n.userPermissionGridPanelUserColumnName}'
         },
         dataIndex: 'userpermissionactive',
         width: '24%'

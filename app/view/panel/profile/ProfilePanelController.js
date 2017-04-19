@@ -128,6 +128,13 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                     try {
                         var res = Ext.decode(response.responseText);
                         if (res.success) {
+                            // update the main viewmodels user data,
+                            // reconfigures visibility of components
+                            // due to roles
+                            var mainView = Ext.ComponentQuery.query(
+                                'momo-mainviewport')[0];
+                            mainView.getController().getUserBySession();
+
                             Ext.Msg.alert(
                                 viewModel.get('actionSuccess'),
                                 viewModel.get('updateSuccessText')

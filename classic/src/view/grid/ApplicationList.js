@@ -25,7 +25,7 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     },
 
     bind: {
-        title: '{title}'
+        title: '{i18n.applicationsTitle}'
     },
 
     hideHeaders: true,
@@ -41,7 +41,9 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     tools: [{
         itemId: 'refresh',
         type: 'refresh',
-        tooltip: 'Refresh',
+        bind: {
+            tooltip: '{i18n.applicationsRefreshText}'
+        },
         callback: 'loadStore'
     }],
 
@@ -57,26 +59,30 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
                 '</div>'
             )
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         flex: 1,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-gear fa-2x" data-qtip="General Settings"></i>',
+        renderer: function() {
+            return '<i class="fa fa-gear fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').applicationsSettings + '">';
+        },
         bind: {
             hidden: '{!allowCreateOrEditWebmaps}'
         }
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         flex: 1,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-eye fa-2x" data-qtip="Show Preview"></i>'
+        renderer: function() {
+            return '<i class="fa fa-eye fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').applicationsPreview + '">';
+        }
     }],
 
     tbar: [{
         xtype: 'button',
         bind: {
-            text: '{createApp}'
+            text: '{i18n.applicationsCreateApp}'
         },
         scale: 'large',
         ui: 'momo',
@@ -85,7 +91,7 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     }, {
         xtype: 'button',
         bind: {
-            text: '{copyApp}'
+            text: '{i18n.applicationsCopyApp}'
         },
         scale: 'large',
         ui: 'momo',
@@ -94,7 +100,7 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     }, {
         xtype: 'button',
         bind: {
-            text: '{deleteApp}'
+            text: '{i18n.applicationsDeleteApp}'
         },
         scale: 'large',
         ui: 'momo',
@@ -103,7 +109,7 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     }, '->', {
         xtype: 'textfield',
         bind: {
-            fieldLabel: '{filterByName}'
+            fieldLabel: '{i18n.applicationsFilterByName}'
         },
         labelWidth: undefined,
         triggers: {
@@ -121,11 +127,11 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         }
     }],
 
-    initComponent: function(){
-        this.callParent(arguments);
-        this.getView().on('cellclick', 'handleCellClick');
-//        this.getView().on('selectionchange', 'selectionChanged');
-        this.getView().on('render', 'loadStore');
+    initComponent: function() {
+        var me = this;
+        me.callParent(arguments);
+        me.getView().on('cellclick', 'handleCellClick');
+        me.getView().on('render', 'loadStore');
     }
 
 });

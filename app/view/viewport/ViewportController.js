@@ -30,7 +30,8 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
      * retrieves user information from the backend and sets the information
      * on the applications main viewmodel
      */
-    getUserBySession: function(){
+    getUserBySession: function() {
+        var me = this;
         var viewModel = this.getViewModel();
         var getUserBySessionPath = BasiGX.util.Url.getWebProjectBaseUrl() +
             'user/getUserBySession.action';
@@ -46,6 +47,8 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
                         responseObj.data
                     );
                     viewModel.set('user', user);
+                    me.setComponentsVisibilityBasedOnRole();
+                    me.setLanguageForUser();
                 } else {
                     Ext.Error.raise('Could not get user by session.');
                 }
@@ -57,6 +60,116 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
                 );
             }
         });
+    },
+
+    /**
+     * Method determines which parts of the frontend are available to the
+     * user based on its roles
+     */
+    setComponentsVisibilityBasedOnRole: function() {
+        var view = this.getView();
+        var viewModel = this.getViewModel();
+        var navigationTreeList = view.down(
+            'treelist[reference=navigationTreeList]');
+        var navigationStore = navigationTreeList.getStore();
+        var user = viewModel.get('user');
+        var hasValidUserDetails =
+            user.get('department') &&
+            user.get('email') &&
+            user.get('firstName') &&
+            user.get('lastName') &&
+            user.get('language') &&
+            user.get('telephone');
+
+        if (!hasValidUserDetails) {
+            // only profile tab shall be active and usable
+            this.redirectTo('profile');
+            navigationStore.clearFilter();
+            navigationStore.filter([
+                {
+                    property : 'routeId',
+                    value    : 'profile'
+                }
+            ]);
+            return;
+        }
+
+        // determine the roles of the suer
+        var groupRoles = user.get('groupRoles');
+        var hasAdminRole = false;
+        var hasSubAdminRole = false;
+        var hasEditorRole = false;
+        var hasUserRole = false;
+        Ext.each(groupRoles, function(groupRole) {
+            if (groupRole.indexOf('ROLE_USER') > -1) {
+                hasUserRole = true;
+            } else if (groupRole.indexOf('ROLE_EDITOR') > -1) {
+                hasEditorRole = true;
+            } else if (groupRole.indexOf('ROLE_SUBADMIN') > -1) {
+                hasSubAdminRole = true;
+            } else if (groupRole.indexOf('ROLE_ADMIN') > -1) {
+                hasAdminRole = true;
+            }
+        });
+
+        // filter the menu based on the roles
+        if (hasAdminRole || hasSubAdminRole) {
+            navigationStore.clearFilter();
+            return;
+        }
+
+        if (hasEditorRole) {
+            navigationStore.clearFilter();
+            navigationStore.filterBy(function(rec) {
+                if (rec.get('routeId') === "applications") {
+                    return true;
+                }
+                if (rec.get('routeId') === "users") {
+                    return false;
+                }
+                if (rec.get('routeId') === "profile") {
+                    return true;
+                }
+                if (rec.get('routeId') === "layers") {
+                    return true;
+                }
+            });
+            return;
+        }
+
+        if (hasUserRole) {
+            navigationStore.clearFilter();
+            navigationStore.filterBy(function(rec) {
+                if (rec.get('routeId') === "applications") {
+                    return true;
+                }
+                if (rec.get('routeId') === "users") {
+                    return false;
+                }
+                if (rec.get('routeId') === "profile") {
+                    return true;
+                }
+                if (rec.get('routeId') === "layers") {
+                    return false;
+                }
+            });
+            return;
+        }
+    },
+
+    /**
+     *
+     */
+    setLanguageForUser: function() {
+        var viewModel = this.getViewModel();
+        var user = viewModel.get('user');
+        var lang = user.get('language');
+        var selector = 'momo-translation-' + lang + '-button';
+        var button = Ext.ComponentQuery.query(selector)[0];
+        // avoid toast
+        button.getController().firstApplicationLoad = true;
+        // trigger translation
+        button.click();
     },
 
     /**

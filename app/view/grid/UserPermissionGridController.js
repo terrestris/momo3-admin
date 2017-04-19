@@ -79,7 +79,8 @@ Ext.define('MoMo.admin.view.grid.UserPermissionGridController', {
             // find matching group
             var matchingGroup;
             Ext.each(json, function(userGroupRole) {
-                if (group.id === userGroupRole.group.id) {
+                if (userGroupRole.group &&
+                    group.id === userGroupRole.group.id) {
 
                     // we can have multiple matching groups, e.g. if a user
                     // has role_subadmin in a group, he will get 2 results
