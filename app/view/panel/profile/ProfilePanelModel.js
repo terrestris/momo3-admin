@@ -4,7 +4,14 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelModel', {
 
     data: {
         title: 'Edit your profile',
+        actionSuccess: 'Success',
+        actionFailure: 'Error',
         deleteUser: 'Delete Account',
+        deleteUserText: 'Do you really want to delete your complete account?',
+        deletionSuccessText: 'Your account has been deleted, you will now be ' +
+            'redirected to the login page',
+        deletionFailureText: 'Your account could not be deleted! Please ' +
+            'contact an administrator to get your account deleted',
         saveUser: 'Save',
         firstNameLabel: 'First name',
         lastNameLabel: 'Last name',

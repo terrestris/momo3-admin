@@ -3,28 +3,82 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
     alias: 'controller.momo-profilepanel',
 
     onDeleteClick: function() {
+        var me = this;
         var view = this.getView();
-        var selection = view.getSelectionModel().getSelection();
-        if (selection.length < 1) {
-            Ext.Msg.alert(
-                'Error',
-                'Please select at least one user before!'
-            );
-            return;
-        }
-        Ext.each(selection, function(app) {
-            app.erase({
-                callback: function(rec,operation,success) {
-                    if (success) {
-                        Ext.toast("Application deleted");
-                    } else {
-                        Ext.toast("Application deletion failed");
-                    }
+        var viewModel = view.getViewModel();
+        var userId = viewModel.get('user').id;
+
+        Ext.Msg.show({
+            title: viewModel.get('deleteUser'),
+            message: viewModel.get('deleteUserText'),
+            buttons: Ext.Msg.YESNO,
+            icon: Ext.Msg.QUESTION,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    view.setLoading(true);
+                    Ext.Ajax.request({
+                        url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                            'momousers/delete.action?id=' + userId,
+                        method: "POST",
+                        defaultHeaders: BasiGX.util.CSRF.getHeader(),
+                        scope: this,
+                        callback: function(self, success, response) {
+                            view.setLoading(false);
+                            if (success) {
+                                try {
+                                    var res = Ext.decode(response.responseText);
+                                    if (res.success) {
+                                        Ext.Msg.alert(
+                                            viewModel.get('actionSuccess'),
+                                            viewModel.get(
+                                                'deletionSuccessText'),
+                                            function() {
+                                                me.doLogout();
+                                            }
+                                        );
+                                    } else {
+                                        Ext.Msg.alert(
+                                            viewModel.get('actionFailure'),
+                                            viewModel.get('deletionFailureText')
+                                        );
+                                    }
+                                } catch (e) {
+                                    Ext.Msg.alert(
+                                        viewModel.get('actionFailure'),
+                                        viewModel.get('deletionFailureText')
+                                    );
+                                }
+                            } else {
+                                Ext.Msg.alert(
+                                    viewModel.get('actionFailure'),
+                                    viewModel.get('deletionFailureText')
+                                );
+                            }
+                        }
+                    });
                 }
-            });
+            }
         });
     },
 
+    /**
+     *
+     */
+    doLogout: function() {
+        Ext.Ajax.request({
+            url: BasiGX.util.Url.getWebProjectBaseUrl() + 'logout',
+            method: "POST",
+            headers: BasiGX.util.CSRF.getHeader(),
+            callback: function() {
+                location.href = BasiGX.util.Url
+                    .getWebProjectBaseUrl() + "login/";
+            }
+        });
+    },
+
+    /**
+     *
+     */
     onSaveClick: function() {
         var me = this;
         var view = me.getView();
@@ -74,19 +128,27 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                     try {
                         var res = Ext.decode(response.responseText);
                         if (res.success) {
-                            Ext.Msg.alert('Update successful',
-                                    viewModel.get('updateSuccessText')
-                                );
+                            Ext.Msg.alert(
+                                viewModel.get('actionSuccess'),
+                                viewModel.get('updateSuccessText')
+                            );
                         } else {
-                            Ext.Msg.alert('Error', viewModel.get(
-                                    'updateFailureText'));
+                            Ext.Msg.alert(
+                                viewModel.get('actionFailure'),
+                                viewModel.get('updateFailureText')
+                            );
                         }
                     } catch (e) {
-                        Ext.Msg.alert('Error', viewModel.get(
-                                'updateFailureText'));
+                        Ext.Msg.alert(
+                            viewModel.get('actionFailure'),
+                            viewModel.get('updateFailureText')
+                        );
                     }
                 } else {
-                    Ext.Msg.alert('Error', viewModel.get('updateFailureText'));
+                    Ext.Msg.alert(
+                        viewModel.get('actionFailure'),
+                        viewModel.get('updateFailureText')
+                    );
                 }
             }
         });
