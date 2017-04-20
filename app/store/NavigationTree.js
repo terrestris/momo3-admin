@@ -24,6 +24,12 @@ Ext.define('MoMo.admin.store.NavigationTree', {
             iconCls: 'x-fa fa-users',
             routeId: 'users'
         }, {
+            text: 'Groups',
+            view: 'grid.GroupList',
+            leaf: true,
+            iconCls: 'x-fa fa-key',
+            routeId: 'groups'
+        }, {
             text: 'Profile',
             view: 'panel.ProfilePanel',
             leaf: true,

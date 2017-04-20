@@ -151,11 +151,17 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                                 iconCls: 'x-fa fa-list',
                                 routeId: 'layers'
                             }, {
-                                text: vm.get('i18n').groupsMenuTitle,
+                                text: vm.get('i18n').usersMenuTitle,
                                 view: 'grid.UserList',
                                 leaf: true,
                                 iconCls: 'x-fa fa-users',
                                 routeId: 'users'
+                            }, {
+                                text: vm.get('i18n').groupsMenuTitle,
+                                view: 'grid.GroupList',
+                                leaf: true,
+                                iconCls: 'x-fa fa-key',
+                                routeId: 'groups'
                             }, {
                                 text: vm.get('i18n').profileMenuTitle,
                                 view: 'panel.ProfilePanel',

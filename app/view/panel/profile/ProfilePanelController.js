@@ -29,29 +29,36 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                                     var res = Ext.decode(response.responseText);
                                     if (res.success) {
                                         Ext.Msg.alert(
-                                            viewModel.get('actionSuccess'),
                                             viewModel.get(
-                                                'deletionSuccessText'),
+                                                'i18n.profilepanelActionSuccess'),
+                                            viewModel.get(
+                                                'i18n.profilepanelDeletionSuccessText'),
                                             function() {
                                                 me.doLogout();
                                             }
                                         );
                                     } else {
                                         Ext.Msg.alert(
-                                            viewModel.get('actionFailure'),
-                                            viewModel.get('deletionFailureText')
+                                            viewModel.get(
+                                                'i18n.profilepanelActionFailure'),
+                                            viewModel.get(
+                                                'i18n.profilepanelDeletionFailureText')
                                         );
                                     }
                                 } catch (e) {
                                     Ext.Msg.alert(
-                                        viewModel.get('actionFailure'),
-                                        viewModel.get('deletionFailureText')
+                                        viewModel.get(
+                                            'i18n.profilepanelActionFailure'),
+                                        viewModel.get(
+                                            'i18n.profilepanelDeletionFailureText')
                                     );
                                 }
                             } else {
                                 Ext.Msg.alert(
-                                    viewModel.get('actionFailure'),
-                                    viewModel.get('deletionFailureText')
+                                    viewModel.get(
+                                        'i18n.profilepanelActionFailure'),
+                                    viewModel.get(
+                                        'i18n.profilepanelDeletionFailureText')
                                 );
                             }
                         }
@@ -136,25 +143,32 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                             mainView.getController().getUserBySession();
 
                             Ext.Msg.alert(
-                                viewModel.get('actionSuccess'),
-                                viewModel.get('updateSuccessText')
+                                viewModel.get('i18n.profilepanelActionSuccess'),
+                                viewModel.get(
+                                        'i18n.profilepanelUpdateSuccessText')
                             );
                         } else {
                             Ext.Msg.alert(
-                                viewModel.get('actionFailure'),
-                                viewModel.get('updateFailureText')
+                                viewModel.get(
+                                    'i18n.profilepanelActionFailure'),
+                                viewModel.get(
+                                    'i18n.profilepanelUpdateFailureText')
                             );
                         }
                     } catch (e) {
                         Ext.Msg.alert(
-                            viewModel.get('actionFailure'),
-                            viewModel.get('updateFailureText')
+                            viewModel.get(
+                                'i18n.profilepanelActionFailure'),
+                            viewModel.get(
+                                'i18n.profilepanelUpdateFailureText')
                         );
                     }
                 } else {
                     Ext.Msg.alert(
-                        viewModel.get('actionFailure'),
-                        viewModel.get('updateFailureText')
+                        viewModel.get(
+                            'i18n.profilepanelActionFailure'),
+                        viewModel.get(
+                                'i18n.profilepanelUpdateFailureText')
                     );
                 }
             }
@@ -172,7 +186,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                 url: 'momoimage/getThumbnail.action?id='
             },
             pictureUpload: {
-                url: 'image/upload.action?'
+                url: 'momoimage/upload.action?'
             },
             graphicDelete: {
                 url: 'rest/images/',
