@@ -163,7 +163,7 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
     setLanguageForUser: function() {
         var viewModel = this.getViewModel();
         var user = viewModel.get('user');
-        var lang = user.get('language');
+        var lang = user.get('language') || 'en';
         var selector = 'momo-translation-' + lang + '-button';
         var button = Ext.ComponentQuery.query(selector)[0];
         // avoid toast

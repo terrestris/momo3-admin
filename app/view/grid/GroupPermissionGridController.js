@@ -183,6 +183,7 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGridController', {
             return;
         }
         var allowedGroups = [];
+        var isSuperAdmin = false;
         Ext.each(user.get('groupRoles'), function(role) {
             if (role.indexOf('ROLE_SUBADMIN') > -1) {
                 var groupId = role.split('ROLE_SUBADMIN_GROUP_')[1];
@@ -190,9 +191,13 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGridController', {
                     allowedGroups.push(parseInt(groupId, 10));
                 }
             }
+            if (role.indexOf('ROLE_ADMIN') > -1) {
+                isSuperAdmin = true;
+            }
         });
         store.each(function(rec) {
-            if (!Ext.Array.contains(allowedGroups, rec.get('groupid'))) {
+            if (!Ext.Array.contains(allowedGroups, rec.get('groupid')) &&
+                    !isSuperAdmin) {
                 var row = tableView.getRow(rec);
                 if (row) {
                     var el = Ext.fly(row);
