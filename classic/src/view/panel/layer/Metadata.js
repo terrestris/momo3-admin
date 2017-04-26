@@ -178,7 +178,8 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
                             checkForWhiteSpaces,
                         bind: {
                             fieldLabel: '{i18n.metadata.deliveryPoint}',
-                            value: '{metadata.organisation.address.deliveryPoint}'
+                            value: '{metadata.organisation' +
+                            '.address.deliveryPoint}'
                         }
                     }, {
                         xtype: 'textfield',

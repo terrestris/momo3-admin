@@ -119,7 +119,7 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
                     url: 'momoimage/getThumbnail.action?id='
                 },
                 pictureUpload: {
-                    url: 'image/upload.action?'
+                    url: 'momoimage/upload.action?'
                 },
                 graphicDelete: {
                     url: 'rest/images/',

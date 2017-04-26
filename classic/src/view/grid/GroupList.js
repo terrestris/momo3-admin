@@ -1,31 +1,31 @@
-Ext.define('MoMo.admin.view.grid.UserList',{
+Ext.define('MoMo.admin.view.grid.GroupList',{
     extend: 'Ext.grid.Panel',
 
-    xtype: 'momo-userlist',
+    xtype: 'momo-grouplist',
 
     requires: [
-        'MoMo.admin.view.grid.UserListController',
-        'MoMo.admin.view.grid.UserListModel',
+        'MoMo.admin.view.grid.GroupListController',
+        'MoMo.admin.view.grid.GroupListModel',
 
-        'MoMo.admin.store.Users'
+        'MoMo.admin.store.Groups'
     ],
 
-    controller: 'momo-userlist',
+    controller: 'momo-grouplist',
 
     viewModel: {
-        type: 'momo-userlist'
+        type: 'momo-grouplist'
     },
 
     store: {
-        type: 'users',
+        type: 'groups',
         sorters: [{
-            property: 'lastName',
+            property: 'name',
             direction: 'ASC'
         }]
     },
 
     bind: {
-        title: '{title}'
+        title: '{i18n.groupGridTitle}'
     },
 
     hideHeaders: true,
@@ -41,40 +41,30 @@ Ext.define('MoMo.admin.view.grid.UserList',{
     tools: [{
         itemId: 'refresh',
         type: 'refresh',
-        tooltip: 'Refresh',
+        bind: {
+            tooltip: '{i18n.groupGridRefresh}'
+        },
         callback: 'loadStore'
     }],
 
     columns: [{
         xtype: 'templatecolumn',
-        width: 40,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: new Ext.XTemplate(
-            '<tpl if="mainRole == \'ROLE_ADMIN\'">',
-                '<i class="fa fa-star fa-2x" data-qtip="Admin"></i>',
-            '<tpl elseif="mainRole == \'ROLE_SUBADMIN\'">',
-                '<i class="fa fa-star-half-o fa-2x" data-qtip="Sub-Admin"></i>',
-            '<tpl else >',
-                '<i class="fa fa-star-o fa-2x" data-qtip="User"></i>',
-            '</tpl>'
-        )
-    }, {
-        xtype: 'templatecolumn',
         flex: 10,
-        tpl: '<div data-qtip="{fullName}">{fullName}</div>'
+        tpl: '<div data-qtip="{name}">{name}</div>'
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         width: 40,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-gear fa-2x" data-qtip="User Settings">'
+        renderer: function() {
+            return '<i class="fa fa-gear fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').groupSettings + '">';
+        }
     }],
 
     tbar: [{
         xtype: 'button',
         bind: {
-            text: '{createUser}'
+            text: '{i18n.groupGridCreateGroup}'
         },
         scale: 'large',
         ui: 'momo',
@@ -83,7 +73,7 @@ Ext.define('MoMo.admin.view.grid.UserList',{
     }, {
         xtype: 'button',
         bind: {
-            text: '{deleteUser}'
+            text: '{i18n.groupGridDeleteGroup}'
         },
         scale: 'large',
         ui: 'momo',
@@ -92,7 +82,7 @@ Ext.define('MoMo.admin.view.grid.UserList',{
     }, '->', {
         xtype: 'textfield',
         bind: {
-            fieldLabel: '{filterByName}'
+            fieldLabel: '{i18n.groupGridFilterByName}'
         },
         labelWidth: undefined,
         triggers: {
@@ -113,7 +103,6 @@ Ext.define('MoMo.admin.view.grid.UserList',{
     initComponent: function(){
         this.callParent(arguments);
         this.getView().on('cellclick', 'handleCellClick');
-//        this.getView().on('selectionchange', 'selectionChanged');
         this.getView().on('render', 'loadStore');
     }
 

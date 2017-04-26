@@ -83,7 +83,8 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 'metadata/csw.action',
             method: "POST",
             params: {
-                xml: xml
+                xml: xml,
+                layerId: layer.getId()
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             scope: this,
@@ -121,7 +122,8 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 'metadata/csw.action',
                 method: "POST",
                 params: {
-                    xml: xml
+                    xml: xml,
+                    layerId: layer.getId()
                 },
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 scope: this,

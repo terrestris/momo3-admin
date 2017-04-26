@@ -4,7 +4,7 @@ Ext.define('MoMo.admin.model.User', {
 
     proxy: {
         type: 'rest',
-        url: BasiGX.util.Url.getWebProjectBaseUrl() + 'rest/users',
+        url: BasiGX.util.Url.getWebProjectBaseUrl() + 'rest/momousers',
         headers: BasiGX.util.CSRF.getHeader()
     },
 

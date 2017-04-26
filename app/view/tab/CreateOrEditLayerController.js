@@ -79,7 +79,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             url: BasiGX.util.Url.getWebProjectBaseUrl() + 'metadata/csw.action',
             method: "POST",
             params: {
-                xml: MoMo.shared.MetadataUtil.getLoadXml(uuid)
+                xml: MoMo.shared.MetadataUtil.getLoadXml(uuid),
+                layerId: viewModel.get('layer').getId()
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             success: function(response){
@@ -116,9 +117,11 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             }
 
             if (Ext.isEmpty(layer.get('metadataIdentifier'))){
-                metadataPanel.getController().createMetadataEntry(layer, metadata);
+                metadataPanel.getController().createMetadataEntry(
+                    layer, metadata);
             } else {
-                metadataPanel.getController().updateMetadataEntry(layer, metadata);
+                metadataPanel.getController().updateMetadataEntry(
+                    layer, metadata);
             }
 
             if (layer && layer.getId()) {

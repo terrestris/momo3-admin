@@ -142,10 +142,12 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
     persistSld: function(){
         var me = this;
         var view = me.getView();
+        var viewModel = view.getViewModel();
         var rulesPanel = view.down('momo-panel-style-rules');
         var sldObj = rulesPanel.sldObj;
         var sldString = rulesPanel.getSld();
         var sldName = MoMo.admin.util.Sld.getSldNameFromSld(sldObj);
+        var targetLayer = viewModel.get('layer');
 
         Ext.Ajax.request({
             url: BasiGX.util.Url.getWebProjectBaseUrl() +
@@ -153,7 +155,9 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
             method: 'POST',
             params: {
                 sld: sldString,
-                sldName: sldName
+                sldName: sldName,
+                // TODO What happens in create-mode?
+                layerId: targetLayer.getId()
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             scope: this,

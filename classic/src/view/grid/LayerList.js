@@ -38,7 +38,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     previewWindow: null,
 
     bind: {
-        title: '{title}'
+        title: '{i18n.layerlistTitle}'
     },
 
     hideHeaders: true,
@@ -58,7 +58,9 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     tools: [{
         itemId: 'refresh',
         type: 'refresh',
-        tooltip: 'Refresh',
+        bind: {
+            tooltip: '{i18n.layerlistRefreshText}'
+        },
         callback: 'loadStore'
     }],
 
@@ -67,41 +69,48 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         flex: 10,
         tpl: '<div data-qtip="{name}">{name}</div>'
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         name: 'layer-settings-column',
         width: 40,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-gear fa-2x" data-qtip="Layer Settings">'
+        renderer: function() {
+            return '<i class="fa fa-gear fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').layerlistSettings + '">';
+        }
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         name: 'layer-style-column',
         width: 40,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-paint-brush fa-2x" data-qtip="Layer Style"></i>'
+        renderer: function() {
+            return '<i class="fa fa-paint-brush fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').layerlistStyle + '">';
+        }
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         name: 'layer-download-column',
         width: 40,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-download fa-2x" ' +
-                'data-qtip="Download Layerdata"></i>'
+        renderer: function() {
+            return '<i class="fa fa-download fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').layerlistDownload + '">';
+        }
     },{
-        xtype: 'templatecolumn',
+        xtype: 'gridcolumn',
         name: 'layer-preview-column',
         width: 40,
         align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-eye fa-2x" data-qtip="Preview Layer"></i>'
+        renderer: function() {
+            return '<i class="fa fa-eye fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').layerlistPreview + '">';
+        }
     }],
 
     tbar: [{
         xtype: 'button',
         name: 'create-layer-button',
         bind: {
-            text: '{createLayer}'
+            text: '{i18n.layerlistCreateLayer}'
         },
         scale: 'large',
         ui: 'momo',
@@ -111,7 +120,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         xtype: 'button',
         name: 'delete-layer-button',
         bind: {
-            text: '{deleteLayer}'
+            text: '{i18n.layerlistDeleteLayer}'
         },
         scale: 'large',
         ui: 'momo',
@@ -121,7 +130,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         xtype: 'textfield',
         name: 'filter-layer-list-field',
         bind: {
-            fieldLabel: '{filterByName}'
+            fieldLabel: '{i18n.layerlistFilterByName}'
         },
         labelWidth: undefined,
         triggers: {

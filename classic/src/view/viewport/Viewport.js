@@ -11,6 +11,8 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         'MoMo.admin.view.grid.ApplicationList',
         'MoMo.admin.view.grid.LayerList',
         'MoMo.admin.view.grid.UserList',
+        'MoMo.admin.view.panel.ProfilePanel',
+        'MoMo.admin.view.panel.GroupPanel',
         'MoMo.admin.view.button.translation.ToMongolian',
         'MoMo.admin.view.button.translation.ToGerman',
         'MoMo.admin.view.button.translation.ToEnglish'
@@ -79,7 +81,9 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
             height: 35,
             width: 35,
             alt: 'current user image',
-            src: 'resources/images/user-example.png'
+            bind: {
+                src: '{profileImage}'
+            }
         }]
     }, {
         xtype: 'momo-maincontainerwrap',
