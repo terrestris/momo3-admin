@@ -12,6 +12,7 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
         'MoMo.admin.view.grid.LayerList',
         'MoMo.admin.view.grid.UserList',
         'MoMo.admin.view.panel.ProfilePanel',
+        'MoMo.admin.view.panel.GroupPanel',
         'MoMo.admin.view.button.translation.ToMongolian',
         'MoMo.admin.view.button.translation.ToGerman',
         'MoMo.admin.view.button.translation.ToEnglish'

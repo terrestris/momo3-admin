@@ -25,7 +25,7 @@ Ext.define('MoMo.admin.store.NavigationTree', {
             routeId: 'users'
         }, {
             text: 'Groups',
-            view: 'grid.GroupList',
+            view: 'panel.GroupPanel',
             leaf: true,
             iconCls: 'x-fa fa-key',
             routeId: 'groups'

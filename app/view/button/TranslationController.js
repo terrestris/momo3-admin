@@ -158,7 +158,7 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                                 routeId: 'users'
                             }, {
                                 text: vm.get('i18n').groupsMenuTitle,
-                                view: 'grid.GroupList',
+                                view: 'panel.GroupPanel',
                                 leaf: true,
                                 iconCls: 'x-fa fa-key',
                                 routeId: 'groups'
@@ -184,6 +184,16 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                         'momo-applicationlist')[0];
                     if (appList) {
                         appList.getView().refresh();
+                    }
+                    var groupList = Ext.ComponentQuery.query(
+                        'momo-grouplist')[0];
+                    if (groupList) {
+                        groupList.getView().refresh();
+                    }
+                    var userGroupRoleGrid = Ext.ComponentQuery.query(
+                        'momo-grouppermissiongrid')[0];
+                    if (userGroupRoleGrid) {
+                        userGroupRoleGrid.getView().refresh();
                     }
                 }
             }

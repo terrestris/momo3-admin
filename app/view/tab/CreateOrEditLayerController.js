@@ -117,9 +117,11 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             }
 
             if (Ext.isEmpty(layer.get('metadataIdentifier'))){
-                metadataPanel.getController().createMetadataEntry(layer, metadata);
+                metadataPanel.getController().createMetadataEntry(
+                    layer, metadata);
             } else {
-                metadataPanel.getController().updateMetadataEntry(layer, metadata);
+                metadataPanel.getController().updateMetadataEntry(
+                    layer, metadata);
             }
 
             if (layer && layer.getId()) {

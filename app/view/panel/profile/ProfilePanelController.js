@@ -9,8 +9,8 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
         var userId = viewModel.get('user').id;
 
         Ext.Msg.show({
-            title: viewModel.get('deleteUser'),
-            message: viewModel.get('deleteUserText'),
+            title: viewModel.get('i18n.profilepanelDeleteUser'),
+            message: viewModel.get('i18n.profilepanelDeleteUserText'),
             buttons: Ext.Msg.YESNO,
             icon: Ext.Msg.QUESTION,
             fn: function(btn) {
@@ -30,9 +30,11 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                                     if (res.success) {
                                         Ext.Msg.alert(
                                             viewModel.get(
-                                                'i18n.profilepanelActionSuccess'),
+                                                'i18n.profilepanelAction' +
+                                                'Success'),
                                             viewModel.get(
-                                                'i18n.profilepanelDeletionSuccessText'),
+                                                'i18n.profilepanelDeletion' +
+                                                'SuccessText'),
                                             function() {
                                                 me.doLogout();
                                             }
@@ -40,9 +42,11 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                                     } else {
                                         Ext.Msg.alert(
                                             viewModel.get(
-                                                'i18n.profilepanelActionFailure'),
+                                                'i18n.profilepanelAction' +
+                                                'Failure'),
                                             viewModel.get(
-                                                'i18n.profilepanelDeletionFailureText')
+                                                'i18n.profilepanelDeletion' +
+                                                'FailureText')
                                         );
                                     }
                                 } catch (e) {
@@ -50,7 +54,8 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                                         viewModel.get(
                                             'i18n.profilepanelActionFailure'),
                                         viewModel.get(
-                                            'i18n.profilepanelDeletionFailureText')
+                                            'i18n.profilepanelDeletion' +
+                                            'FailureText')
                                     );
                                 }
                             } else {
