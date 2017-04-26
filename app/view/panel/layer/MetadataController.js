@@ -74,37 +74,47 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    createMetadataEntry: function(layer, metadata){
+    createMetadataEntry: function(layerObj, metadata){
         var me = this;
         var xml = MoMo.shared.MetadataUtil.getInsertBlankXml();
+        var layer;
 
-        Ext.Ajax.request({
-            url: BasiGX.util.Url.getWebProjectBaseUrl() +
-                'metadata/csw.action',
-            method: "POST",
-            params: {
-                xml: xml,
-                layerId: layer.getId()
-            },
-            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+        MoMo.admin.model.Layer.load(layerObj.data.id, {
             scope: this,
-            success: function(response) {
-                var responseObj;
-                var uuid;
-                if (response && response.responseText) {
-                    responseObj = Ext.decode(response.responseText);
-                    uuid = MoMo.shared.MetadataUtil.uuidFromXmlString(
-                            responseObj.data);
-                    layer.set('metadataIdentifier', uuid);
-                    layer.save();
-                    // creation is an empty dataset, now update with the real
-                    // values from the form
-                    me.updateMetadataEntry(layer, metadata);
-                }
-                Ext.toast('Createad MetadataSet with UUID: ' + uuid);
+            success: function(record) {
+                layer = record;
+                Ext.Ajax.request({
+                    url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                        'metadata/csw.action',
+                    method: "POST",
+                    params: {
+                        xml: xml,
+                        layerId: layer.getId()
+                    },
+                    defaultHeaders: BasiGX.util.CSRF.getHeader(),
+                    scope: this,
+                    success: function(response) {
+                        var responseObj;
+                        var uuid;
+                        if (response && response.responseText) {
+                            responseObj = Ext.decode(response.responseText);
+                            uuid = MoMo.shared.MetadataUtil.uuidFromXmlString(
+                                    responseObj.data);
+                            layer.set('metadataIdentifier', uuid);
+                            layer.save();
+                            // creation is an empty dataset, now update with
+                            // the real values from the form
+                            me.updateMetadataEntry(layer, metadata);
+                        }
+                        Ext.toast('Createad MetadataSet with UUID: ' + uuid);
+                    },
+                    failure: function(){
+                        Ext.toast('Error: Couldn\'t create MetadaSet');
+                    }
+                });
             },
-            failure: function(){
-                Ext.toast('Error: Couldn\'t create MetadaSet');
+            failure: function() {
+                Ext.toast('Error loading Layer Data.');
             }
         });
     },
