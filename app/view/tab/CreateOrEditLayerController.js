@@ -50,6 +50,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     if(uuid){
                         me.loadMetadata(uuid);
                     }
+                    me.loadEntityPermissionStores();
                 },
                 failure: function() {
                     Ext.toast('Error loading Layer Data.');
@@ -64,6 +65,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
 
             viewModel.set('layer', cleanLayer);
             viewModel.get('layer').set('id', undefined);
+            me.loadEntityPermissionStores();
         }
         var generalTab = me.getView().down('momo-layer-general');
         me.getView().setActiveItem(generalTab);
@@ -92,6 +94,18 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             failure: function(){
                 Ext.toast('Warning: Couldn\'t load Metadata for layer.');
             }
+        });
+    },
+
+    /**
+     *
+     */
+    loadEntityPermissionStores: function() {
+        var permissionTab = this.getView().down(
+            'momo-layer-permission');
+        var grids = permissionTab.query('momo-entitypermissions');
+        Ext.each(grids, function(grid) {
+            grid.getController().loadStore();
         });
     },
 
@@ -154,10 +168,60 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 });
             }
 
-            me.redirectTo('layers');
+            // update permissions if necessary
+            me.updatePermissionsAndRedirect();
+
         } else {
             Ext.toast("Please fill out the required fields.");
         }
+    },
+
+    /**
+     * Method detects when and if permission have been updated in
+     * order to make the final redirect to the layers overview page.
+     * We need to do this as the update requires component to still exist,
+     * while redirect destroys them, so it may not happen too early
+     */
+    updatePermissionsAndRedirect: function() {
+        var me = this;
+        var permissionGrids = me.getView().query(
+            'momo-entitypermissions');
+        var awaitedEvents = permissionGrids.length;
+        var permissionsupdatedEvents = 0;
+        var permissionsunmodifiedEvents = 0;
+        Ext.each(permissionGrids, function(grid) {
+            grid.getController().on('permissionsunmodified', function() {
+                permissionsunmodifiedEvents++;
+                if (permissionsunmodifiedEvents === awaitedEvents) {
+                    // nothing has changed, just redirect
+                    me.redirectTo('layers');
+                    return;
+                }
+                if (permissionsunmodifiedEvents +
+                    permissionsupdatedEvents === awaitedEvents) {
+                    Ext.toast(me.getView().getViewModel().get('i18n')
+                        .permissionsUpdatesSuccessText);
+                    me.redirectTo('layers');
+                }
+            }, {single: true});
+            grid.getController().on('permissionsupdated', function() {
+                permissionsupdatedEvents++;
+                if (permissionsunmodifiedEvents === awaitedEvents) {
+                    // nothing has changed, just redirect
+                    me.redirectTo('layers');
+                    return;
+                }
+                if (permissionsunmodifiedEvents +
+                    permissionsupdatedEvents === awaitedEvents) {
+                    if (awaitedEvents !== 0) {
+                        Ext.toast(me.getView().getViewModel().get('i18n')
+                            .permissionsUpdatesSuccessText);
+                    }
+                    me.redirectTo('layers');
+                }
+            }, {single: true});
+            grid.getController().updatePermissions();
+        });
     },
 
     /**

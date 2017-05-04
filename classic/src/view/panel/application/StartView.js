@@ -113,25 +113,27 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                         fieldLabel: '{startview.mapZoomLabel}',
                         value: '{startview.values.zoom}'
                     }
-                }, {
-                    columnWidth: 1/3,
-                    step: 1,
-                    minValue: 0,
-                    name: 'mapZoomMax',
-                    bind: {
-                        fieldLabel: '{startview.mapZoomMaxLabel}',
-                        value: '{startview.mapZoomMax}'
-                    }
-                }, {
-                    columnWidth: 1/3,
-                    step: 1,
-                    minValue: 0,
-                    name: 'mapZoomMin',
-                    bind: {
-                        fieldLabel: '{startview.mapZoomMinLabel}',
-                        value: '{startview.mapZoomMin}'
-                    }
-                }]
+                }
+//                {
+//                    columnWidth: 1/3,
+//                    step: 1,
+//                    minValue: 0,
+//                    name: 'mapZoomMax',
+//                    bind: {
+//                        fieldLabel: '{startview.mapZoomMaxLabel}',
+//                        value: '{startview.mapZoomMax}'
+//                    }
+//                }, {
+//                    columnWidth: 1/3,
+//                    step: 1,
+//                    minValue: 0,
+//                    name: 'mapZoomMin',
+//                    bind: {
+//                        fieldLabel: '{startview.mapZoomMinLabel}',
+//                        value: '{startview.mapZoomMin}'
+//                    }
+//                }
+                ]
             }, {
                 bind: {
                     title: '{startview.mapExtentTitle}'

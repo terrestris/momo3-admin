@@ -65,10 +65,10 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
         renderer: function() {
             return '<i class="fa fa-gear fa-2x" data-qtip="' +
                 this.getViewModel().get('i18n').applicationsSettings + '">';
-        },
-        bind: {
-            hidden: '{!allowCreateOrEditWebmaps}'
         }
+//        bind: {
+//            hidden: '{!allowCreateOrEditWebmaps}'
+//        }
     },{
         xtype: 'gridcolumn',
         flex: 1,
@@ -82,7 +82,8 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     tbar: [{
         xtype: 'button',
         bind: {
-            text: '{i18n.applicationsCreateApp}'
+            text: '{i18n.applicationsCreateApp}',
+            hidden: '{!allowCreateOrEditWebmaps}'
         },
         scale: 'large',
         ui: 'momo',
@@ -91,7 +92,8 @@ Ext.define('MoMo.admin.view.grid.ApplicationList',{
     }, {
         xtype: 'button',
         bind: {
-            text: '{i18n.applicationsCopyApp}'
+            text: '{i18n.applicationsCopyApp}',
+            hidden: '{!allowCreateOrEditWebmaps}'
         },
         scale: 'large',
         ui: 'momo',

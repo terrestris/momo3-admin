@@ -8,7 +8,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
         'MoMo.admin.view.tab.CreateOrEditLayerModel',
         'MoMo.admin.view.panel.layer.General',
         'MoMo.admin.view.panel.layer.Metadata',
-        'MoMo.admin.view.panel.layer.Style'
+        'MoMo.admin.view.panel.layer.Style',
+        'MoMo.admin.view.panel.layer.Permissions'
     ],
 
     controller: 'momo-create-or-edit-layer',
@@ -53,6 +54,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
         bind: {
             disabled: '{isNewLayer}'
         }
+    }, {
+        xtype: 'momo-layer-permission'
     }],
 
     listeners: {

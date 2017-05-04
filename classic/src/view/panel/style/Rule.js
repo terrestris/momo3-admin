@@ -44,7 +44,7 @@ Ext.define('MoMo.admin.view.panel.style.Rule', {
         me.initFilterSymbolizerComponents();
     },
 
-    initBaseFieldset: function(){
+    initBaseFieldset: function() {
         this.add({
             xtype: 'fieldset',
             title: this.getViewModel().get('titlePrefix'),
@@ -64,6 +64,11 @@ Ext.define('MoMo.admin.view.panel.style.Rule', {
                 defaultType: 'textfield',
                 items: [{
                     fieldLabel: 'Name',
+                    // setting a default value to have validation returning true
+                    // when panel has not been shown and user saves layer.
+                    // if not done, field would be invalid as e.g. viemodel may
+                    // not be ready
+                    value: 'new Rule',
                     bind: {
                         value: '{rule.name}'
                     },

@@ -20,7 +20,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     /**
      *
      */
-    loadApplicationData: function(){
+    loadApplicationData: function() {
         var me = this;
         var viewModel = me.getViewModel();
         var applicationId = viewModel.get('entityId');
@@ -42,6 +42,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                     var layerTab = me.getView().down('momo-application-layer');
                     var layerTreePanel = layerTab.down('momo-layertree');
                     layerTreePanel.getController().loadStoreData();
+                    me.loadEntityPermissionStores();
                 },
                 failure: function() {
                     Ext.toast('Error loading Application Data.');
@@ -51,6 +52,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             var layerTab = me.getView().down('momo-application-layer');
             var layerTreePanel = layerTab.down('momo-layertree');
             layerTreePanel.getController().loadStoreData();
+            me.loadEntityPermissionStores();
         }
         var generalTab = me.getView().down('momo-application-general');
         me.getView().setActiveItem(generalTab);
@@ -125,6 +127,15 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                 Ext.Msg.alert('Error', errorMessage);
             }
         });
+
+        // update permissions if necessary
+        if (action === 'update') {
+            var permissionGrids = me.getView().query(
+                'momo-entitypermissions');
+            Ext.each(permissionGrids, function(grid) {
+                grid.getController().updatePermissions();
+            });
+        }
     },
 
     /**
@@ -159,6 +170,19 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
 
         layerTreePanel.setTreeConfigId(appData.layerTree.id);
         layerTreePanel.getController().loadStoreData();
+        me.loadEntityPermissionStores();
+    },
+
+    /**
+     *
+     */
+    loadEntityPermissionStores: function() {
+        var permissionTab = this.getView().down(
+            'momo-application-permission');
+        var grids = permissionTab.query('momo-entitypermissions');
+        Ext.each(grids, function(grid) {
+            grid.getController().loadStore();
+        });
     },
 
     /**
