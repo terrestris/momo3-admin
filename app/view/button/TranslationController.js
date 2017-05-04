@@ -151,12 +151,6 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                                 iconCls: 'x-fa fa-list',
                                 routeId: 'layers'
                             }, {
-                                text: vm.get('i18n').usersMenuTitle,
-                                view: 'grid.UserList',
-                                leaf: true,
-                                iconCls: 'x-fa fa-users',
-                                routeId: 'users'
-                            }, {
                                 text: vm.get('i18n').groupsMenuTitle,
                                 view: 'panel.GroupPanel',
                                 leaf: true,
@@ -195,6 +189,11 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                     if (userGroupRoleGrid) {
                         userGroupRoleGrid.getView().refresh();
                     }
+                    var permissionGrids = Ext.ComponentQuery.query(
+                        'momo-entitypermissions');
+                    Ext.each(permissionGrids, function(grid) {
+                        grid.getView().refresh();
+                    });
                 }
             }
         }

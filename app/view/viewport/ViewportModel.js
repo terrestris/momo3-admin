@@ -20,6 +20,20 @@ Ext.define('MoMo.admin.view.viewport.ViewportModel', {
                 profileImage = 'resources/images/emptyUserAvatar.png';
             }
             return profileImage;
+        },
+        allowCreateOrEditWebmaps: function() {
+            var availableRoles = [];
+            if (this.get('user') && this.get('user').getData()) {
+                availableRoles = this.get('user').getData().groupRoles;
+            }
+            var isAllowed = false;
+            Ext.each(availableRoles, function(role) {
+                if (role.indexOf('ROLE_ADMIN') > -1 ||
+                    role.indexOf('ROLE_SUBADMIN') > -1) {
+                    isAllowed = true;
+                }
+            });
+            return isAllowed;
         }
     }
 });

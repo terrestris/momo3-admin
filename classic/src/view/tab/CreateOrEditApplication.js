@@ -10,7 +10,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
         'MoMo.admin.view.panel.application.Layout',
         'MoMo.admin.view.panel.application.Layer',
         'MoMo.admin.view.panel.application.Tools',
-        'MoMo.admin.view.panel.application.StartView'
+        'MoMo.admin.view.panel.application.StartView',
+        'MoMo.admin.view.panel.application.Permissions'
     ],
 
     controller: 'momo-create-or-edit-application',
@@ -57,6 +58,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
         xtype: 'momo-application-start-view'
     }, {
         xtype: 'momo-application-layer'
+    }, {
+        xtype: 'momo-application-permission'
     }],
 
     listeners: {

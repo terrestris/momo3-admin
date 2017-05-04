@@ -8,6 +8,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
 
     data: {
 
+        i18n: {
+            permissions: {
+                applicationpermissionstitle: 'Permissions',
+                applicationpermissionsdescriptiontext: 'Here you can manage ' +
+                    'what users and groups may' +
+                    'see, edit and delete this application.<br>' +
+                    'If you are creating a new application, you will need to ' +
+                    'save it first before you can set the permissions'
+            }
+        },
         entityId: null,
 
         cancelBtnText: 'Cancel',
@@ -53,16 +63,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
             mapExtentMaxXLabel: 'Max X',
             mapExtentMaxYLabel: 'Max Y',
             mapZoomLabel: 'Level',
-            mapZoomMaxLabel: 'Max',
-            mapZoomMinLabel: 'Min',
+//            mapZoomMaxLabel: 'Max',
+//            mapZoomMinLabel: 'Min',
             mapExtent: {
                 minX: 0,
                 minY: 0,
                 maxX: 0,
                 maxY: 0
             },
-            mapZoomMax: 28,
-            mapZoomMin: 0,
+//            mapZoomMax: 28,
+//            mapZoomMin: 0,
             values: {
                 center: {
                     x: 11579292,

@@ -60,6 +60,14 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
             style: {
                 title: 'Style',
                 fieldsetTitle: 'Generate Style for Layer'
+            },
+            permissions: {
+                layerpermissionstitle: 'Permissions',
+                layerpermissionsdescriptiontext: 'Here you can manage what ' +
+                    'users and groups may' +
+                    ' see, edit and delete this layer.<br>' +
+                    'If you are creating a new layer, you will need to ' +
+                    'save it first before you can set the permissions'
             }
         },
 
