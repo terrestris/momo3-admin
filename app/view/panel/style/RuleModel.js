@@ -3,9 +3,9 @@ Ext.define('MoMo.admin.view.panel.style.RuleModel', {
     alias: 'viewmodel.panel.style.rule',
 
     data: {
-        titlePrefix: 'Rule',
+        titlePrefix: '',
         rule: null,
-        removeRuleButtonText: 'Remove this rule',
+        removeRuleButtonText: '',
         removeRuleButtonIconCls: 'fa fa-minus'
     },
 

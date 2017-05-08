@@ -10,7 +10,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
     ],
 
     onAttributesButtonClicked: function(btn){
+        var me = this;
         var win = Ext.ComponentQuery.query("window[name=layerAttributes]")[0];
+        var viewModel = me.getView().lookupViewModel();
 
         if(win){
             if(win.isVisible()){
@@ -22,7 +24,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             Ext.create('Ext.window.Window', {
                 name: 'layerAttributes',
                 constrain: true,
-                title: 'Attributes',
+                bind: {
+                    title: viewModel.get('i18n.general.availableAttributes')
+                },
                 bodyPadding: '10px',
                 scrollable: 'y',
                 animateTarget: btn,
@@ -56,6 +60,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var submitForm = view.down('momo-form-submitform');
         var fieldsClone = [];
         var layerNameField = view.down('textfield[name="layerName"]');
+        var viewModel = me.getView().lookupViewModel();
         var fields = view.query(
                 'textfield[name="layerName"],'+
                 'textarea[name="layerDescription"],'+
@@ -64,7 +69,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             );
 
         if(!layerNameField.isValid()){
-            Ext.toast('Please enter a layer name.');
+            Ext.toast(viewModel.get('i18n.general.layerNameInvalidMsg'));
             return;
         }
         view.setLoading(true);
@@ -105,8 +110,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 });
 
                 if (action.response && action.response.responseText) {
-                    var respObj = Ext.decode(
-                            action.response.responseText);
+                    var respObj = Ext.decode(action.response.responseText),
+                        errorMsg = viewModel.
+                          get('i18n.general.uploadLayerErrorMsg');
 
                     // We have to Set an CRS for the importJob manually and then
                     // restart it again
@@ -114,8 +120,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                         me.showProjectionWindow(respObj);
                     }
 
-                    Ext.toast(respObj.message,
-                            'Error while uploading the layer.');
+                    Ext.toast(respObj.message, errorMsg);
                 }
             }
         });
@@ -125,12 +130,15 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var me = this;
         //TODO Fix for multiupload
         var layerName = respObj.tasksWithoutProjection[0].layer.name;
+        var viewModel = me.getView().lookupViewModel();
 
         Ext.create('Ext.window.Window', {
             name: 'projectionWindow',
             constrain: true,
             modal: true,
-            title: 'Choose projection',
+            bind: {
+                title: viewModel.get('i18n.general.chooseProjectionWindowTitle')
+            },
             bodyPadding: '10px',
             scrollable: 'y',
             closeable: false,
@@ -142,7 +150,10 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 fieldLabel: layerName,
                 labelAlign: 'top',
                 width: '100%',
-                emptyText: 'Choose a Projection System',
+                bind: {
+                    emptyText: viewModel.
+                      get('i18n.general.chooseProjectionLayerNameEmptyText')
+                },
                 name: 'fileProjection',
                 displayField: 'name',
                 valueField: 'code',
@@ -158,14 +169,18 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 }
             }],
             bbar: ['->', {
-                text: 'Cancel Upload',
-//                ui: 'mapmavin-cancel', TODO
+                bind: {
+                    text: viewModel.
+                      get('i18n.general.chooseProjectionCancelBtnText')
+                },
                 handler: function(btn){
                     me.cancelImport(btn, respObj);
                 }
             },{
-                text: 'OK',
-//                ui: 'mapmavin', TODO
+                bind: {
+                    text: viewModel.
+                      get('i18n.general.chooseProjectionOkBtnText')
+                },
                 handler: function(btn){
                     me.updateCrsForImport(btn, respObj);
                 }
@@ -236,8 +251,10 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var coeLayerController = coeLayerPanel.getController();
         var metadataPanel = coeLayerPanel.down('momo-layer-metadata');
         var metadataController = metadataPanel.getController();
+        var uploadSuccessfulText = viewModel.
+          get('i18n.general.uploadSuccessfulText');
 
-        Ext.toast('Successfully uploaded the layer.');
+        Ext.toast(uploadSuccessfulText);
 
         // reload the layer stores
         var layerComponents = Ext.ComponentQuery.query(
@@ -287,7 +304,11 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             reader.readAsBinaryString(file);
         } else {
             me.updateUploadInfo();
-            Ext.toast('Prevalidation of zip skipped.', 'Large Uploadfile');
+            var zipValidationFailedText = viewModel.
+              get('i18n.general.zipValidationFailedText');
+            var fileTooLargeText = viewModel.
+              get('i18n.general.fileTooLargeText');
+            Ext.toast(zipValidationFailedText, fileTooLargeText);
         }
     },
 
@@ -372,13 +393,32 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
     updateUploadInfo: function(){
         var me = this;
         var upload = me.getViewModel().get('upload');
+        var uploadSkippedLargeFileMsg = me.getViewModel().
+          get('i18n.general.uploadSkippedLargeFileMsg');
+        var uploadSkippedShapeFileMissingMsg = me.getViewModel().
+          get('i18n.general.uploadSkippedShapeFileMissingMsg');
+        var uploadSkippedDbfFileMissingMsg = me.getViewModel().
+          get('i18n.general.uploadSkippedDbfFileMissingMsg');
+        var uploadSkippedShxFileMissingMsg = me.getViewModel().
+          get('i18n.general.uploadSkippedShxFileMissingMsg');
+        var uploadSkippedPrjMissingMsg = me.getViewModel().
+          get('i18n.general.uploadSkippedPrjMissingMsg');
+        var uploadSkippedGeoTiffMissingMsg = me.getViewModel().
+          get('i18n.general.uploadSkippedGeoTiffMissingMsg');
+        var uploadInfoGeoreferencedGeoTiffMsg = me.getViewModel().
+          get('i18n.general.uploadInfoGeoreferencedGeoTiffMsg');
+        var uploadGeoTiffNotGeoreferencedMsg = me.getViewModel().
+          get('i18n.general.uploadGeoTiffNotGeoreferencedMsg');
+        var uploadFailedNoTypeDeterminedMsg = me.getViewModel().
+          get('i18n.general.uploadFailedNoTypeDeterminedMsg');
+
         var template = new Ext.XTemplate(
             '<tpl if="this.gotFile(values)">',
                 '<p><b>Layertype</b>: ',
                     '<tpl if="fileSize &gt; 100000000">',
                         '<i style="color:orange;" ',
                             'class="fa fa-exclamation-triangle"></i> ',
-                            'Skipped preprocessing because of large file.',
+                            uploadSkippedLargeFileMsg,
                     '<tpl else>',
                         '{dataType}',
                     '</tpl>',
@@ -390,21 +430,21 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                         '<i style="color:green;" class="fa fa-check"></i>',
                     '<tpl else>',
                         '<i style="color:red;" class="fa fa-times"></i> ',
-                        'A shape file is missing.',
+                        uploadSkippedShapeFileMissingMsg,
                     '</tpl></p>',
                     '<p><b>*.shx: </b>',
                     '<tpl if="vector.hasShx">',
                         '<i style="color:green;" class="fa fa-check"></i>',
                     '<tpl else>',
                         '<i style="color:red;" class="fa fa-times"></i> ',
-                        'A database file is missing.',
+                        uploadSkippedShxFileMissingMsg,
                     '</tpl></p>',
                     '<p><b>*.dbf: </b>',
                     '<tpl if="vector.hasDbf">',
                         '<i style="color:green;" class="fa fa-check""></i>',
                     '<tpl else>',
                         '<i style="color:red;" class="fa fa-times"></i> ',
-                        'A database file is missing.',
+                        uploadSkippedDbfFileMissingMsg,
                     '</tpl></p>',
                     '<p><b>*.prj: </b>',
                     '<tpl if="vector.hasPrj">',
@@ -412,8 +452,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                     '<tpl else>',
                         '<i style="color:orange;" ',
                         'class="fa fa-exclamation-triangle"></i> ',
-                        'A projection file is recommended. You can choose a ',
-                        'projectionsystem from the combo alternatively.',
+                        uploadSkippedPrjMissingMsg,
                     '</tpl></p>',
                 '<tpl elseif="dataType == \'Raster\'">',
                     '<tpl if="raster.hasGeoTiff">',
@@ -426,12 +465,12 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                         '<p>',
                             '<b>*.geoTiff / *.tif: </b>',
                             '<i style="color:red;" class="fa fa-times"></i> ',
-                            'A geoTiff or tif file is missing.',
+                            uploadSkippedGeoTiffMissingMsg,
                         '</p>',
                     '</tpl>',
                     '<tpl if="raster.hasGeoKeys">',
                         '<p>',
-                            '<b>Data is georeferenced: </b> ',
+                            '<b>',uploadInfoGeoreferencedGeoTiffMsg,'</b> ',
                             '<i style="color:green;" class="fa fa-check"></i>',
                         '<p>',
                     '<tpl elseif="raster.hasTfw">',
@@ -442,9 +481,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                     '<tpl else>',
                         '<p><b>Error: </b>',
                             '<i style="color:red;" class="fa fa-times"></i> ',
-                            'Your raster data is not georeferenced. Please ',
-                            'georeference it or add a worldfile (*.tfw) to ',
-                            'the zip.',
+                            uploadGeoTiffNotGeoreferencedMsg,
                         '</p>',
                     '</tpl>',
                 '<tpl else>',
@@ -453,11 +490,11 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                             '<b>Info: </b>',
                             '<i style="color:orange;" ',
                                 'class="fa fa-exclamation-triangle"></i> ',
-                                'Skipped preprocessing because of large file.',
+                                uploadSkippedLargeFileMsg,
                         '<tpl else>',
                             '<b>Error: </b>',
                             '<i style="color:red;" class="fa fa-times"></i> ',
-                                'Type of the layer could not be determined.',
+                                uploadFailedNoTypeDeterminedMsg,
                         '</tpl>',
                     '</p>',
                 '</tpl>',

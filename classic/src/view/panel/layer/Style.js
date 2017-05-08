@@ -10,7 +10,7 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
     routeId: 'style',
 
     bind: {
-        title: '{i18n.style.title}'
+        title: '{style.title}'
     },
 
     scrollable: 'y',
@@ -20,7 +20,7 @@ Ext.define('MoMo.admin.view.panel.layer.Style',{
     items: [{
         xtype: 'fieldset',
         bind: {
-            title: '{i18n.style.fieldsetTitle}'
+            title: '{style.fieldsetTitle}'
         },
         items: [{
             xtype: 'momo-panel-style-styler',
