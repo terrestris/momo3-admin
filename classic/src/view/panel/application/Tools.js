@@ -12,7 +12,7 @@ Ext.define('MoMo.admin.view.panel.application.Tools', {
     routeId: 'tools',
 
     bind: {
-        title: '{tools.title}'
+        title: '{i18n.tools.title}'
     },
 
     padding: 20,
@@ -22,12 +22,12 @@ Ext.define('MoMo.admin.view.panel.application.Tools', {
     items: [{
         xtype: 'fieldset',
         bind: {
-            title: '{tools.title}'
+            title: '{i18n.tools.title}'
         },
         items: [{
             xtype: 'displayfield',
             bind: {
-                value: '{tools.helpText}'
+                value: '{i18n.tools.helpText}'
             }
         }]
     }],
