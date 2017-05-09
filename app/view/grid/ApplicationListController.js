@@ -33,16 +33,26 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
 
     onCopyClick: function() {
         var view = this.getView();
+        var viewModel = view.lookupViewModel();
+        var appCopyErrorMsgTitle = viewModel.get('i18n.appCopyErrorMsgTitle');
+        var appCopySelectAppsBeforeMsg = viewModel.
+            get('i18n.appCopySelectAppsBeforeMsg');
+        var appCopyPromptMsg = viewModel.get('i18n.appCopyPromptMsg');
+        var appCopiedSuccessfulMsg = viewModel.
+            get('i18n.appCopiedSuccessfulMsg');
+        var appCopyErrorMsg = viewModel.get('i18n.appCopyErrorMsg');
+        var copyPromptTitle = viewModel.get('i18n.appCopyPromptTitle');
+
         var selection = view.getSelectionModel().getSelection();
         if (selection.length !== 1) {
             Ext.Msg.alert(
-                'Error',
-                'Please select a single application before!'
+                appCopyErrorMsgTitle,
+                appCopySelectAppsBeforeMsg
             );
             return;
         }
         var appId = selection[0].get('id');
-        BasiGX.prompt('Enter a new name for the application to be copied', {
+        BasiGX.prompt(appCopyPromptMsg, {
             fn: function(decision, appName) {
                 if (decision === "ok" && appName !== "") {
                     view.setLoading(true);
@@ -60,35 +70,42 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
                             view.setLoading(false);
                             if (response && response.status === 201) {
                                 view.getStore().load();
-                                Ext.toast("Application has been copied " +
-                                    "successfull");
+                                Ext.toast(appCopiedSuccessfulMsg);
                             } else {
                                 Ext.Msg.alert(
-                                    'Error',
-                                    'Could not copy the application.'
+                                    appCopyErrorMsgTitle,
+                                    appCopyErrorMsg
                                 );
                             }
                         },
                         failure: function() {
                             view.setLoading(false);
                             Ext.Msg.alert(
-                                'Error',
-                                'Could not copy the application.'
+                                appCopyErrorMsgTitle,
+                                appCopyErrorMsg
                             );
                         }
                     });
                 }
-            }
+            },
+            title: copyPromptTitle
         });
     },
 
     onDeleteClick: function() {
         var view = this.getView();
         var selection = view.getSelectionModel().getSelection();
+        var viewModel = view.lookupViewModel();
+        var appCopyErrorMsgTitle = viewModel.get('i18n.appCopyErrorMsgTitle');
+        var appCopySelectAppsBeforeMsg = viewModel.
+            get('i18n.appCopySelectAppsBeforeMsg');
+        var appDeletedMsg = viewModel.get('i18n.appDeletedMsg');
+        var appDeletionErrorMsg = viewModel.get('i18n.appDeletionErrorMsg');
+
         if (selection.length < 1) {
             Ext.Msg.alert(
-                'Error',
-                'Please select at least one application before!'
+                appCopyErrorMsgTitle,
+                appCopySelectAppsBeforeMsg
             );
             return;
         }
@@ -96,9 +113,9 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
             app.erase({
                 callback: function(rec,operation,success) {
                     if (success) {
-                        Ext.toast("Application deleted");
+                        Ext.toast(appDeletedMsg);
                     } else {
-                        Ext.toast("Application deletion failed");
+                        Ext.toast(appDeletionErrorMsg);
                     }
                 }
             });
