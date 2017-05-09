@@ -3,12 +3,12 @@ Ext.define('MoMo.admin.view.panel.style.FilterModel', {
     alias: 'viewmodel.panel.style.filter',
 
     data: {
-        title: 'Use Filter',
-        attributeComboLabel: 'Property',
-        operatorComboLabel: 'Operator',
-        literalNumberField1Label: 'Lower boundary',
-        literalNumberField2Label: 'Value',
-        literalTextFieldLabel: 'Is like pattern'
+        title: '',
+        attributeComboLabel: '',
+        operatorComboLabel: '',
+        literalNumberField1Label: '',
+        literalNumberField2Label: '',
+        literalTextFieldLabel: ''
     }
 
 });

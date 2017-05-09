@@ -141,16 +141,16 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
         if(!win){
             Ext.create('Ext.window.Window', {
                 name: 'symbolizer-edit-window',
-                title: me.getViewModel().get('windowTitle'),
+                title: viewModel.get('windowTitle'),
                 layout: 'fit',
                 items: [styleEditor],
                 bbar: [{
-                    text: 'Cancel',
+                    text: viewModel.get('cancelSymbolizationText'),
                     handler: function(btn){
                         btn.up('[name=symbolizer-edit-window]').close();
                     }
                 },{
-                    text: 'Apply',
+                    text: viewModel.get('applySymbolizationText'),
                     handler: me.applyStyle,
                     scope: me
                 }]

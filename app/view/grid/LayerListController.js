@@ -74,11 +74,15 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         var me = this;
         var view = me.getView();
         var selection = view.getSelectionModel().getSelection();
+        var viewModel = me.getViewModel();
+        var deletionErrorMsgTitle = viewModel.get('deletionErrorMsgTitle');
+        var deletionErrorMsgText = viewModel.get('deletionErrorMsgText');
+        var deletionMsgTemplate = viewModel.get('deletionMsgTemplate');
+        var unsuccessfulDeletionMsgTemplate = viewModel.
+            get('unsuccessfulDeletionMsgTemplate');
+
         if (selection.length !== 1) {
-            Ext.Msg.alert(
-                'Error',
-                'Please select a single layer before!'
-            );
+            Ext.Msg.alert(deletionErrorMsgTitle,deletionErrorMsgText);
             return;
         }
         Ext.each(selection, function(rec) {
@@ -87,10 +91,14 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
                     view.setLoading(false);
                     view.getStore().load();
                     if (success) {
-                        Ext.toast("Layer " + rec.get('name') + " deleted.");
+                        Ext.toast(Ext.String.format(deletionMsgTemplate,
+                            rec.get('name')));
                     } else {
-                        Ext.toast("Layer " + rec.get('name') +
-                            " could not be deleted.");
+                        Ext.toast(
+                          Ext.String.format(unsuccessfulDeletionMsgTemplate,
+                            rec.get('name')
+                          )
+                        );
                         return false;
                     }
                 }
@@ -120,8 +128,13 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     },
 
     downloadLayerdata: function(layerIdArray){
+        var me = this,
+            viewModel = me.getViewModel(),
+            downloadStartingMsg = viewModel.get('downloadStartingMsg'),
+            downloadFailureMsg = viewModel.get('downloadFailureMsg');
+
         if (layerIdArray) {
-            Ext.toast('Download will start shortly, please wait...');
+            Ext.toast(downloadStartingMsg);
             var form = Ext.DomHelper.append(document.body, {
                 tag : 'form',
                 method : 'post',
@@ -143,22 +156,23 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
             form.submit();
             document.body.removeChild(form);
         } else {
-            Ext.toast('Could not download Layerdata!');
+            Ext.toast(downloadFailureMsg);
         }
     },
 
     showLayerPreview: function(record) {
         var me = this;
         if(Ext.isNumber(record.get('id'))){
-            var previewWindow = this.getView().previewWindow;
+            var previewWindow = me.getView().previewWindow;
             var previewMap = previewWindow.down('gx_component_map').getMap();
+            var previewTemplate = me.getViewModel().get('previewTemplate');
 
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                     'rest/layers/' + record.get('id'),
                 success: function(response) {
-                    var title = Ext.String.format('Preview of "{0}"',
-                            record.get('name'));
+                    var title = Ext.String.format(previewTemplate,
+                        record.get('name'));
                     var obj = Ext.decode(response.responseText);
                     var layer = MoMo.admin.util.LayerParser.
                             createOlLayer(obj);
@@ -177,7 +191,8 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
                 failure: function(response) {
                     Ext.raise('server-side failure with status code ' +
                         response.status);
-                }
+                },
+                scope: me
             });
         }
     },

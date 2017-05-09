@@ -34,13 +34,13 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplication', {
     }, {
         xtype: 'button',
         bind: {
-            text: '{cancelBtnText}'
+            text: '{i18n.cancelBtnText}'
         },
         handler: 'onCancelClick'
     }, {
         xtype: 'button',
         bind: {
-            text: '{saveBtnText}'
+            text: '{i18n.saveBtnText}'
         },
         handler: 'onSaveClick'
     }],

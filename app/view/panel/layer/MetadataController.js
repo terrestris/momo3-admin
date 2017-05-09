@@ -16,9 +16,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-
     prefillEmptyFields: function(){
-
         var view = this.getView();
         var viewModel = view.lookupViewModel();
         var title = viewModel.get('metadata.title');
@@ -78,6 +76,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
         var me = this;
         var xml = MoMo.shared.MetadataUtil.getInsertBlankXml();
         var layer;
+        var viewModel = me.getView().lookupViewModel();
 
         MoMo.admin.model.Layer.load(layerObj.data.id, {
             scope: this,
@@ -106,15 +105,18 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                             // the real values from the form
                             me.updateMetadataEntry(layer, metadata);
                         }
-                        Ext.toast('Createad MetadataSet with UUID: ' + uuid);
+                        Ext.toast(viewModel.
+                          get('i18n.metadata.createdMetadataMsg') + uuid);
                     },
                     failure: function(){
-                        Ext.toast('Error: Couldn\'t create MetadaSet');
+                        Ext.toast(viewModel.
+                          get('i18n.metadata.couldNotCreateMetadataMsg'));
                     }
                 });
             },
             failure: function() {
-                Ext.toast('Error loading Layer Data.');
+                Ext.toast(viewModel.
+                  get('i18n.metadata.couldNotLoadLayerDataMsg'));
             }
         });
     },
@@ -123,8 +125,9 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
      *
      */
     updateMetadataEntry: function(layer, metadata){
+        var me = this;
         var uuid = layer.get('metadataIdentifier');
-
+        var viewModel = me.getView().lookupViewModel();
         if(uuid && metadata){
             var xml = MoMo.shared.MetadataUtil.getUpdateXml(uuid, metadata);
             Ext.Ajax.request({
@@ -138,10 +141,12 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 scope: this,
                 success: function() {
-                    Ext.toast('Updated MetadataSet with UUID: ' + uuid);
+                    Ext.toast(viewModel.
+                      get('i18n.metadata.updatedMetadataMsg') + uuid);
                 },
                 failure: function(){
-                    Ext.toast('Error: Couldn\'t update MetadaSet');
+                    Ext.toast(viewModel.
+                      get('i18n.metadata.couldNotUpdateMetadataMsg'));
                 }
             });
         }

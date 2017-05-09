@@ -38,7 +38,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     previewWindow: null,
 
     bind: {
-        title: '{i18n.layerlistTitle}'
+        title: '{layerlistTitle}'
     },
 
     hideHeaders: true,
@@ -59,7 +59,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         itemId: 'refresh',
         type: 'refresh',
         bind: {
-            tooltip: '{i18n.layerlistRefreshText}'
+            tooltip: '{layerlistRefreshText}'
         },
         callback: 'loadStore'
     }],
@@ -75,7 +75,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         align: "center",
         renderer: function() {
             return '<i class="fa fa-gear fa-2x" data-qtip="' +
-                this.getViewModel().get('i18n').layerlistSettings + '">';
+                this.getViewModel().get('layerlistSettings') + '">';
         }
     },{
         xtype: 'gridcolumn',
@@ -84,7 +84,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         align: "center",
         renderer: function() {
             return '<i class="fa fa-paint-brush fa-2x" data-qtip="' +
-                this.getViewModel().get('i18n').layerlistStyle + '">';
+                this.getViewModel().get('layerlistStyle') + '">';
         }
     },{
         xtype: 'gridcolumn',
@@ -93,7 +93,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         align: "center",
         renderer: function() {
             return '<i class="fa fa-download fa-2x" data-qtip="' +
-                this.getViewModel().get('i18n').layerlistDownload + '">';
+                this.getViewModel().get('layerlistDownload') + '">';
         }
     },{
         xtype: 'gridcolumn',
@@ -102,7 +102,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         align: "center",
         renderer: function() {
             return '<i class="fa fa-eye fa-2x" data-qtip="' +
-                this.getViewModel().get('i18n').layerlistPreview + '">';
+                this.getViewModel().get('layerlistPreview') + '">';
         }
     }],
 
@@ -110,7 +110,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         xtype: 'button',
         name: 'create-layer-button',
         bind: {
-            text: '{i18n.layerlistCreateLayer}'
+            text: '{layerlistCreateLayer}'
         },
         scale: 'large',
         ui: 'momo',
@@ -120,7 +120,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         xtype: 'button',
         name: 'delete-layer-button',
         bind: {
-            text: '{i18n.layerlistDeleteLayer}'
+            text: '{layerlistDeleteLayer}'
         },
         scale: 'large',
         ui: 'momo',
@@ -130,7 +130,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         xtype: 'textfield',
         name: 'filter-layer-list-field',
         bind: {
-            fieldLabel: '{i18n.layerlistFilterByName}'
+            fieldLabel: '{layerlistFilterByName}'
         },
         labelWidth: undefined,
         triggers: {

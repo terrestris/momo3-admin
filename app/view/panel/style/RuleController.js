@@ -4,6 +4,7 @@ Ext.define('MoMo.admin.view.panel.style.RuleController', {
 
     removeRule: function(){
         var view = this.getView();
+        var viewModel = this.getViewModel();
         var rulesPanel = view.up('momo-panel-style-rules');
         var rules = rulesPanel.rules;
         var rule = view.getRule();
@@ -15,7 +16,7 @@ Ext.define('MoMo.admin.view.panel.style.RuleController', {
             }));
             view.fireEvent('rulechanged', rule);
         } else {
-            Ext.toast('At least one rule is required.');
+            Ext.toast(viewModel.get('singleRoleNeededErrorMsg'));
         }
     },
 

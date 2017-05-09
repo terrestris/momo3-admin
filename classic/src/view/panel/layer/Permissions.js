@@ -20,7 +20,7 @@ Ext.define('MoMo.admin.view.panel.layer.Permissions', {
     items: [{
         xtype: 'displayfield',
         bind: {
-            value: '{i18n.permissions.layerpermissionsdescriptiontext}'
+            value: '{i18n.permissions.layerpermissionsdescriptionText}'
         }
     }, {
         xtype: 'fieldset',

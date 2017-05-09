@@ -45,7 +45,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
                     me.loadEntityPermissionStores();
                 },
                 failure: function() {
-                    Ext.toast('Error loading Application Data.');
+                    Ext.toast(viewModel.
+                      get('i18n.couldNotLoadApplicationDataMsg'));
                 }
             });
         } else {
@@ -63,6 +64,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         var viewport = me.getView().up('viewport');
         var layerTreePanel = me.getView().down('momo-layertree');
         var layerTreePanelCtrl = layerTreePanel.getController();
+        var viewModel = me.getView().lookupViewModel();
 
         // validate fields in all tabs
         var allFieldsValid = me.validateFields();
@@ -74,7 +76,9 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             layerTreePanelCtrl.syncTreeStore(me.saveApplication, me);
 
         } else {
-            Ext.toast('Please fill out all required fields.', null, 'b');
+            Ext.toast(
+              viewModel.get('i18n.saveApplicationProvideAllRequiredFieldsMsg'),
+              null, 'b');
         }
     },
 
@@ -95,14 +99,15 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             jsonData: me.collectAppData(),
             scope: me,
-            // TODO fix messages
             callback: function() {
                 viewport.setLoading(false);
             },
             success: function(response) {
                 var json = JSON.parse(response.responseText);
-                Ext.toast('Successfully ' + action + 'd the application "'
-                        + json.name + '"', null, 'b');
+                var msgTemplate = viewModel.
+                  get('i18n.saveApplicationResponseTpl');
+                Ext.toast(
+                  Ext.String.format(msgTemplate, action, json.name), null, 'b');
                 var appList = viewport.down('momo-applicationlist');
                 if (appList) {
                     appList.getStore().load();

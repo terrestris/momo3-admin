@@ -14,7 +14,7 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
     routeId: 'layer',
 
     bind: {
-        title: '{layer.title}'
+        title: '{i18n.layer.title}'
     },
 
     padding: 20,
@@ -24,7 +24,7 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
     items: [{
         xtype: 'fieldset',
         bind: {
-            title: '{layer.title}'
+            title: '{i18n.layer.title}'
         },
         layout: {
             type: 'hbox',
@@ -34,9 +34,6 @@ Ext.define('MoMo.admin.view.panel.application.Layer', {
             xtype: 'momo-layerlist',
             scrollable: 'y',
             flex: 1,
-            bind: {
-                title: '{layer.availableLayersGridTitle}'
-            },
             viewConfig: {
                 plugins: {
                     ptype: 'gridviewdragdrop',

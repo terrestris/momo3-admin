@@ -7,7 +7,8 @@ Ext.define('MoMo.admin.view.panel.application.GeneralController', {
         var viewModel = me.getView().lookupViewModel();
 
         if (box.checked) {
-            Ext.toast(viewModel.get('general.publicBoxToastText'), null, 'b');
+            Ext.toast(viewModel.get('i18n.general.publicBoxToastText'),
+              null, 'b');
         }
     },
 
@@ -16,7 +17,8 @@ Ext.define('MoMo.admin.view.panel.application.GeneralController', {
         var viewModel = me.getView().lookupViewModel();
 
         if (!box.checked) {
-            Ext.toast(viewModel.get('general.activeBoxToastText'), null, 'b');
+            Ext.toast(viewModel.get('i18n.general.activeBoxToastText'),
+              null, 'b');
         }
     }
 

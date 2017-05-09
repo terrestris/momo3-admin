@@ -19,7 +19,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
 
     routeId: 'metadata',
 
-    title: 'Metadata', // TODO use title formula from viewmodel
+    bind: {
+        title: '{i18n.metadata.tabPanelTitle}'
+    },
 
     scrollable: 'y',
 
@@ -31,7 +33,9 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
 
     items: [{
         xtype: 'fieldset',
-        title: 'Metadata',
+        bind: {
+            title: '{i18n.metadata.tabPanelTitle}'
+        },
         layout: 'hbox',
         scrollable: 'y',
         items: [{
