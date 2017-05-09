@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.view.panel.style.RulesModel', {
     alias: 'viewmodel.panel.style.rules',
 
     data: {
-        addRuleButtonText: 'Add Rule',
+        addRuleButtonText: '',
         addRuleButtonIconCls: 'fa fa-plus'
     }
 

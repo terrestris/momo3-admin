@@ -3,11 +3,11 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerModel', {
     alias: 'viewmodel.panel.style.symbolizer',
     data: {
         name: 'SLDStyler',
-        title: 'Symbolizer',
+        title: '',
         olStyle: null,
         symbolType: null,
-        windowTitle: 'Edit Symbolizer',
-        symbolizerFieldSetHtml: 'click symbolizer to edit'
+        windowTitle: '',
+        symbolizerFieldSetHtml: ''
     }
 
 });
