@@ -67,7 +67,12 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                         flex: 1,
                         bind: {
                             fieldLabel: '{i18n.general.fileUploadFieldLabel}',
-                            emptyText: '{i18n.general.fileUploadEmptyText}'
+                            emptyText: '{i18n.general.fileUploadEmptyText}',
+                            buttonText: '{i18n.general.fileSelectBtnText}'
+                        },
+                        setButtonText: function(value) {
+                            // needed since it isn't bindable
+                            this.button.setText(value);
                         },
                         name: 'file',
                         allowBlank: false,
@@ -78,7 +83,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     }, {
                         xtype: 'button',
                         bind: {
-                            text: '{i18n.general.fileUpladButtonText}'
+                            text: '{i18n.general.fileUploadButtonText}'
                         },
                         formBind: true,
                         margin: '0 0 0 5px',

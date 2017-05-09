@@ -19,7 +19,8 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
                 layerNameEmptyText: 'Enter a layer name',
                 fileUploadFieldLabel: 'File',
                 fileUploadEmptyText: '*.zip',
-                fileUpladButtonText: 'Upload',
+                fileUploadButtonText: 'Upload',
+                fileSelectBtnText: 'Browse...',
                 layerDescription: 'Layer Description',
                 layerOpacity: 'Layer Opacity',
                 hoverTemplate: 'Hover Template',
@@ -27,6 +28,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
             },
             metadata: {
                 title: 'Titel',
+                tabPanelTitle: 'Metadata',
                 abstract: 'Abstract',
                 organisation: 'Organisation',
                 address: 'Anschrift',

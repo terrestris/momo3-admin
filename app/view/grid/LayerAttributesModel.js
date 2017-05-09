@@ -8,8 +8,8 @@ Ext.define('MoMo.admin.view.grid.LayerAttributesModel', {
 
     data: {
         layer: null,
-        keyColumnHeader: 'Name',
-        valueColumnHeader: 'Data Type'
+        keyColumnHeader: '',
+        valueColumnHeader: ''
     },
 
     stores: {

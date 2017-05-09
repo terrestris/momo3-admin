@@ -55,7 +55,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayer', {
             disabled: '{isNewLayer}'
         }
     }, {
-        xtype: 'momo-layer-permission'
+        xtype: 'momo-layer-permission',
+        bind: {
+            disabled: '{isNewLayer}'
+        }
     }],
 
     listeners: {
