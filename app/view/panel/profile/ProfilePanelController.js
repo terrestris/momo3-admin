@@ -95,10 +95,12 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
         var me = this;
         var view = me.getView();
         var viewModel = view.getViewModel();
+        var userId = viewModel.get('user').id;
         var values = view.getForm().getValues();
         var grid = view.down('momo-userpermissiongrid');
         var modifiedRecs = grid.getStore().getModifiedRecords();
         values.permissions = {};
+        values.userId = userId;
         // read out the permissions per group
         Ext.each(modifiedRecs, function(rec) {
             // only handle this rec if it has been changed
