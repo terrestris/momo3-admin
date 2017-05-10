@@ -21,7 +21,13 @@ Ext.define('MoMo.admin.view.grid.GroupList',{
         sorters: [{
             property: 'name',
             direction: 'ASC'
-        }]
+        }],
+        // filter out the admin user group, as it may not be edited
+        filters: [
+            function(item) {
+                return item.get('name') !== "Admin User Group";
+            }
+        ]
     },
 
     bind: {

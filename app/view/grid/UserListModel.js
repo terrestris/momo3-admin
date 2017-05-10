@@ -6,6 +6,12 @@ Ext.define('MoMo.admin.view.grid.UserListModel', {
         title: 'All users',
         createUser: 'Create',
         deleteUser: 'Delete',
-        filterByName: 'Filter by name'
+        filterByName: 'Filter by name',
+        actionSuccess: 'Success',
+        actionFailure: 'Error',
+        deleteUserText: 'Do you really want to delete the selected ' +
+            'account(s)?',
+        deletionSuccessText: 'An account has been successfully deleted',
+        deletionFailureText: 'An account could not be deleted'
     }
 });

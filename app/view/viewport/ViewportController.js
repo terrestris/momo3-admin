@@ -113,8 +113,30 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         });
 
         // filter the menu based on the roles
-        if (hasAdminRole || hasSubAdminRole) {
+        if (hasAdminRole) {
             navigationStore.clearFilter();
+            return;
+        }
+
+        if (hasSubAdminRole) {
+            navigationStore.clearFilter();
+            navigationStore.filterBy(function(rec) {
+                if (rec.get('routeId') === "applications") {
+                    return true;
+                }
+                if (rec.get('routeId') === "users") {
+                    return false;
+                }
+                if (rec.get('routeId') === "profile") {
+                    return true;
+                }
+                if (rec.get('routeId') === "layers") {
+                    return true;
+                }
+                if (rec.get('routeId') === "groups") {
+                    return true;
+                }
+            });
             return;
         }
 
@@ -125,6 +147,9 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
                     return true;
                 }
                 if (rec.get('routeId') === "users") {
+                    return false;
+                }
+                if (rec.get('routeId') === "groups") {
                     return false;
                 }
                 if (rec.get('routeId') === "profile") {
@@ -148,6 +173,9 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
                 }
                 if (rec.get('routeId') === "profile") {
                     return true;
+                }
+                if (rec.get('routeId') === "groups") {
+                    return false;
                 }
                 if (rec.get('routeId') === "layers") {
                     return false;

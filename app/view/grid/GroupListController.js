@@ -37,8 +37,10 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
         });
         Ext.each(recs, function(rec) {
             // disable all groups not owned by this user, except superadmin
-            if ((rec.get('owner') && rec.get('owner').id !== userId) &&
-                    !isSuperAdmin) {
+            // disable the admin user group always, as editing it may lead
+            // to undesired behaviour
+            if (((rec.get('owner') && rec.get('owner').id !== userId) &&
+                    !isSuperAdmin) || rec.get('name') === "Admin User Group") {
                 var row = tableView.getRow(rec);
                 if (row) {
                     var el = Ext.fly(row);

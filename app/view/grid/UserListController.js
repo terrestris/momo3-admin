@@ -31,22 +31,75 @@ Ext.define('MoMo.admin.view.grid.UserListController', {
         }
     },
 
-    onCreateClick: function() {
-        Ext.toast("Create user");
-    },
-
     onDeleteClick: function() {
-        Ext.toast("Delete user");
-    },
+        var view = this.getView();
+        var viewModel = view.getViewModel();
+        var selection = view.getSelectionModel().getSelection();
 
-    handleCellClick: function(gridview, td, cellIndex){
-        switch(cellIndex) {
-            case 2:
-                Ext.toast("Edit user-settings");
-                break;
-            default:
-                return;
-        }
+        Ext.Msg.show({
+            title: viewModel.get('i18n.deleteUser'),
+            message: viewModel.get('i18n.deleteUserText'),
+            buttons: Ext.Msg.YESNO,
+            icon: Ext.Msg.QUESTION,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    view.setLoading(true);
+                    Ext.each(selection, function(user) {
+                        var userId = user.get('id');
+                        Ext.Ajax.request({
+                            url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                                'momousers/delete.action?id=' + userId,
+                            method: "POST",
+                            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+                            scope: this,
+                            callback: function(self, success, response) {
+                                view.setLoading(false);
+                                view.getStore().load();
+                                if (success) {
+                                    try {
+                                        var res = Ext.decode(
+                                            response.responseText);
+                                        if (res.success) {
+                                            Ext.Msg.alert(
+                                                viewModel.get(
+                                                    'i18n.action' +
+                                                    'Success'),
+                                                viewModel.get(
+                                                    'i18n.deletion' +
+                                                    'SuccessText')
+                                            );
+                                        } else {
+                                            Ext.Msg.alert(
+                                                viewModel.get(
+                                                    'i18n.action' +
+                                                    'Failure'),
+                                                viewModel.get(
+                                                    'i18n.deletion' +
+                                                    'FailureText')
+                                            );
+                                        }
+                                    } catch (e) {
+                                        Ext.Msg.alert(
+                                            viewModel.get(
+                                                'i18n.actionFailure'),
+                                            viewModel.get(
+                                                'i18n.deletion' +
+                                                'FailureText')
+                                        );
+                                    }
+                                } else {
+                                    Ext.Msg.alert(
+                                        viewModel.get(
+                                            'i18n.actionFailure'),
+                                        viewModel.get(
+                                            'i18n.deletionFailureText')
+                                    );
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        });
     }
-
 });
