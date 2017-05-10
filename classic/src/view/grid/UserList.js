@@ -51,11 +51,7 @@ Ext.define('MoMo.admin.view.grid.UserList',{
         align: "center",
         tdCls: "column-tool",
         tpl: new Ext.XTemplate(
-            '<tpl if="mainRole == \'ROLE_ADMIN\'">',
-                '<i class="fa fa-star fa-2x" data-qtip="Admin"></i>',
-            '<tpl elseif="mainRole == \'ROLE_SUBADMIN\'">',
-                '<i class="fa fa-star-half-o fa-2x" data-qtip="Sub-Admin"></i>',
-            '<tpl else >',
+            '<tpl>',
                 '<i class="fa fa-star-o fa-2x" data-qtip="User"></i>',
             '</tpl>'
         )
@@ -63,57 +59,42 @@ Ext.define('MoMo.admin.view.grid.UserList',{
         xtype: 'templatecolumn',
         flex: 10,
         tpl: '<div data-qtip="{fullName}">{fullName}</div>'
-    },{
-        xtype: 'templatecolumn',
-        width: 40,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: '<i class="fa fa-gear fa-2x" data-qtip="User Settings">'
     }],
 
-    tbar: [{
-        xtype: 'button',
-        bind: {
-            text: '{createUser}'
-        },
-        scale: 'large',
-        ui: 'momo',
-        iconCls: 'fa fa-plus fa-2x',
-        handler: 'onCreateClick'
-    }, {
-        xtype: 'button',
-        bind: {
-            text: '{deleteUser}'
-        },
-        scale: 'large',
-        ui: 'momo',
-        iconCls: 'fa fa-minus fa-2x',
-        handler: 'onDeleteClick'
-    }, '->', {
-        xtype: 'textfield',
-        bind: {
-            fieldLabel: '{filterByName}'
-        },
-        labelWidth: undefined,
-        triggers: {
-            clear: {
-                cls: 'x-form-clear-trigger',
-                handler: function(){
-                    // Will trigger the change listener
-                    this.reset();
+    tbar: [
+        {
+            xtype: 'button',
+            bind: {
+                text: '{deleteUser}'
+            },
+            scale: 'large',
+            ui: 'momo',
+            iconCls: 'fa fa-minus fa-2x',
+            handler: 'onDeleteClick'
+        }, '->', {
+            xtype: 'textfield',
+            bind: {
+                fieldLabel: '{filterByName}'
+            },
+            labelWidth: undefined,
+            triggers: {
+                clear: {
+                    cls: 'x-form-clear-trigger',
+                    handler: function(){
+                        // Will trigger the change listener
+                        this.reset();
+                    }
                 }
+            },
+            listeners: {
+                change: 'onFilterChange',
+                buffer: 250
             }
-        },
-        listeners: {
-            change: 'onFilterChange',
-            buffer: 250
         }
-    }],
+    ],
 
     initComponent: function(){
         this.callParent(arguments);
-        this.getView().on('cellclick', 'handleCellClick');
-//        this.getView().on('selectionchange', 'selectionChanged');
         this.getView().on('render', 'loadStore');
     }
 
