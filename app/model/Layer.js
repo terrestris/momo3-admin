@@ -39,6 +39,9 @@ Ext.define('MoMo.admin.model.Layer', {
             type: 'LayerAppearance',
             unique: true
         }
+    }, {
+        name: 'readPermissionGrantedFromAnyApplication',
+        type: 'boolean'
     }]
 
     // manyToMany: {
