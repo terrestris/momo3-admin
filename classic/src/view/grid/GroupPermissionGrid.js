@@ -23,7 +23,13 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGrid',{
             'editorpermissionactive',
             'userpermissionactive'
         ],
-        groupField: 'groupname'
+        groupField: 'groupname',
+        // filter out the admin user group, as it may not be edited
+        filters: [
+            function(item) {
+                return item.get('groupname') !== "Admin User Group";
+            }
+        ]
     }),
 
     features: [{

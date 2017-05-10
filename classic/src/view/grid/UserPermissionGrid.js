@@ -20,6 +20,12 @@ Ext.define('MoMo.admin.view.grid.UserPermissionGrid',{
             'subadminpermissionactive',
             'editorpermissionactive',
             'userpermissionactive'
+        ],
+        // filter out the admin user group, as it may not be edited
+        filters: [
+            function(item) {
+                return item.get('groupname') !== "Admin User Group";
+            }
         ]
     }),
 
