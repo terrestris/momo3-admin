@@ -21,7 +21,23 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
         sorters: [{
             property: 'name',
             direction: 'ASC'
-        }]
+        }],
+        listeners: {
+            load: function(store){
+                var layerList = Ext.ComponentQuery.query('momo-layerlist')[0];
+                var tableView = layerList.getView();
+                store.each(function(rec) {
+                    if (rec.get('readPermissionGrantedFromAnyApplication')) {
+                        var row = tableView.getRow(rec);
+                        if (row) {
+                            var el = Ext.fly(row);
+                            // mask the user row
+                            el.mask();
+                        }
+                    }
+                });
+            }
+        }
     },
 
     config: {
