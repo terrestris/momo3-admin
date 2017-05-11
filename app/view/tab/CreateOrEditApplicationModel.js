@@ -65,20 +65,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationModel', {
         entityId: null,
         application: Ext.create('MoMo.admin.model.Application'),
         startview: {
-//            mapZoomMaxLabel: 'Max',
-//            mapZoomMinLabel: 'Min',
             mapExtent: {
                 minX: 0,
                 minY: 0,
                 maxX: 0,
                 maxY: 0
             },
-//            mapZoomMax: 28,
-//            mapZoomMin: 0,
             values: {
                 center: {
-                    x: 11579292,
-                    y: 6095394
+                    x: 11843458,
+                    y: 6251937
                 },
                 projection: 'EPSG:3857',
                 zoom: 5

@@ -60,6 +60,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                 }
             },
             items: [{
+                hidden: true,
                 bind: {
                     title: '{i18n.startview.projectionTitle}'
                 },
@@ -70,6 +71,7 @@ Ext.define('MoMo.admin.view.panel.application.StartView', {
                     allowBlank: false,
                     displayField: 'name',
                     valueField: 'code',
+                    hidden: true,
                     forceSelection: true,
                     editable: false,
                     columnWidth: 1,
