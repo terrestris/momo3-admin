@@ -81,7 +81,7 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
         var unsuccessfulDeletionMsgTemplate = viewModel.
             get('unsuccessfulDeletionMsgTemplate');
 
-        if (selection.length !== 1) {
+        if (selection.length < 1) {
             Ext.Msg.alert(deletionErrorMsgTitle,deletionErrorMsgText);
             return;
         }
