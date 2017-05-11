@@ -100,23 +100,36 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                             uuid = MoMo.shared.MetadataUtil.uuidFromXmlString(
                                     responseObj.data);
                             layer.set('metadataIdentifier', uuid);
-                            layer.save();
-                            // creation is an empty dataset, now update with
-                            // the real values from the form
-                            me.updateMetadataEntry(layer, metadata);
+
+                            // an dieser Stelle ist UUID noch nicht gesetzt
+                            layer.save({
+                                callback: function(savedLayer) {
+                                    // creation is an empty dataset, now update
+                                    // with the real values from the form
+                                    viewModel.set('layer', savedLayer);
+                                    me.updateMetadataEntry(
+                                        savedLayer, metadata, viewModel);
+                                }
+                            });
                         }
-                        Ext.toast(viewModel.
-                          get('i18n.metadata.createdMetadataMsg') + uuid);
+                        if (viewModel.getData()) {
+                            Ext.toast(viewModel.
+                                get('i18n.metadata.createdMetadataMsg') + uuid);
+                        }
                     },
                     failure: function(){
-                        Ext.toast(viewModel.
-                          get('i18n.metadata.couldNotCreateMetadataMsg'));
+                        if (viewModel.getData()) {
+                            Ext.toast(viewModel.
+                                get('i18n.metadata.couldNotCreateMetadataMsg'));
+                        }
                     }
                 });
             },
             failure: function() {
-                Ext.toast(viewModel.
-                  get('i18n.metadata.couldNotLoadLayerDataMsg'));
+                if (viewModel.getData()) {
+                    Ext.toast(viewModel.
+                        get('i18n.metadata.couldNotLoadLayerDataMsg'));
+                }
             }
         });
     },
@@ -124,12 +137,11 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    updateMetadataEntry: function(layer, metadata){
-        var me = this;
+    updateMetadataEntry: function(layer, metadata, viewModel){
         var uuid = layer.get('metadataIdentifier');
-        var viewModel = me.getView().lookupViewModel();
         if(uuid && metadata){
             var xml = MoMo.shared.MetadataUtil.getUpdateXml(uuid, metadata);
+
             Ext.Ajax.request({
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                 'metadata/csw.action',
@@ -141,15 +153,18 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 scope: this,
                 success: function() {
-                    Ext.toast(viewModel.
-                      get('i18n.metadata.updatedMetadataMsg') + uuid);
+                    if (viewModel && viewModel.getData()) {
+                        Ext.toast(viewModel.
+                            get('i18n.metadata.updatedMetadataMsg') + uuid);
+                    }
                 },
                 failure: function(){
-                    Ext.toast(viewModel.
-                      get('i18n.metadata.couldNotUpdateMetadataMsg'));
+                    if (viewModel && viewModel.getData()) {
+                        Ext.toast(viewModel.
+                            get('i18n.metadata.couldNotUpdateMetadataMsg'));
+                    }
                 }
             });
         }
-
     }
 });
