@@ -165,12 +165,12 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         });
 
         startViewTabViewModel.set('appData', {
-            mapProjection: 'EPSG:4326',
+            mapProjection: 'EPSG:3857',
             mapCenter: {
-                x: 31579292,
-                y: 6095394
+                x: 11843458,
+                y: 6251937
             },
-            mapZoom: 2
+            mapZoom: 5
         });
 
         layerTreePanel.setTreeConfigId(appData.layerTree.id);
