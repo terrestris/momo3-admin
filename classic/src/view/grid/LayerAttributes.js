@@ -4,7 +4,8 @@ Ext.define('MoMo.admin.view.grid.LayerAttributes',{
     xtype: 'momo-grid-layerattributes',
 
     requires: [
-        'MoMo.admin.view.grid.LayerAttributesModel'
+        'MoMo.admin.view.grid.LayerAttributesModel',
+        'MoMo.admin.store.LayerAttributes'
     ],
 
     viewModel: 'grid-layerattributes',
@@ -15,9 +16,18 @@ Ext.define('MoMo.admin.view.grid.LayerAttributes',{
 
     initComponent: function(){
         this.callParent();
-        if(this.getLayer()){
-            this.getViewModel().set('layer', this.getLayer());
-        }
+        var layerSrc = this.getLayer().getSource();
+        var layerUrl = layerSrc.get('url');
+        var layerName = layerSrc.get('layerNames');
+        var store = this.getStore();
+        var proxy = store.getProxy();
+        var url = layerUrl +
+            '?service=WFS&' +
+            'request=DescribeFeatureType&typeName=' + layerName;
+
+        proxy.setUrl(url);
+        store.load();
+
     },
 
     columns: [{
@@ -33,8 +43,8 @@ Ext.define('MoMo.admin.view.grid.LayerAttributes',{
         dataIndex: 'type'
     }],
 
-    bind: {
-        store: '{layerAttributes}'
+    store: {
+        type: 'layerattributes'
     }
 
 });

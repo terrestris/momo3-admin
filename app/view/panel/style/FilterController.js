@@ -41,7 +41,6 @@ Ext.define('MoMo.admin.view.panel.style.FilterController', {
             service: 'WFS',
             request: 'DescribeFeatureType',
             version: '1.1.0',
-            outputFormat: 'XMLSCHEMA',
             typeName: layerName
         };
 
