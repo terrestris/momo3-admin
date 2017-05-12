@@ -5,16 +5,17 @@ Ext.define('MoMo.admin.store.LayerAttributes', {
     alias: 'store.layerattributes',
 
     requires: [
-        'Ext.data.reader.Xml'
+        'Ext.data.reader.Json'
     ],
 
     proxy: {
         type: 'ajax',
+        extraParams: {
+            outputFormat: 'application/json'
+        },
         reader: {
-            type: 'xml',
-            namespace: 'xsd',
-            record: 'element',
-            rootProperty: 'sequence'
+            type: 'json',
+            rootProperty: 'featureTypes[0].properties'
         }
     },
 
@@ -50,7 +51,15 @@ Ext.define('MoMo.admin.store.LayerAttributes', {
             'gml:MultiPointPropertyType',
             'gml:MultiLineStringPropertyType',
             'gml:MultiSurfacePropertyType',
-            'gml:MultiPolygonPropertyType'
+            'gml:MultiPolygonPropertyType',
+            'gml:Point',
+            'gml:Polygon',
+            'gml:LineString',
+            'gml:Surface',
+            'gml:MultiPoint',
+            'gml:MultiPolygon',
+            'gml:MultiLineString',
+            'gml:MultiSurface'
         ];
 
         return !Ext.Array.contains(ignoreTypes, item.get('type'));
