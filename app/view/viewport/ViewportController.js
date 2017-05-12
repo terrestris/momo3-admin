@@ -47,6 +47,7 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
                         responseObj.data
                     );
                     viewModel.set('user', user);
+                    me.setAllowCreateOrEditWebmapsOnViewModel(viewModel, user);
                     me.setComponentsVisibilityBasedOnRole();
                     me.setLanguageForUser();
                 } else {
@@ -60,6 +61,25 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
                 );
             }
         });
+    },
+
+    /**
+     * Method updates the viewmodels bool flag. A formula in the viewmodel
+     * sometimes doesnt trigger, thats why we do it manually here
+     */
+    setAllowCreateOrEditWebmapsOnViewModel: function(viewModel, user) {
+        var availableRoles = [];
+        if (user && user.getData()) {
+            availableRoles = user.getData().groupRoles;
+        }
+        var isAllowed = false;
+        Ext.each(availableRoles, function(role) {
+            if (role.indexOf('ROLE_ADMIN') > -1 ||
+                role.indexOf('ROLE_SUBADMIN') > -1) {
+                isAllowed = true;
+            }
+        });
+        viewModel.set('allowCreateOrEditWebmaps', isAllowed);
     },
 
     /**
