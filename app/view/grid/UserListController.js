@@ -19,11 +19,14 @@ Ext.define('MoMo.admin.view.grid.UserListController', {
 
         if (filterField.value) {
             this.nameFilter = filters.add({
-                id: 'nameFilter',
-                property: 'name',
-                value: filterField.value,
-                anyMatch: true,
-                caseSensitive: false
+                filterFn: function(item) {
+                    var d = item.data;
+                    var v = filterField.value.toLowerCase();
+                    return d.accountName.toLowerCase().indexOf(v) !== -1 ||
+                        d.fullName.toLowerCase().indexOf(v) !== -1 ||
+                        d.department &&
+                        d.department.toLowerCase().indexOf(v) !== -1;
+                }
             });
         } else if (this.nameFilter) {
             filters.remove(this.nameFilter);

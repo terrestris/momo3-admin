@@ -38,6 +38,12 @@ Ext.define('MoMo.admin.model.User', {
     }, {
         name: 'lastName',
         type: 'string'
+    }, {
+        name: 'department',
+        type: 'string'
+    }, {
+        name: 'telephone',
+        type: 'string'
     }]
 
 });

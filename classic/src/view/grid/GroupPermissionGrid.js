@@ -35,24 +35,7 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGrid',{
     features: [{
         ftype:'grouping',
         enableGroupingMenu: false,
-        enableNoGroups: false,
-        groupHeaderTpl: [
-            '{name}   ' +
-            '<tpl if="name != \'\'"><button id="{name}" onclick=' +
-            '"event.stopPropagation();' +
-            'Ext.ComponentQuery.query(\'momo-grouppermissiongrid\')[0]' +
-            '.getController().addUser(event);" type="button">' +
-            '{name:this.translate}</input>' +
-            '<tpl else><br></tpl>',
-            {
-                translate: function() {
-                    var viewModel = Ext.ComponentQuery.query(
-                        'momo-grouppermissiongrid')[0].getViewModel();
-                    return viewModel.get('i18n.groupAddUserBtnText');
-                }
-
-            }
-        ]
+        enableNoGroups: false
     }],
 
     columns: [{
