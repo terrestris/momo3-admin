@@ -3,7 +3,7 @@ Ext.define('MoMo.admin.view.grid.UserListModel', {
     alias: 'viewmodel.momo-userlist',
 
     data: {
-        title: 'All sers',
+        title: 'All users',
         createUser: 'Create',
         deleteUser: 'Delete',
         filterByName: 'Filter by name',
@@ -13,6 +13,6 @@ Ext.define('MoMo.admin.view.grid.UserListModel', {
             'account(s)?',
         deletionSuccessText: 'An account has been successfully deleted',
         deletionFailureText: 'An account could not be deleted',
-        userlistFirstNameLabel: ''
+        userlistFirstNameLabel: 'First name'
     }
 });
