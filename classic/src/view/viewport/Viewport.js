@@ -84,6 +84,12 @@ Ext.define('MoMo.admin.view.viewport.Viewport', {
             bind: {
                 src: '{profileImage}'
             }
+        }, {
+            xtype: 'tbtext',
+            cls: 'header-toolbar-text',
+            bind: {
+                text: '{i18n.versionLabel}: ' + Ext.momoVersion
+            }
         }]
     }, {
         xtype: 'momo-maincontainerwrap',
