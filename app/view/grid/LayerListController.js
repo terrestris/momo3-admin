@@ -86,8 +86,13 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
             return;
         }
         Ext.each(selection, function(rec) {
-            rec.erase({
-                callback: function(record,operation,success) {
+            view.setLoading(true);
+            Ext.Ajax.request({
+                url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                    'rest/momolayers/' + rec.getId(),
+                method: 'DELETE',
+                defaultHeaders: BasiGX.util.CSRF.getHeader(),
+                callback: function(record, operation, success) {
                     view.setLoading(false);
                     view.getStore().load();
                     if (success) {
