@@ -12,6 +12,7 @@ Ext.define('MoMo.admin.view.grid.UserListModel', {
         deleteUserText: 'Do you really want to delete the selected ' +
             'account(s)?',
         deletionSuccessText: 'An account has been successfully deleted',
-        deletionFailureText: 'An account could not be deleted'
+        deletionFailureText: 'An account could not be deleted',
+        userlistFirstNameLabel: 'First name'
     }
 });

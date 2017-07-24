@@ -28,7 +28,7 @@ Ext.define('MoMo.admin.view.grid.UserList',{
         title: '{title}'
     },
 
-    hideHeaders: true,
+    hideHeaders: false,
 
     selModel: {
         type: 'checkboxmodel',
@@ -47,18 +47,41 @@ Ext.define('MoMo.admin.view.grid.UserList',{
 
     columns: [{
         xtype: 'templatecolumn',
+        width: 50,
+        tpl: '<img height="24" src="{profileImage}"></img>'
+    }, {
+        xtype: 'templatecolumn',
         width: 40,
-        align: "center",
-        tdCls: "column-tool",
-        tpl: new Ext.XTemplate(
-            '<tpl>',
-                '<i class="fa fa-star-o fa-2x" data-qtip="User"></i>',
-            '</tpl>'
-        )
+        tpl: '<div class="x-btn-icon-el-default-toolbar-small ' +
+            'trans-{language}" style="margin-top: 8px;"> </div>'
     }, {
         xtype: 'templatecolumn',
         flex: 10,
+        bind: {
+            text: '{i18n.userlistFirstNameLabel}/{i18n.userlistLastNameLabel}'
+        },
         tpl: '<div data-qtip="{fullName}">{fullName}</div>'
+    }, {
+        xtype: 'templatecolumn',
+        flex: 10,
+        bind: {
+            text: '{i18n.userlistEmailLabel}'
+        },
+        tpl: '<div data-qtip="{fullName}">{email}</div>'
+    }, {
+        xtype: 'templatecolumn',
+        flex: 10,
+        bind: {
+            text: '{i18n.userlistDepartmentLabel}'
+        },
+        tpl: '<div data-qtip="{fullName}">{department}</div>'
+    }, {
+        xtype: 'templatecolumn',
+        flex: 10,
+        bind: {
+            text: '{i18n.userlistTelephoneLabel}'
+        },
+        tpl: '<div data-qtip="{fullName}">{telephone}</div>'
     }],
 
     tbar: [
@@ -93,7 +116,7 @@ Ext.define('MoMo.admin.view.grid.UserList',{
         }
     ],
 
-    initComponent: function(){
+    initComponent: function() {
         this.callParent(arguments);
         this.getView().on('render', 'loadStore');
     }

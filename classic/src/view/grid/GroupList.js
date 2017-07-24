@@ -34,7 +34,7 @@ Ext.define('MoMo.admin.view.grid.GroupList',{
         title: '{i18n.groupGridTitle}'
     },
 
-    hideHeaders: true,
+    collapseMode: 'header',
 
     selModel: {
         type: 'checkboxmodel',
@@ -57,6 +57,14 @@ Ext.define('MoMo.admin.view.grid.GroupList',{
         xtype: 'templatecolumn',
         flex: 10,
         tpl: '<div data-qtip="{name}">{name}</div>'
+    },{
+        xtype: 'gridcolumn',
+        width: 40,
+        align: "center",
+        renderer: function() {
+            return '<i class="fa fa-plus fa-2x" data-qtip="' +
+                this.getViewModel().get('i18n').groupAddUserBtnText + '">';
+        }
     },{
         xtype: 'gridcolumn',
         width: 40,
