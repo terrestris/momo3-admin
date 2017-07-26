@@ -8,7 +8,8 @@ Ext.define('MoMo.admin.view.viewport.ViewportModel', {
         allowCreateOrEditWebmaps: false,
         i18n: {
             logoutTitle: 'Log out',
-            logoutMessage: 'Are you sure you want to log out?'
+            logoutMessage: 'Are you sure you want to log out?',
+            versionLabel: ''
         }
     },
     formulas: {

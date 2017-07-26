@@ -59,6 +59,16 @@
             // always load the classic profile
             Ext.manifest = 'classic'; // this name must match a build profile name
         };
+
+        // store version number
+        Ext.momoVersion = '<%
+        java.io.InputStream in = getClass().getResourceAsStream("/META-INF/config/version.properties");
+        java.util.Properties props = new java.util.Properties();
+        if (in != null) {
+            props.load(in);
+        }
+        out.print(props.getProperty("momo.version"));
+        %>';
     </script>
 
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
