@@ -337,6 +337,28 @@ Ext.define('MoMo.admin.view.viewport.ViewportController', {
         vmData.currentView = newView;
     },
 
+    /**
+     *
+     */
+    showHelpDocument: function() {
+        var lang = this.getView().getViewModel().get('currentLanguage')
+            .toLowerCase();
+        var win = Ext.create('Ext.window.Window', {
+            width: '80%',
+            height: '80%',
+            layout: 'fit',
+            items: {
+                xtype: 'component',
+                autoEl: {
+                    tag: 'iframe',
+                    style: 'height: 100%; width: 100%; border: none',
+                    src: '../userdocs/build/MoMo_doc_' + lang + '.pdf'
+                }
+            }
+        });
+        win.show();
+    },
+
     onNavigationTreeSelectionChange: function (tree, node) {
         if (node && node.get('view')) {
             this.redirectTo(node.get("routeId"));

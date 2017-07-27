@@ -122,6 +122,10 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                     }
                     me.firstApplicationLoad = false;
 
+                    var mainVm = Ext.ComponentQuery.query(
+                        'momo-mainviewport')[0].getViewModel();
+                    mainVm.set('currentLanguage', me.locale);
+
                     // adjust locale of login/logout button
                     var loginBtn =
                         Ext.ComponentQuery.query('momo-login-logout-button')[0];
@@ -143,31 +147,36 @@ Ext.define('MoMo.admin.view.button.TranslationController', {
                                 view: 'grid.ApplicationList',
                                 iconCls: 'right-icon x-fa fa-desktop',
                                 routeId: 'applications',
+                                helpKey: 'applications-treelistitem',
                                 leaf: true
                             }, {
                                 text: vm.get('i18n').layersMenuTitle,
                                 view: 'grid.LayerList',
                                 leaf: true,
                                 iconCls: 'x-fa fa-list',
-                                routeId: 'layers'
+                                routeId: 'layers',
+                                helpKey: 'layers-treelistitem'
                             }, {
                                 text: vm.get('i18n').groupsMenuTitle,
                                 view: 'panel.GroupPanel',
                                 leaf: true,
                                 iconCls: 'x-fa fa-key',
-                                routeId: 'groups'
+                                routeId: 'groups',
+                                helpKey: 'groups-treelistitem'
                             }, {
                                 text: vm.get('i18n').usersMenuTitle,
                                 view: 'grid.UserList',
                                 leaf: true,
                                 iconCls: 'x-fa fa-user',
-                                routeId: 'users'
+                                routeId: 'users',
+                                helpKey: 'users-treelistitem'
                             }, {
                                 text: vm.get('i18n').profileMenuTitle,
                                 view: 'panel.ProfilePanel',
                                 leaf: true,
                                 iconCls: 'x-fa fa-user',
-                                routeId: 'profile'
+                                routeId: 'profile',
+                                helpKey: 'profile-treelistitem'
                             }]
                         };
                         // need to reset the root node as ext is buggy here
