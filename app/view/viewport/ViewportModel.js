@@ -6,10 +6,13 @@ Ext.define('MoMo.admin.view.viewport.ViewportModel', {
         currentView: null,
         user: null,
         allowCreateOrEditWebmaps: false,
+        currentLanguage: 'en',
         i18n: {
             logoutTitle: 'Log out',
             logoutMessage: 'Are you sure you want to log out?',
-            versionLabel: ''
+            versionLabel: '',
+            helpButtonText: '',
+            contextHelpTooltip: ''
         }
     },
     formulas: {
