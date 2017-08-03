@@ -133,10 +133,12 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
         var rules = rulesPanel.rules;
         var sldObj = rulesPanel.sldObj;
 
-        MoMo.admin.util.Sld.setRulesOfSldObject(sldObj, rules);
-        rulesPanel.setSld(MoMo.admin.util.Sld.toSldString(sldObj));
+        if (sldObj && rules) {
+            MoMo.admin.util.Sld.setRulesOfSldObject(sldObj, rules);
+            rulesPanel.setSld(MoMo.admin.util.Sld.toSldString(sldObj));
 
-        this.persistSld();
+            this.persistSld();
+        }
     },
 
     persistSld: function(){

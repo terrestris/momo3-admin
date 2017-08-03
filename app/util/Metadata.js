@@ -83,7 +83,7 @@ Ext.define('MoMo.admin.util.Metadata', {
         getInsertBlankXml: function(){
             var xml;
             Ext.Ajax.request({
-                url: BasiGX.util.Url.getWebProjectBaseUrl() + '/admin/resources/data/xmlTemplates/insertMetadata.xml',
+                url: BasiGX.util.Url.getWebProjectBaseUrl() + 'admin/resources/data/xmlTemplates/insertMetadata.xml',
                 method: 'GET',
                 async: false,
                 success: function(response) {
