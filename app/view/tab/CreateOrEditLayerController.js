@@ -124,9 +124,14 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
         // in order to switch back to the all-layers view. If we switch to
         // early, several methods will fail because of destroyed views or
         // viewmodels
+        var styleSaveNeeded = stylerPanel && layer.get(
+            'dataType').toLowerCase() !== 'raster';
         var styleSaved = false;
         var metadataSaved = false;
+        var layerSaveNeeded = layer && layer.getId();
         var layerSaved = false;
+        var layerAppearanceSaveNeeded = layer && layer.getId() &&
+            appearance && appearance.getId();
         var layerAppearanceSaved = false;
 
 
@@ -134,16 +139,15 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
 
             view.setLoading(true);
 
-            if (stylerPanel && layer.get('dataType').toLowerCase() !==
-                    'raster') {
+            if (styleSaveNeeded) {
                 stylerPanel.on({
                     'styleUpdateSuccess': function() {
                         styleSaved = true;
                         me.checkForUpdateComplete(
-                            styleSaved,
+                            styleSaveNeeded, styleSaved,
                             metadataSaved,
-                            layerSaved,
-                            layerAppearanceSaved
+                            layerSaveNeeded, layerSaved,
+                            layerAppearanceSaveNeeded, layerAppearanceSaved
                         );
                     },
                     scope: me
@@ -157,10 +161,10 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 'metadataUpdateSuccess': function() {
                     metadataSaved = true;
                     me.checkForUpdateComplete(
-                        styleSaved,
+                        styleSaveNeeded, styleSaved,
                         metadataSaved,
-                        layerSaved,
-                        layerAppearanceSaved
+                        layerSaveNeeded, layerSaved,
+                        layerAppearanceSaveNeeded, layerAppearanceSaved
                     );
                 },
                 scope: me
@@ -173,16 +177,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     layer, metadata);
             }
 
-            if (layer && layer.getId()) {
+            if (layerSaveNeeded) {
                 layer.save({
                     callback: function(rec,operation,success) {
                         if (success) {
                             layerSaved = true;
                             me.checkForUpdateComplete(
-                                styleSaved,
+                                styleSaveNeeded, styleSaved,
                                 metadataSaved,
-                                layerSaved,
-                                layerAppearanceSaved
+                                layerSaveNeeded, layerSaved,
+                                layerAppearanceSaveNeeded, layerAppearanceSaved
                             );
                             Ext.toast("Layer " + layer.get('name') + " saved.");
 
@@ -195,16 +199,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 });
             }
 
-            if (layer && layer.getId() && appearance && appearance.getId()) {
+            if (layerAppearanceSaveNeeded) {
                 appearance.save({
                     callback: function(rec,operation,success) {
                         if (success) {
                             layerAppearanceSaved = true;
                             me.checkForUpdateComplete(
-                                styleSaved,
+                                styleSaveNeeded, styleSaved,
                                 metadataSaved,
-                                layerSaved,
-                                layerAppearanceSaved
+                                layerSaveNeeded, layerSaved,
+                                layerAppearanceSaveNeeded, layerAppearanceSaved
                             );
                             Ext.toast("Layerappearance for layer " +
                                     layer.get('name') + " saved.");
@@ -226,9 +230,16 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
      * check if all requests have finished succesfully before
      * destroying views....
      */
-    checkForUpdateComplete: function(styleSaved, metadataSaved, layerSaved,
-        layerAppearanceSaved) {
-        if (styleSaved && metadataSaved && layerSaved && layerAppearanceSaved) {
+    checkForUpdateComplete: function(styleSaveNeeded, styleSaved, metadataSaved,
+            layerSaveNeeded, layerSaved, layerAppearanceSaveNeeded,
+            layerAppearanceSaved) {
+        if ((styleSaveNeeded && !styleSaved) ||
+            (layerSaveNeeded && !layerSaved) ||
+            (layerAppearanceSaveNeeded && !layerAppearanceSaved)) {
+            return;
+        }
+
+        if (metadataSaved) {
             // finally update permissions
             this.updatePermissionsAndRedirect();
         }
