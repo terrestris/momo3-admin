@@ -120,32 +120,74 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
         var metadata = viewModel.get('metadata');
         var appearance = layer.getAppearance();
 
+        // preparing booleans to determine when everything has been updated
+        // in order to switch back to the all-layers view. If we switch to
+        // early, several methods will fail because of destroyed views or
+        // viewmodels
+        var styleSaved = false;
+        var metadataSaved = false;
+        var layerSaved = false;
+        var layerAppearanceSaved = false;
+
+
         if (allFieldsValid) {
 
             view.setLoading(true);
 
             if (stylerPanel && layer.get('dataType').toLowerCase() !==
                     'raster') {
+                stylerPanel.on({
+                    'styleUpdateSuccess': function() {
+                        styleSaved = true;
+                        me.checkForUpdateComplete(
+                            styleSaved,
+                            metadataSaved,
+                            layerSaved,
+                            layerAppearanceSaved
+                        );
+                    },
+                    scope: me
+                });
                 var stylerPanelCtrl = stylerPanel.getController();
                 stylerPanelCtrl.applyAndSave();
             }
 
+            var metadataCtrl = metadataPanel.getController();
+            metadataPanel.on({
+                'metadataUpdateSuccess': function() {
+                    metadataSaved = true;
+                    me.checkForUpdateComplete(
+                        styleSaved,
+                        metadataSaved,
+                        layerSaved,
+                        layerAppearanceSaved
+                    );
+                },
+                scope: me
+            });
             if (Ext.isEmpty(layer.get('metadataIdentifier'))){
-                metadataPanel.getController().createMetadataEntry(
+                metadataCtrl.createMetadataEntry(
                     layer, metadata);
             } else {
-                metadataPanel.getController().updateMetadataEntry(
+                metadataCtrl.updateMetadataEntry(
                     layer, metadata);
             }
 
             if (layer && layer.getId()) {
                 layer.save({
                     callback: function(rec,operation,success) {
-                        view.setLoading(false);
                         if (success) {
+                            layerSaved = true;
+                            me.checkForUpdateComplete(
+                                styleSaved,
+                                metadataSaved,
+                                layerSaved,
+                                layerAppearanceSaved
+                            );
                             Ext.toast("Layer " + layer.get('name') + " saved.");
 
                         } else {
+                            view.setLoading(false);
                             Ext.toast("Layer " + layer.get('name') +
                                 " could not be saved.");
                         }
@@ -156,11 +198,18 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
             if (layer && layer.getId() && appearance && appearance.getId()) {
                 appearance.save({
                     callback: function(rec,operation,success) {
-                        view.setLoading(false);
                         if (success) {
+                            layerAppearanceSaved = true;
+                            me.checkForUpdateComplete(
+                                styleSaved,
+                                metadataSaved,
+                                layerSaved,
+                                layerAppearanceSaved
+                            );
                             Ext.toast("Layerappearance for layer " +
                                     layer.get('name') + " saved.");
                         } else {
+                            view.setLoading(false);
                             Ext.toast("Layerappearance for layer " +
                                     layer.get('name') + " could not be saved.");
                         }
@@ -168,11 +217,20 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 });
             }
 
-            // update permissions if necessary
-            me.updatePermissionsAndRedirect();
-
         } else {
             Ext.toast("Please fill out the required fields.");
+        }
+    },
+
+    /**
+     * check if all requests have finished succesfully before
+     * destroying views....
+     */
+    checkForUpdateComplete: function(styleSaved, metadataSaved, layerSaved,
+        layerAppearanceSaved) {
+        if (styleSaved && metadataSaved && layerSaved && layerAppearanceSaved) {
+            // finally update permissions
+            this.updatePermissionsAndRedirect();
         }
     },
 
@@ -194,6 +252,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 permissionsunmodifiedEvents++;
                 if (permissionsunmodifiedEvents === awaitedEvents) {
                     // nothing has changed, just redirect
+                    me.getView().setLoading(false);
                     me.redirectTo('layers');
                     return;
                 }
@@ -201,6 +260,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                     permissionsupdatedEvents === awaitedEvents) {
                     Ext.toast(me.getView().getViewModel().get('i18n')
                         .permissionsUpdatesSuccessText);
+                    me.getView().setLoading(false);
                     me.redirectTo('layers');
                 }
             }, {single: true});
@@ -208,6 +268,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                 permissionsupdatedEvents++;
                 if (permissionsunmodifiedEvents === awaitedEvents) {
                     // nothing has changed, just redirect
+                    me.getView().setLoading(false);
                     me.redirectTo('layers');
                     return;
                 }
@@ -217,6 +278,7 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerController', {
                         Ext.toast(me.getView().getViewModel().get('i18n')
                             .permissionsUpdatesSuccessText);
                     }
+                    me.getView().setLoading(false);
                     me.redirectTo('layers');
                 }
             }, {single: true});

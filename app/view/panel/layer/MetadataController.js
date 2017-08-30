@@ -118,6 +118,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                         }
                     },
                     failure: function(){
+                        me.getView().fireEvent('metadataUpdateFailure');
                         if (viewModel.getData()) {
                             Ext.toast(viewModel.
                                 get('i18n.metadata.couldNotCreateMetadataMsg'));
@@ -126,6 +127,7 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 });
             },
             failure: function() {
+                me.getView().fireEvent('metadataUpdateFailure');
                 if (viewModel.getData()) {
                     Ext.toast(viewModel.
                         get('i18n.metadata.couldNotLoadLayerDataMsg'));
@@ -137,7 +139,8 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    updateMetadataEntry: function(layer, metadata, viewModel){
+    updateMetadataEntry: function(layer, metadata, viewModel) {
+        var me = this;
         var uuid = layer.get('metadataIdentifier');
         if(uuid && metadata){
             var xml = MoMo.shared.MetadataUtil.getUpdateXml(uuid, metadata);
@@ -153,12 +156,14 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
                 scope: this,
                 success: function() {
+                    me.getView().fireEvent('metadataUpdateSuccess');
                     if (viewModel && viewModel.getData()) {
                         Ext.toast(viewModel.
                             get('i18n.metadata.updatedMetadataMsg') + uuid);
                     }
                 },
                 failure: function(){
+                    me.getView().fireEvent('metadataUpdateFailure');
                     if (viewModel && viewModel.getData()) {
                         Ext.toast(viewModel.
                             get('i18n.metadata.couldNotUpdateMetadataMsg'));

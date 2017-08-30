@@ -39,6 +39,9 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
             me.rebuildTask.cancel();
         }
         var view = me.getView();
+        if (!view) {
+            return;
+        }
         if (view.isConfiguring) {
             me.rebuildTask = new Ext.util.DelayedTask(
                 me.checkRebuildUserInterface, me, [layerName]
@@ -164,9 +167,11 @@ Ext.define('MoMo.admin.view.panel.style.StylerController', {
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             scope: this,
             success: function() {
+                view.fireEvent('styleUpdateSuccess');
                 Ext.toast("Successfully updated style.");
             },
             failure: function(response) {
+                view.fireEvent('styleUpdateFailure');
                 Ext.toast(Ext.decode(response.responseText).message,
                         "Couldn't update style.");
             }
