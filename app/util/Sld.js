@@ -105,11 +105,23 @@ Ext.define('MoMo.admin.util.Sld', {
          * TODO the assumption below should be validated
          */
         rulesFromSldObject: function(sldObject){
-            return sldObject.value.
-                namedLayerOrUserLayer[0].
-                namedStyleOrUserStyle[0].
-                featureTypeStyle[0].
-                rule;
+            if (sldObject.value.namedLayerOrUserLayer[0] &&
+                sldObject.value.namedLayerOrUserLayer[0].
+                namedStyleOrUserStyle &&
+                sldObject.value.namedLayerOrUserLayer[0].
+                namedStyleOrUserStyle[0] && sldObject.value.
+                namedLayerOrUserLayer[0].namedStyleOrUserStyle[0].
+                featureTypeStyle[0] && sldObject.value.
+                namedLayerOrUserLayer[0].namedStyleOrUserStyle[0].
+                featureTypeStyle[0].rule) {
+                return sldObject.value.
+                    namedLayerOrUserLayer[0].
+                    namedStyleOrUserStyle[0].
+                    featureTypeStyle[0].
+                    rule;
+            } else {
+                return [];
+            }
         },
 
         /**
