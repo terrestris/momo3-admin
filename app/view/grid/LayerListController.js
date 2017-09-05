@@ -92,7 +92,7 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
                     'rest/momolayers/' + rec.getId(),
                 method: 'DELETE',
                 defaultHeaders: BasiGX.util.CSRF.getHeader(),
-                callback: function(record, operation, success) {
+                callback: function(operation, success) {
                     view.setLoading(false);
                     view.getStore().load();
                     if (success) {
