@@ -32,6 +32,38 @@ Ext.define('MoMo.admin.view.panel.layer.Metadata',{
     },
 
     items: [{
+        xtype: 'container',
+        layout: {
+            type: 'hbox',
+            pack: 'center'
+        },
+        items: [{
+            xtype: 'button',
+            bind: {
+                text: '{i18n.metadata.uploadText}'
+            },
+            handler: function(btn) {
+                btn.up().down('fileuploadfield').fileInputEl.dom.click();
+            }
+        }, {
+            xtype: 'fileuploadfield',
+            buttonOnly: true,
+            buttonText: 'Upload',
+            hidden: true,
+            listeners: {
+                change: 'onMetadataUpload'
+            }
+        }, {
+            xtype: 'button',
+            margin: '0 0 0 20',
+            bind: {
+                text: '{i18n.metadata.downloadText}'
+            },
+            listeners: {
+                click: 'onMetadataDownload'
+            }
+        }]
+    }, {
         xtype: 'fieldset',
         bind: {
             title: '{i18n.metadata.tabPanelTitle}'

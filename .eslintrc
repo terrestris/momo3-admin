@@ -16,7 +16,8 @@
         "FileReader": false,
         "JSZip": true,
         "GeoTIFF": true,
-        "Blob": false
+        "Blob": false,
+        "URL": false
     },
     "rules": {
         "comma-dangle": 2,
