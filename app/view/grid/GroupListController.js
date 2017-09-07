@@ -51,11 +51,14 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
     },
 
     /**
-     *
+     * Filter both grids to show only matching groups.
      */
     onFilterChange: function(filterField) {
         var grid = this.getView(),
-            filters = grid.store.getFilters();
+            filters = grid.store.getFilters(),
+            permissiongrid = this.getView().up('momo-grouppanel').down(
+                'momo-grouppermissiongrid'),
+            permissionfilters = permissiongrid.store.getFilters();
 
         if (filterField.value) {
             this.nameFilter = filters.add({
@@ -65,9 +68,18 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
                 anyMatch: true,
                 caseSensitive: false
             });
+            this.nameFilterPermission = permissionfilters.add({
+                id: 'nameFilterPermission',
+                property: 'groupname',
+                value: filterField.value,
+                anyMatch: true,
+                caseSensitive: false
+            });
         } else if (this.nameFilter) {
             filters.remove(this.nameFilter);
+            permissionfilters.remove(this.nameFilterPermission);
             this.nameFilter = null;
+            this.nameFilterPermission = null;
         }
     },
 
@@ -236,7 +248,9 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
                         }
                     ]
                 },
-                displayField: 'name'
+                displayField: 'name',
+                queryMode: 'local',
+                anyMatch: true
             }, {
                 xtype: 'combo',
                 name: 'usercombo',
@@ -247,12 +261,16 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
                 },
                 store: {
                     type: 'users',
+                    autoLoad: true,
                     sorters: [{
                         property: 'name',
                         direction: 'ASC'
                     }]
                 },
-                displayField: 'fullName'
+                displayField: 'fullName',
+                queryMode: 'local',
+                forceSelection: true,
+                anyMatch: true
             }, {
                 xtype: 'combo',
                 name: 'rolecombo',
@@ -263,6 +281,7 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
                 },
                 store: {
                     type: 'roles',
+                    autoLoad: true,
                     sorters: [{
                         property: 'name',
                         direction: 'ASC'
@@ -273,7 +292,10 @@ Ext.define('MoMo.admin.view.grid.GroupListController', {
                         }
                     ]
                 },
-                displayField: 'name'
+                displayField: 'name',
+                queryMode: 'local',
+                forceSelection: true,
+                anyMatch: true
             }],
             bbar: ['->', {
                 xtype: 'button',

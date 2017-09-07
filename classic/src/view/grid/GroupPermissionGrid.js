@@ -34,8 +34,11 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGrid',{
 
     features: [{
         ftype:'grouping',
+        id: 'permissiongridgrouper',
         enableGroupingMenu: false,
-        enableNoGroups: false
+        enableNoGroups: false,
+        groupHeaderTpl: '{name}',
+        startCollapsed: true
     }],
 
     columns: [{
@@ -70,6 +73,26 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGrid',{
     listeners: {
         cellclick: 'handleSelectionChange',
         render: 'loadData'
-    }
+    },
+    tbar: ['->', {
+        xtype: 'textfield',
+        bind: {
+            fieldLabel: '{i18n.groupPermissionGridFilterByName}'
+        },
+        labelWidth: undefined,
+        triggers: {
+            clear: {
+                cls: 'x-form-clear-trigger',
+                handler: function(){
+                    // Will trigger the change listener
+                    this.reset();
+                }
+            }
+        },
+        listeners: {
+            change: 'onFilterChange',
+            buffer: 250
+        }
+    }]
 
 });

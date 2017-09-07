@@ -222,6 +222,32 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGridController', {
         } else if (editor) {
             record.set('userpermissionactive', true);
         }
+    },
+
+    onFilterChange: function(filterField) {
+        var grid = this.getView(),
+            filters = grid.store.getFilters(),
+            feature = grid.getView().getFeature(
+                'permissiongridgrouper');
+
+        if (filterField.value) {
+            this.usernameFilter = filters.add({
+                id: 'usernameFilter',
+                property: 'username',
+                value: filterField.value,
+                anyMatch: true,
+                caseSensitive: false
+            });
+            // expand all matching groups that contain the user name
+            feature.expandAll();
+        } else if (this.usernameFilter) {
+            filters.remove(this.usernameFilter);
+            this.usernameFilter = null;
+            // collapse all groups after reset
+            if (feature) {
+                feature.collapseAll();
+            }
+        }
     }
 
 });
