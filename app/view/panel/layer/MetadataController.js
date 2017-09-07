@@ -171,5 +171,87 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                 }
             });
         }
+    },
+
+    /**
+     * Reads a user provided metadata xml and fills the form with it
+     */
+    onMetadataUpload: function(field) {
+        var me = this;
+        var file = field.getEl().query('input[type=file]')[0].files[0];
+        if (file.type !== "text/xml") {
+            Ext.Msg.alert(me.getViewModel().get('i18n.metadata.noXMLTitle'),
+                me.getViewModel().get('i18n.metadata.noXMLText'));
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var text = e.target.result;
+            if (!text || text === "") {
+                Ext.Msg.alert(me.getViewModel().get(
+                    'i18n.metadata.parseFailTitle'),
+                    me.getViewModel().get('i18n.metadata.parseFailText'));
+                return;
+            }
+            var metadataObj = MoMo.shared.MetadataUtil.parseMetadataXml(text);
+            me.getViewModel().set('metadata', metadataObj);
+            Ext.Msg.alert(me.getViewModel().get(
+                'i18n.metadata.uploadSuccessTitle'),
+                me.getViewModel().get('i18n.metadata.uploadSuccessText'));
+        };
+        reader.readAsText(file);
+    },
+
+    /**
+     * Gets the metadata XML and downloads it for the user
+     */
+    onMetadataDownload: function() {
+        var coeLayer = Ext.ComponentQuery.query('momo-create-or-edit-layer')[0];
+        if (!coeLayer) {
+            return;
+        }
+        var me = this;
+        var viewModel = coeLayer.getViewModel();
+        Ext.Ajax.request({
+            url: BasiGX.util.Url.getWebProjectBaseUrl() + 'metadata/csw.action',
+            method: "POST",
+            params: {
+                xml: MoMo.shared.MetadataUtil.getLoadXml(
+                    viewModel.get('layer').get('metadataIdentifier')),
+                layerId: viewModel.get('layer').getId()
+            },
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            success: function(response){
+                var responseObj = Ext.decode(response.responseText);
+                if (!responseObj.success) {
+                    Ext.Msg.alert(me.getViewModel().get(
+                        'i18n.metadata.downloadFailTitle'),
+                        me.getViewModel().get(
+                        'i18n.metadata.downloadFailText'));
+                    return;
+                }
+                var filename = "Metadata.xml";
+                var type = "text/xml";
+                var file = new Blob([responseObj.data], {type: type});
+                if (window.navigator.msSaveOrOpenBlob) {
+                    // IE10+
+                    window.navigator.msSaveOrOpenBlob(file, filename);
+                } else { // Others
+                    var a = document.createElement("a");
+                    var url = URL.createObjectURL(file);
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.setTimeout(function() {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                }
+            },
+            failure: function(){
+                Ext.toast('Warning: Couldn\'t load Metadata for layer.');
+            }
+        });
     }
 });
