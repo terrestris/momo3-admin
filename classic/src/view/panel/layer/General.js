@@ -36,6 +36,11 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
             xtype: 'fieldcontainer',
             columnWidth: 0.5,
             items: [{
+                xtype: 'displayfield',
+                bind: {
+                    value: '{i18n.general.uploadDescription}'
+                }
+            }, {
                 xtype: 'textfield',
                 bind: {
                     fieldLabel: '{i18n.general.layerName}',
