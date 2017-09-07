@@ -58,7 +58,12 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                             maxX: maxX,
                             maxY: maxY
                         });
-//                        view.setLoading(false);
+                        // coordinates retrieved here are always in EPSG:3857
+                        var combo = Ext.ComponentQuery.query(
+                            'combo[name=metadata-geography-projection]')[0];
+                        if (combo) {
+                            combo.setValue("EPSG:3857");
+                        }
                     }
                 },
                 failure: function(response) {
