@@ -87,7 +87,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     },{
         xtype: 'gridcolumn',
         name: 'layer-settings-column',
-        width: 40,
+        width: 50,
         align: "center",
         renderer: function() {
             return '<i class="fa fa-gear fa-2x" data-qtip="' +
@@ -96,7 +96,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     },{
         xtype: 'gridcolumn',
         name: 'layer-style-column',
-        width: 40,
+        width: 50,
         align: "center",
         renderer: function() {
             return '<i class="fa fa-paint-brush fa-2x" data-qtip="' +
@@ -105,7 +105,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     },{
         xtype: 'gridcolumn',
         name: 'layer-download-column',
-        width: 40,
+        width: 50,
         align: "center",
         renderer: function() {
             return '<i class="fa fa-download fa-2x" data-qtip="' +
@@ -114,7 +114,7 @@ Ext.define('MoMo.admin.view.grid.LayerList',{
     },{
         xtype: 'gridcolumn',
         name: 'layer-preview-column',
-        width: 40,
+        width: 50,
         align: "center",
         renderer: function() {
             return '<i class="fa fa-eye fa-2x" data-qtip="' +
