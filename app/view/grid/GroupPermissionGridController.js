@@ -239,12 +239,14 @@ Ext.define('MoMo.admin.view.grid.GroupPermissionGridController', {
                 caseSensitive: false
             });
             // expand all matching groups that contain the user name
+            feature.invalidateCache();
             feature.expandAll();
         } else if (this.usernameFilter) {
             filters.remove(this.usernameFilter);
             this.usernameFilter = null;
             // collapse all groups after reset
             if (feature) {
+                feature.invalidateCache();
                 feature.collapseAll();
             }
         }

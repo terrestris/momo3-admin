@@ -99,6 +99,7 @@ Ext.define('MoMo.admin.view.grid.GroupList',{
             fieldLabel: '{i18n.groupGridFilterByName}'
         },
         labelWidth: undefined,
+        width: 290,
         triggers: {
             clear: {
                 cls: 'x-form-clear-trigger',
