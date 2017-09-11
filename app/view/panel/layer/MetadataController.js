@@ -16,7 +16,8 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
     /**
      *
      */
-    prefillEmptyFields: function(){
+    prefillEmptyFields: function() {
+        var me = this;
         var view = this.getView();
         var viewModel = view.lookupViewModel();
         var title = viewModel.get('metadata.title');
@@ -58,13 +59,19 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
                             maxX: maxX,
                             maxY: maxY
                         });
-//                        view.setLoading(false);
+                        // coordinates retrieved here are always in EPSG:3857
+                        var combo = this.getView().down(
+                            'combo[name=metadata-geography-projection]');
+                        if (combo) {
+                            combo.setValue("EPSG:3857");
+                        }
                     }
                 },
                 failure: function(response) {
                     Ext.raise('server-side failure with status code ' +
                         response.status);
-                }
+                },
+                scope: me
             });
         }
     },
