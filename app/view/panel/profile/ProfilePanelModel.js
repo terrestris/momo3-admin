@@ -7,6 +7,19 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelModel', {
         profilepanelActionSuccess: 'Success',
         profilepanelActionFailure: 'Error',
         profilepanelDeleteUser: 'Delete Account',
+        profilepanelChangePassword: 'Change password',
+        profilepanelConfirmChangePassword: 'Do you want to reset ' +
+            'your password now?',
+        profilepanelOldPassword: 'Old password',
+        profilepanelNewPassword: 'New password',
+        profilepanelNewPasswordValidate: 'Verify new password',
+        profilepanelNewPasswordNotEqual: 'New password entries are not equal.',
+        profilepanelChangePasswordCancel: 'Cancel',
+        profilepanelChangePasswordReset: 'Reset',
+        profilepanelChangePasswordError: 'Updating the password was NOT ' +
+            'successful.',
+        profilepanelChangePasswordSuccess: 'Password has successfully been ' +
+            'updated.',
         profilepanelDeleteUserText: 'Do you really want to delete your ' +
             'complete account?',
         profilepanelDeletionSuccessText: 'Your account has been deleted, you ' +

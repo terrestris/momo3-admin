@@ -2,6 +2,161 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.momo-profilepanel',
 
+    requires: [
+        'Ext.window.Window',
+        'MoMo.admin.view.form.SubmitForm'
+    ],
+
+    /**
+     *
+     */
+    onChangePasswordClick: function() {
+        var view = this.getView();
+        var viewModel = view.getViewModel();
+
+        var win = Ext.create('Ext.window.Window', {
+            bodyPadding: 5,
+            title: viewModel.get('i18n.profilepanelChangePassword'),
+            width: 400,
+            height: 350,
+            modal: true,
+            constrain: true,
+            layout: 'fit',
+            items: [
+                {
+                    xtype: 'momo-form-submitform',
+                    bodyPadding: 5,
+
+                    url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                        'momousers/updatePassword.action',
+
+                    layout: 'anchor',
+                    defaultType: 'textfield',
+                    defaults: {
+                        inputType: 'password',
+                        emptyText: '',
+                        msgTarget: 'under',
+                        anchor: '100%'
+                    },
+                    items: [{
+                        fieldLabel: viewModel.get(
+                            'i18n.profilepanelOldPassword'),
+                        name: 'oldPassword',
+                        allowBlank: false
+                    }, {
+                        xtype: 'tbspacer',
+                        height: 20
+                    }, {
+                        fieldLabel: viewModel.get(
+                            'i18n.profilepanelNewPassword'),
+                        name: 'newPassword',
+                        minLength: 6,
+                        maskRe: /\S/, // everything but whitespace
+                        allowBlank: false
+                    }, {
+                        fieldLabel: viewModel.get(
+                            'i18n.profilepanelNewPasswordValidate'),
+                        name: 'newPasswordValidation',
+                        submitValue: false,
+                        allowBlank: false,
+                        validation: true,
+                        validator: function(value) {
+                            var oldPw1 =
+                                this.up().down('textfield[name=newPassword]');
+                            if(oldPw1.getValue() !== value) {
+                                return viewModel.get(
+                                    'i18n.profilepanelNewPasswordNotEqual');
+                            } else {
+                                return true;
+                            }
+                        }
+                    }],
+
+                    // Reset and Submit buttons
+                    buttonAlign: 'left',
+                    buttons: [{
+                        text: viewModel.get(
+                            'i18n.profilepanelChangePasswordCancel'),
+                        handler: function() {
+                            this.up('window').close();
+                        }
+                    }, {
+                        text: viewModel.get(
+                            'i18n.profilepanelChangePasswordReset'),
+                        handler: function() {
+                            this.up('form').getForm().reset();
+                        }
+                    }, '->', {
+                        text: viewModel.get('i18n.profilepanelChangePassword'),
+                        formBind: true,
+                        disabled: true,
+                        handler: function() {
+                            var form = this.up('form').getForm();
+                            var changePwWin = this.up('window');
+                            if (form.isValid()) {
+                                Ext.Msg.confirm(
+                                    viewModel.get(
+                                        'i18n.profilepanelChangePassword'),
+                                    viewModel.get(
+                                        'i18n.profilepanel'+
+                                        'ConfirmChangePassword'),
+                                    function (choice) {
+                                        if (choice === 'yes') {
+                                            changePwWin.setLoading(true);
+                                            form.submit({
+                                                success: function(f, action) {
+                                                    changePwWin.setLoading(
+                                                        false);
+                                                    var respObj;
+                                                    if (action.response &&
+                                                        action.response.
+                                                            responseText) {
+                                                        respObj =
+                                                            Ext.decode(
+                                                                action.response.
+                                                                responseText);
+                                                        if(respObj.success) {
+                                                            changePwWin.close();
+                                                            Ext.toast(
+                                                                viewModel.get(
+                                                                'i18n.' +
+                                                                'profilepanel' +
+                                                                'ChangePass'+
+                                                                'wordSuccess')
+                                                            );
+                                                        } else {
+                                                            Ext.toast(
+                                                                viewModel.get(
+                                                                'i18n.' +
+                                                                'profilepanel' +
+                                                                'ChangePass'+
+                                                                'wordError')
+                                                            );
+                                                        }
+                                                    }
+                                                },
+                                                failure: function() {
+                                                    changePwWin.setLoading(
+                                                        false);
+                                                    Ext.toast(viewModel.get(
+                                                        'i18n.profilepanel'+
+                                                        'ChangePasswordError'));
+                                                }
+                                            });
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    }]
+                }]
+        });
+        win.show();
+    },
+
+    /**
+     *
+     */
     onDeleteClick: function() {
         var me = this;
         var view = this.getView();
