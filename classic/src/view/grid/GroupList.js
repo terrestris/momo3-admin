@@ -59,7 +59,7 @@ Ext.define('MoMo.admin.view.grid.GroupList',{
         tpl: '<div data-qtip="{name}">{name}</div>'
     },{
         xtype: 'gridcolumn',
-        width: 40,
+        width: 50,
         align: "center",
         renderer: function() {
             return '<i class="fa fa-plus fa-2x" data-qtip="' +
@@ -67,7 +67,7 @@ Ext.define('MoMo.admin.view.grid.GroupList',{
         }
     },{
         xtype: 'gridcolumn',
-        width: 40,
+        width: 50,
         align: "center",
         renderer: function() {
             return '<i class="fa fa-gear fa-2x" data-qtip="' +
