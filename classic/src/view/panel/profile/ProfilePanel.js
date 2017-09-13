@@ -33,6 +33,15 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
         ui: 'momo',
         iconCls: 'fa fa-minus fa-2x',
         handler: 'onDeleteClick'
+    }, {
+        xtype: 'button',
+        bind: {
+            text: '{i18n.profilepanelChangePassword}'
+        },
+        scale: 'large',
+        ui: 'momo',
+        iconCls: 'fa fa-lock fa-2x',
+        handler: 'onChangePasswordClick'
     }],
 
     items: [{
@@ -70,6 +79,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
                     fieldLabel: '{i18n.profilepanelEmailLabel}',
                     value: '{user.email}'
                 },
+                vtype: 'email',
                 name: 'email',
                 allowBlank: false
             }, {
@@ -110,7 +120,9 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
                     value: '{user.language}'
                 },
                 name: 'language',
-                allowBlank: false
+                allowBlank: false,
+                editable: false,
+                forceSelection: true
             }, {
                 xtype: 'container',
                 layout: 'hbox',
