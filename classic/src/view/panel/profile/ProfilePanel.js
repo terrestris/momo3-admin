@@ -40,7 +40,7 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
         },
         scale: 'large',
         ui: 'momo',
-        iconCls: 'fa fa-key fa-2x',
+        iconCls: 'fa fa-lock fa-2x',
         handler: 'onChangePasswordClick'
     }],
 
@@ -120,7 +120,9 @@ Ext.define('MoMo.admin.view.panel.ProfilePanel',{
                     value: '{user.language}'
                 },
                 name: 'language',
-                allowBlank: false
+                allowBlank: false,
+                editable: false,
+                forceSelection: true
             }, {
                 xtype: 'container',
                 layout: 'hbox',

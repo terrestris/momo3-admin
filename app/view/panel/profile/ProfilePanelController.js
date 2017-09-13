@@ -51,7 +51,9 @@ Ext.define('MoMo.admin.view.panel.ProfilePanelController', {
                             'i18n.profilepanelNewPassword'),
                         name: 'newPassword',
                         minLength: 6,
-                        maskRe: /\S/, // everything but whitespace
+                        regex: /^\S*$/,
+                        regexText: viewModel.get(
+                            'i18n.profilepanelNoWhitespaceText'),
                         allowBlank: false
                     }, {
                         fieldLabel: viewModel.get(
