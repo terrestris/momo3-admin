@@ -72,7 +72,6 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
         if (allFieldsValid) {
 
             viewport.setLoading(true);
-
             layerTreePanelCtrl.syncTreeStore(me.saveApplication, me);
 
         } else {
@@ -85,12 +84,20 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditApplicationController', {
     /**
      *
      */
-    saveApplication: function() {
+    saveApplication: function(treeStoreSyncSuccess) {
         var me = this;
         var viewModel = me.getViewModel();
         var viewport = me.getView().up('viewport');
         var appId = viewModel.get('application.id');
         var action = Ext.isNumber(appId) ? 'update' : 'create';
+
+        if (!treeStoreSyncSuccess) {
+            viewport.setLoading(false);
+            Ext.toast(
+                viewModel.get('i18n.updateTreeFailed'),
+                null, 'b');
+            return;
+        }
 
         Ext.Ajax.request({
             url: BasiGX.util.Url.getWebProjectBaseUrl() +
