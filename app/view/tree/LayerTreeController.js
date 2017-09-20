@@ -65,11 +65,14 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
         var store = view.getStore();
 
         if(Ext.isEmpty(store.getModifiedRecords())){
-            cbFn.call(cbScope);
+            cbFn.call(cbScope, true);
             return;
         }
 
         store.sync({
+            failure: function() {
+                cbFn.call(cbScope, false);
+            },
             success: function(batch) {
                 var operations = batch.getOperations();
                 var treeConfigId;
@@ -90,7 +93,7 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
                 // TODO: reload store with id?
                 view.setTreeConfigId(treeConfigId);
 
-                cbFn.call(cbScope);
+                cbFn.call(cbScope, true);
             }
         });
     },
@@ -250,7 +253,6 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
         var me = this;
         var viewModel = me.getViewModel();
         var record = item.up('menu').record;
-
         Ext.Msg.confirm(
             record.get('leaf') ?
                     viewModel.get('deleteTreeLeafWindowTitle') :
@@ -264,9 +266,16 @@ Ext.define('MoMo.admin.view.grid.LayerTreeController', {
                             record.get('text')),
             function (btn) {
                 if (btn === 'yes') {
-                    record.erase();
+                    record.erase({
+                        failure: function() {
+                            Ext.toast(
+                                viewModel.get('deleteTreeItemFailed'),
+                                null, 'b');
+                            // TODO: howto undo the store removal of the record?
+                        }
+                    }, me);
                 }
-            }
+            }, me
         );
     },
 
