@@ -9,6 +9,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         'MoMo.admin.view.grid.LayerAttributes'
     ],
 
+    /**
+     *
+     */
     onAttributesButtonClicked: function(btn){
         var me = this;
         var win = Ext.ComponentQuery.query("window[name=layerAttributes]")[0];
@@ -46,6 +49,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         }
     },
 
+    /**
+     *
+     */
     onAttributeDblClicked: function(grid, record){
         var string = '{' + record.get('name') + '}';
         var field = this.getView().down('textfield[name=layerHoverTemplate]');
@@ -53,6 +59,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         grid.up('window').close();
     },
 
+    /**
+     *
+     */
     uploadButtonPressed: function(){
         var me = this;
         var view = this.getView();
@@ -61,12 +70,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var fieldsClone = [];
         var layerNameField = view.down('textfield[name="layerName"]');
         var viewModel = me.getView().lookupViewModel();
-        var fields = view.query(
-                'textfield[name="layerName"],'+
-                'textarea[name="layerDescription"],'+
-                'numberfield[name="layerOpacity"],'+
-                'textfield[name="layerHoverTemplate"]'
-            );
+        var fields = view.query('textfield[name="layerName"]');
 
         if(!layerNameField.isValid()){
             Ext.toast(viewModel.get('i18n.general.layerNameInvalidMsg'));
@@ -101,7 +105,6 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 });
             },
             failure: function(form, action) {
-
                 view.setLoading(false);
 
                 // cleanup: delete the cloned items from the form
@@ -126,6 +129,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
     },
 
+    /**
+     *
+     */
     showProjectionWindow: function(respObj){
         var me = this;
         //TODO Fix for multiupload
@@ -188,6 +194,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
     },
 
+    /**
+     *
+     */
     updateCrsForImport: function(btn, respObj){
         var me = this;
         var win = btn.up('window');
@@ -206,10 +215,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 taskId: respObj.tasksWithoutProjection[0].id,
                 fileProjection: combo.getValue(),
                 layerName: layer.get('name'),
-                dataType: layer.get('dataType'),
-                layerDescription: layer.get('description'),
-                layerHoverTemplate: layer.getAppearance().get('hoverTemplate'),
-                layerOpacity: layer.getAppearance().get('opacity')
+                dataType: layer.get('dataType')
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             scope: this,
@@ -227,6 +233,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
     },
 
+    /**
+     *
+     */
     cancelImport: function(btn, respObj){
         var win = btn.up('window');
         Ext.Ajax.request({
@@ -244,6 +253,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
     },
 
+    /**
+     *
+     */
     onUploadSucess: function(respObj){
         var view = this.getView();
         var viewModel = view.lookupViewModel();
@@ -257,9 +269,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         Ext.toast(uploadSuccessfulText);
 
         // reload the layer stores
-        var layerComponents = Ext.ComponentQuery.query(
-            'momo_tree_managedatalayers, momo_view_layergroupsdataview, '
-                +'momo-layerlist');
+        var layerComponents = Ext.ComponentQuery.query('momo-layerlist');
 
         Ext.each(layerComponents, function(comp){
             comp.getStore().load();
@@ -271,12 +281,16 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         //Load newly created Layerdata
         viewModel.set('entityId', respObj.data.id);
         coeLayerController.loadLayerData();
-        // reset data and gui
+        // reset data and guit
         viewModel.set('upload', null);
     },
 
+    /**
+     *
+     */
     onFileUploadFieldChanged: function(field){
         var me = this;
+        var view = me.getView();
         var viewModel = me.getViewModel();
         var file = field.getEl().query('input[type=file]')[0].files[0];
 
@@ -292,6 +306,8 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         viewModel.set('upload.fileSize', file.size);
         var reader = new FileReader();
 
+        view.setLoading(true);
+
         if(file.size < 100000000) { // check filesize 100000000 (100 MB)
             reader.onload = function(){
                 var res = this.result;
@@ -301,20 +317,27 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                         me.loadZipFailure.bind(me)
                 );
             };
-            reader.readAsBinaryString(file);
+            if (reader.readAsBinaryString) {
+                reader.readAsBinaryString(file);
+            } else {
+                reader.readAsArrayBuffer(file);
+            }
         } else {
+            view.setLoading(false);
+            viewModel.set('upload.layerDataTypeNotSelectable', false);
+            viewModel.set('upload.dataType', null);
+            viewModel.set('layer.dataType', null);
             me.updateUploadInfo();
-            var zipValidationFailedText = viewModel.
-              get('i18n.general.zipValidationFailedText');
-            var fileTooLargeText = viewModel.
-              get('i18n.general.fileTooLargeText');
-            Ext.toast(zipValidationFailedText, fileTooLargeText);
         }
     },
 
+    /**
+     *
+     */
     loadZipSuccess: function(zip) {
         var me = this;
         var viewModel = me.getViewModel();
+        var view = me.getView();
         var containsShape = false;
         var containsRaster = false;
         var lowerFileName;
@@ -323,18 +346,24 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         zip.forEach(function(relativePath, zipEntry) {
             if(zipEntry.name.indexOf(".shp") > -1){
                 containsShape = true;
+                view.setLoading(false);
                 return false;
             }
             if((zipEntry.name.toLowerCase().indexOf(".geotiff") > -1) ||
                     (zipEntry.name.indexOf(".tif") > -1)){
 
                 zipEntry.async("arraybuffer").then(function (content) {
-                    var tiff = GeoTIFF.parse(content);
-                    var image = tiff.getImage();
-                    var geoKeys = image.getGeoKeys();
-
-                    viewModel.set('upload.raster.hasGeoKeys', !!geoKeys);
-                    me.updateUploadInfo();
+                    try {
+                        var tiff = GeoTIFF.parse(content);
+                        var image = tiff.getImage();
+                        var geoKeys = image.getGeoKeys();
+                        viewModel.set('upload.raster.hasGeoKeys', !!geoKeys);
+                        me.updateUploadInfo();
+                        view.setLoading(false);
+                    } catch (error) {
+                        viewModel.set('upload.raster.hasGeoKeys', false);
+                        view.setLoading(false);
+                    }
                 });
 
                 containsRaster = true;
@@ -343,14 +372,18 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         });
 
         if(containsShape){
+            viewModel.set('upload.layerDataTypeNotSelectable', true);
             viewModel.set('upload.dataType', 'Vector');
             viewModel.set('layer.dataType', 'Vector');
         } else if (containsRaster){
+            viewModel.set('upload.layerDataTypeNotSelectable', true);
             viewModel.set('upload.dataType', 'Raster');
             viewModel.set('layer.dataType', 'Raster');
         } else {
-            viewModel.set('upload.dataType', null);
-            viewModel.set('layer.dataType', null);
+            viewModel.set('upload.layerDataTypeNotSelectable', false);
+            viewModel.set('upload.dataType', 'unknown');
+            viewModel.set('layer.dataType', 'unknown');
+            view.setLoading(false);
         }
         var dataType = viewModel.get('upload.dataType');
 
@@ -390,6 +423,22 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         me.updateUploadInfo();
     },
 
+    /**
+     *
+     */
+    onLayerDataTypeSelect: function(combo, record) {
+        var me = this;
+        var vm = me.getViewModel();
+        var selectedDataType = record.get('type');
+
+        // the combo's value is bound to 'upload.dataType', but
+        // we'll still have to set the value on the layer
+        vm.set('layer.dataType', selectedDataType);
+    },
+
+    /**
+     *
+     */
     updateUploadInfo: function(){
         var me = this;
         var upload = me.getViewModel().get('upload');
@@ -414,16 +463,14 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
 
         var template = new Ext.XTemplate(
             '<tpl if="this.gotFile(values)">',
+                '<p><b>Filesize</b>: {[this.prettyFileSize(values)]} MB</p>',
                 '<p><b>Layertype</b>: ',
                     '<tpl if="fileSize &gt; 100000000">',
-                        '<i style="color:orange;" ',
-                            'class="fa fa-exclamation-triangle"></i> ',
-                            uploadSkippedLargeFileMsg,
+                        'unknown',
                     '<tpl else>',
                         '{dataType}',
                     '</tpl>',
                 '</p>',
-                '<p><b>Filesize</b>: {[this.prettyFileSize(values)]} MB</p>',
                 '<tpl if="dataType == \'Vector\'">',
                     '<p><b>*.shp: </b>',
                     '<tpl if="vector.hasShp">',
@@ -507,16 +554,21 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                     return !!values.fileName;
                 },
                 prettyFileSize: function(values){
-                    var fileSizeInMB = values.fileSize/1048576;
-                    return Ext.util.Format.number(fileSizeInMB, '0.00');
+                    var fileSizeInMB = values.fileSize / (1024 * 1024);
+                    return Math.round(fileSizeInMB * 1000) / 1000;
                 }
             });
         var html = template.apply(upload);
-        me.getView().down('fieldset[name=upload-file-infos]').setHtml(html);
+        me.getView().down('component[name="file-information-html-msg"]').setHtml(html);
     },
 
     loadZipFailure: function (e) {
         Ext.raise("Error: ", e);
+        var me = this;
+        var view = me.getView();
+        if(view) {
+            view.setLoading(false);
+        }
     }
 
 });
