@@ -9,7 +9,10 @@ install:
   - git clone https://github.com/openlayers/ol3.git ../lib/ol3
   - ./ci/create-sencha-environment.sh
   - npm install
-  - make build -C ../lib/ol3
+  - cd ../lib/ol3
+  - git checkout v3.17.1
+  - npm install
+  - make build
 script:
   - npm run lint
 branches:
