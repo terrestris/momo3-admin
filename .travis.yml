@@ -13,7 +13,8 @@ install:
   - git checkout v3.17.1
   - npm install
   - make build
-  - cd ../../admin
+  - pwd && ls ../../
+  - cd ../../momo3-admin
 script:
   - npm run lint
 branches:
