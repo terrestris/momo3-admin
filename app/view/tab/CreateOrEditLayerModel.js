@@ -117,9 +117,11 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
         style: null,
 
         upload: {
+            layerDataTypeNotSelectable: null,
             fileName: null,
             fileSize: null,
             dataType: null,
+            fileProjection: null,
             vector: {
                 hasShp: false,
                 hasShx: false,
@@ -146,6 +148,27 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
         isHoverable: function(get){
             var isVector = get('layer.dataType').toLowerCase() !== "raster";
             return !get('isNewLayer') && isVector;
+        },
+        isRasterLayer: function(get) {
+            return get('layer.dataType').toLowerCase() === "raster";
+        },
+        isVectorLayer: function(get) {
+            return get('layer.dataType').toLowerCase() === "vector";
+        },
+        isUploadBtnEnabled: function(get) {
+            if (get('upload.fileProjection') && get('layer.dataType')) {
+                var dataType = get('layer.dataType').toLowerCase();
+                if(dataType === "vector" || dataType === "raster") {
+                    return true;
+                }
+            }
+            if (get('layer.dataType').toLowerCase() === "raster") {
+                return get('upload.raster.hasPrj') || get('upload.raster.hasGeoKeys');
+            } else if (get('layer.dataType').toLowerCase() === "vector") {
+                return get('upload.vector.hasPrj');
+            } else {
+                return false;
+            }
         }
     }
 });

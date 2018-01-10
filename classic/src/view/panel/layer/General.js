@@ -10,7 +10,8 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
 
         'MoMo.admin.view.form.SubmitForm',
         'MoMo.admin.store.Epsg',
-        'MoMo.admin.util.TextfieldValidator'
+        'MoMo.admin.util.TextfieldValidator',
+        'MoMo.admin.store.LayerDataType'
     ],
 
     controller: 'momo-layer-general',
@@ -45,7 +46,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                 bind: {
                     fieldLabel: '{i18n.general.layerName}',
                     value: '{layer.name}',
-                    emptyText: '{i18n.general.layerNameEmptyText}'
+                    emptyText: '{i18n.general.layerNameEmptyText}',
+                    hidden: '{isNewLayer}',
+                    disabled: '{isNewLayer}'
                 },
                 msgTarget: 'under',
                 validator: MoMo.admin.util.TextfieldValidator.
@@ -58,7 +61,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                 url: BasiGX.util.Url.getWebProjectBaseUrl() +
                         'import/create-layer.action',
                 // set to hidden:true initially to avoid ugly blinking onRender
-//                hidden: true,
+                hidden: true,
                 // show for createLayer only
                 bind: {
                     hidden: '{!isNewLayer}'
@@ -88,9 +91,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     }, {
                         xtype: 'button',
                         bind: {
-                            text: '{i18n.general.fileUploadButtonText}'
+                            text: '{i18n.general.fileUploadButtonText}',
+                            disabled: '{!isUploadBtnEnabled}'
                         },
-                        formBind: true,
                         margin: '0 0 0 5px',
                         handler: 'uploadButtonPressed'
                     }]
@@ -100,7 +103,66 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     bind: {
                         hidden: '{!upload.fileName}',
                         title: '{upload.fileName}'
-                    }
+                    },
+                    items: [{
+                        xtype: 'component',
+                        name: 'file-information-html-msg'
+                    }, {
+                        xtype: 'combobox',
+                        labelAlign: 'left',
+                        labelWidth: 300,
+                        width: '100%',
+                        bind: {
+                            fieldLabel: '{i18n.general.chooseLayerDataTypeEmptyText}',
+                            emptyText: '{i18n.general.chooseLayerDataTypeEmptyText}',
+                            hidden: '{(isRasterLayer || isVectorLayer) && upload.layerDataTypeNotSelectable}',
+                            value: '{upload.dataType}'
+                        },
+                        listeners: {
+                            select: 'onLayerDataTypeSelect'
+                        },
+                        name: 'layerdatatype',
+                        submitValue: false,
+                        displayField: 'display',
+                        valueField: 'type',
+                        store: {
+                            type: 'layerdatatype',
+                            autoLoad: true
+                        },
+                        anyMatch: true,
+                        queryMode: 'local',
+                        editable: false,
+                        triggerAction: 'all',
+                        style: {
+                            marginBottom: 10
+                        }
+                    }, {
+                         xtype: 'combobox',
+                         labelAlign: 'left',
+                         labelWidth: 300,
+                         width: '100%',
+                         bind: {
+                             fieldLabel: '{i18n.general.chooseProjectionLayerNameEmptyText}',
+                             emptyText: '{i18n.general.chooseProjectionLayerNameEmptyText}',
+                             hidden: '{upload.raster.hasGeoKeys || upload.raster.hasPrj || upload.vector.hasPrj}',
+                             value: '{upload.fileProjection}'
+                         },
+                         name: 'projection',
+                         submitValue: false,
+                         displayField: 'name',
+                         valueField: 'code',
+                         store: {
+                             type: 'epsg',
+                             autoLoad: true
+                         },
+                         anyMatch: true,
+                         queryMode: 'local',
+                         forceSelection: true,
+                         triggerAction: 'all',
+                         style: {
+                             marginBottom: 0
+                         }
+                     }]
                 }, {
                     xtype: 'hiddenfield',
                     name: 'dataType',
@@ -110,7 +172,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                 }, {
                     xtype: 'hiddenfield',
                     name: 'fileProjection',
-                    value: ''
+                    bind: {
+                        value: '{upload.fileProjection}'
+                    }
                 }]
             }, {
                 xtype: 'textarea',
