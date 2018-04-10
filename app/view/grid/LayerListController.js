@@ -73,6 +73,21 @@ Ext.define('MoMo.admin.view.grid.LayerListController', {
     onDeleteClick: function() {
         var me = this;
         var view = me.getView();
+        var viewModel = view.lookupViewModel();
+        BasiGX.confirm(viewModel.get('i18n.layerDeleteConfirmation'), {
+            title: viewModel.get('i18n.layerDeleteConfirmationTitle'),
+            fn: function(answer) {
+                if (answer === 'yes') {
+                    me.deleteLayer();
+                }
+            },
+            scope: me
+        });
+    },
+
+    deleteLayer: function() {
+        var me = this;
+        var view = me.getView();
         var selection = view.getSelectionModel().getSelection();
         var viewModel = me.getViewModel();
         var deletionErrorMsgTitle = viewModel.get('deletionErrorMsgTitle');

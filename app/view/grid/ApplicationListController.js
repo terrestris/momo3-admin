@@ -93,6 +93,21 @@ Ext.define('MoMo.admin.view.grid.ApplicationListController', {
     },
 
     onDeleteClick: function() {
+        var me = this;
+        var view = me.getView();
+        var viewModel = view.lookupViewModel();
+        BasiGX.confirm(viewModel.get('i18n.appDeleteConfirmation'), {
+            title: viewModel.get('i18n.appDeleteConfirmationTitle'),
+            fn: function(answer) {
+                if (answer === 'yes') {
+                    me.deleteApp();
+                }
+            },
+            scope: me
+        });
+    },
+
+    deleteApp: function() {
         var view = this.getView();
         var selection = view.getSelectionModel().getSelection();
         var viewModel = view.lookupViewModel();
