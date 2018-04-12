@@ -129,13 +129,17 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
                     'geoserver.action',
                 geoserverFontListUrl: BasiGX.util.Url.getWebProjectBaseUrl() +
                     'font/getGeoServerFontList.action',
+                geoserverInstalledFontListUrl: BasiGX.util.Url
+                    .getWebProjectBaseUrl() +
+                    'font/getGeoServerInstalledFontList.action',
                 geoserverFontUrl: BasiGX.util.Url.getWebProjectBaseUrl() +
                     'font/getGeoServerFont.action'
             },
             layer: layerName,
             sld: sld,
             ruleName: rule.name,
-            mode: symbolType.toLowerCase()
+            mode: symbolType.toLowerCase(),
+            useTextSymbolizer: true
         };
 
         if(!win){
@@ -143,6 +147,8 @@ Ext.define('MoMo.admin.view.panel.style.SymbolizerController', {
                 name: 'symbolizer-edit-window',
                 title: viewModel.get('windowTitle'),
                 layout: 'fit',
+                height: 660,
+                scroll: 'auto',
                 items: [styleEditor],
                 bbar: [{
                     text: viewModel.get('cancelSymbolizationText'),
