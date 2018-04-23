@@ -39,7 +39,9 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
             items: [{
                 xtype: 'displayfield',
                 bind: {
-                    value: '{i18n.general.uploadDescription}'
+                    value: '{i18n.general.uploadDescription}',
+                    // show for createLayer only
+                    hidden: '{!isNewLayer}'
                 }
             }, {
                 xtype: 'textfield',
