@@ -84,8 +84,10 @@ Ext.define('MoMo.admin.view.panel.layer.MetadataController', {
         var xml = MoMo.shared.MetadataUtil.getInsertBlankXml();
         var layer;
         var viewModel = me.getView().lookupViewModel();
+        var layerId = layerObj.data.layer ?
+            layerObj.data.layer.id : layerObj.data.id;
 
-        MoMo.admin.model.Layer.load(layerObj.data.id, {
+        MoMo.admin.model.Layer.load(layerId, {
             scope: this,
             success: function(record) {
                 layer = record;
