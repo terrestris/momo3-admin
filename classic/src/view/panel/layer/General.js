@@ -31,15 +31,19 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
         bind: {
             title: '{i18n.general.generalTitle}'
         },
-        layout: 'column',
+        layout: 'form',
         scrollable: 'y',
         items: [{
             xtype: 'fieldcontainer',
-            columnWidth: 0.5,
+            defaults: {
+                labelWidth: 130
+            },
             items: [{
                 xtype: 'displayfield',
                 bind: {
-                    value: '{i18n.general.uploadDescription}'
+                    value: '{i18n.general.uploadDescription}',
+                    // show for createLayer only
+                    hidden: '{!isNewLayer}'
                 }
             }, {
                 xtype: 'textfield',
@@ -196,6 +200,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     increment: 0.01,
                     decimalPrecision: 2,
                     submitValue: false,
+                    labelWidth: 130,
                     bind:{
                         fieldLabel: '{i18n.general.layerOpacity}',
                         value: '{layer.appearance.opacity}',
@@ -228,7 +233,7 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     width: 400,
                     name: 'layerHoverTemplate',
                     margin: '0 5px 0 0',
-                    flex: 1,
+                    labelWidth: 130,
                     bind: {
                         fieldLabel: '{i18n.general.hoverTemplate}',
                         value: '{layer.appearance.hoverTemplate}'
@@ -240,10 +245,53 @@ Ext.define('MoMo.admin.view.panel.layer.General',{
                     },
                     handler: 'onAttributesButtonClicked'
                 }]
+            }, {
+                xtype: 'fieldset',
+                name: 'legendFieldset',
+                bind: {
+                    title: '{i18n.general.legend.title}'
+                },
+                scrollable: 'y',
+                defaults: {
+                    layout: 'vbox',
+                    align: 'stretchmax',
+                    margin: 5
+                },
+                items: [{
+                    xtype: 'container',
+                    items: [{
+                        xtype: 'checkbox',
+                        width: 350,
+                        bind: {
+                            boxLabel: '{i18n.general.legend.useFixLegendUrlCbBoxLabel}',
+                            value: '{hasFixLegendUrl}'
+                        },
+                        listeners: {
+                            change: 'onHasFixLegendCbChange'
+                        }
+                    }, {
+                        xtype: 'button',
+                        name: 'graphic-pool-btn',
+                        handler: 'onChooseImageClick',
+                        bind: {
+                            text: '{i18n.general.legend.chooseOrUploadImage}',
+                            disabled: '{!hasFixLegendUrl}'
+                        }
+                    }, {
+                        xtype: 'image',
+                        name: 'legend-img-preview',
+                        bind: {
+                            src: '{layer.fixLegendUrl}'
+                        },
+                        listeners : {
+                            load : {
+                                element : 'el',
+                                fn : 'onLegendImageLoad'
+                            }
+                        }
+                    }]
+                }]
             }]
-        },{
-            xtype: 'container',
-            columnWidth: 0.5
         }]
     }]
 });

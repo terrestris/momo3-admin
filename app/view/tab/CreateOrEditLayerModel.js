@@ -24,7 +24,12 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
                 layerDescription: 'Layer Description',
                 layerOpacity: 'Layer Opacity',
                 hoverTemplate: 'Hover Template',
-                availableAttributes: 'Available Attributes'
+                availableAttributes: 'Available Attributes',
+                legend: {
+                    title: 'Legend settings',
+                    useFixLegendUrlCbBoxLabel: 'Fix legend image (instead of GetLegendGraphic)?',
+                    chooseOrUploadImage: 'Upload/choose image'
+                }
             },
             metadata: {
                 title: 'Titel',
@@ -168,6 +173,11 @@ Ext.define('MoMo.admin.view.tab.CreateOrEditLayerModel', {
                 return get('upload.vector.hasPrj');
             } else {
                 return false;
+            }
+        },
+        hasFixLegendUrl: {
+            get: function(get) {
+                return !Ext.isEmpty(get('layer.fixLegendUrl'));
             }
         }
     }

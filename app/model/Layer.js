@@ -25,6 +25,9 @@ Ext.define('MoMo.admin.model.Layer', {
         name: 'dataType',
         type: 'string'
     }, {
+        name: 'fixLegendUrl',
+        type: 'string'
+    }, {
         name: 'sourceId',
         reference: {
             type: 'LayerSource',
