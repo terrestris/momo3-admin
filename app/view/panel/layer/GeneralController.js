@@ -6,7 +6,9 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         'MoMo.admin.store.Epsg',
 
         'MoMo.admin.view.form.SubmitForm',
-        'MoMo.admin.view.grid.LayerAttributes'
+        'MoMo.admin.view.grid.LayerAttributes',
+
+        'BasiGX.view.panel.GraphicPool'
     ],
 
     /**
@@ -569,6 +571,185 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         if(view) {
             view.setLoading(false);
         }
-    }
+    },
 
+    /**
+     * Enables or disables image upload button depending on check state of the
+     * checkbox.
+     *
+     * @param {Ext.form.field.Checkbox} cb the Checkbox
+     * @param {Boolean} newValue the new value of the cb
+     */
+    onHasFixLegendCbChange: function(cb, newValue) {
+        var me = this;
+        var view = me.getView();
+        var buttonSel = 'button[name=graphic-pool-btn]';
+        var imgSel = 'image[name=legend-img-preview]';
+        var imgBtn = cb.up('fieldset').down(buttonSel);
+        var legendImgCmp = cb.up('fieldset').down(imgSel);
+
+        if (!newValue) {
+            me.updateLegendSrc('', null);
+            view.lookupViewModel().set('layer.fixLegendUrl', null);
+        }
+
+        if (imgBtn) {
+            imgBtn.setDisabled(!newValue);
+        }
+        if (legendImgCmp) {
+            legendImgCmp.setHidden(!newValue);
+        }
+    },
+
+    /**
+     * Opens window containing graphic pool for already uploaded images as well
+     * as dialog to upload a new one.
+     */
+    onChooseImageClick: function() {
+        var me = this;
+        var viewModel = me.getView().lookupViewModel();
+
+        var graphicPool =
+                Ext.ComponentQuery.query('window[name=legend-image-pool]')[0];
+
+        if(!graphicPool) {
+            var graphicPoolPanel = Ext.create('BasiGX.view.panel.GraphicPool', {
+                backendUrls: {
+                    pictureList: {
+                        url: 'rest/images/',
+                        method: 'GET'
+                    },
+                    pictureSrc: {
+                        url: 'momoimage/getThumbnail.action?id='
+                    },
+                    pictureUpload: {
+                        url: 'momoimage/upload.action',
+                        method: 'POST'
+                    },
+                    graphicDelete: {
+                        url: 'rest/images/',
+                        method: 'DELETE'
+                    }
+                },
+                okClickCallbackFn: me.onSelectLegendImg.bind(me),
+                deleteClickCallbackFn: me.onDeleteLegendImg.bind(me),
+                useCsrfToken: true
+            });
+            var winTitle = viewModel.get('i18n.general.legend.chooseOrUploadImage');
+            graphicPool = Ext.create('Ext.window.Window', {
+                layout: 'fit',
+                modal: true,
+                title: winTitle,
+                name: 'legend-image-pool',
+                constrainHeader: true,
+                scrollable: true,
+                items: [
+                    graphicPoolPanel
+                ]
+            });
+        }
+        graphicPool.show();
+    },
+
+    /**
+     * Callback function for OK button click
+     * @param {Ext.data.Model} img the image record
+     */
+    onSelectLegendImg: function(img) {
+        var me = this;
+        var viewModel = me.getView().lookupViewModel();
+        var layer = viewModel.get('layer');
+        var imgUrl = '/momoimage/get.action?id=' + img.get('id');
+
+        me.updateLegendSrc(imgUrl, img);
+
+        var layerSource = layer.getSource();
+
+        var url = layerSource.get('url') + Ext.urlAppend(
+            '?SERVICE=WMS&VERSION=1.1.1&' +
+            'REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&' +
+            'LAYER=' + layerSource.get('layerNames'));
+
+        viewModel.get('layer').set('fixLegendUrl', url);
+    },
+
+    /**
+     * Updates legend graphic source via GeoServer REST
+     */
+    updateLegendSrc: function (imgUrl, img) {
+
+        var me = this;
+        var view = me.getView();
+        var viewModel = view.lookupViewModel();
+        var layerId = viewModel.get('layer').get('id');
+        var width = 0;
+        var height = 0;
+        var format = '';
+
+        if (img) {
+            width = img.get('width');
+            height = img.get('height');
+            format = img.get('fileType');
+        }
+
+        Ext.Ajax.request({
+            url: BasiGX.util.Url.getWebProjectBaseUrl() +
+                'sld/updateLegendSrc.action',
+            method: 'POST',
+            params: {
+                layerId: layerId,
+                imgUrl: imgUrl,
+                width: width,
+                height: height,
+                format: format
+            },
+            defaultHeaders: BasiGX.util.CSRF.getHeader(),
+            scope: this,
+            success: function() {
+                if (!Ext.isEmpty(viewModel.get('layer.fixLegendUrl'))) {
+                    Ext.toast("Successfully updated legend graphic source");
+                }
+            },
+            failure: function(response) {
+                Ext.toast(
+                    Ext.decode(response.responseText).message,
+                    "Couldn't update legend graphic source"
+                );
+            }
+        });
+    },
+
+    /**
+     * Callback function for Delete button click
+     * @param {Ext.data.Model} img the image record
+     */
+    onDeleteLegendImg: function(img) {
+        var me = this;
+        var view = me.getView();
+        var viewModel = view.lookupViewModel();
+        var imgUrl = '/momo/image/get.action?id=' + img.get('id');
+        var currentUrl = viewModel.get('layer.fixLegendUrl');
+        if (currentUrl === imgUrl) {
+            me.updateLegendSrc('', null);
+            viewModel.get('layer').set('fixLegendUrl', null);
+        }
+    },
+
+    /**
+     * Adjust the size of the image component when a new image has been loaded.
+     *
+     * @param {Object} evt the (load) event
+     * @param {Object} imageEl the DOM element of the image
+     */
+    onLegendImageLoad: function(evt, imageEl) {
+        var me = this;
+        var view = me.getView();
+        var legendImageCmp = view.down('image[name=legend-img-preview]');
+
+        var imageWidth = imageEl.naturalWidth;
+        var imageHeight = imageEl.naturalHeight;
+
+        legendImageCmp.setWidth(imageWidth);
+        legendImageCmp.setHeight(imageHeight);
+    }
 });
