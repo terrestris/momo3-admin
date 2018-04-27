@@ -693,6 +693,8 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             '?SERVICE=WMS&VERSION=1.1.1&' +
             'REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&' +
             'LAYER=' + layerSource.get('layerNames'));
+        // avoid caching by reload
+        url += "&_dc=" + new Date().getTime();
 
         viewModel.get('layer').set('fixLegendUrl', url);
     },
