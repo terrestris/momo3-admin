@@ -4,7 +4,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
 
     requires: [
         'MoMo.admin.store.Epsg',
-
+        'MoMo.shared.MetadataUtil',
         'MoMo.admin.view.form.SubmitForm',
         'MoMo.admin.view.grid.LayerAttributes',
 
@@ -217,7 +217,8 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 taskId: respObj.tasksWithoutProjection[0].id,
                 fileProjection: combo.getValue(),
                 layerName: layer.get('name'),
-                dataType: layer.get('dataType')
+                dataType: layer.get('dataType'),
+                layerConfig: respObj.layerConfig
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             scope: this,
@@ -277,11 +278,34 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
             comp.getStore().load();
         });
 
+        var metadataHandled = false;
+        if (respObj.data.layerConfig && !Ext.isEmpty(respObj.data.layerConfig)) {
+            var layerConfig = Ext.decode(respObj.data.layerConfig);
+            if (!Ext.isEmpty(layerConfig.config)) {
+                layerConfig.config = Ext.decode(layerConfig.config);
+            }
+            //Create MetadataEntry
+            if (layerConfig.metadata) {
+                var metadataObj = MoMo.shared.MetadataUtil.parseMetadataXml(
+                    layerConfig.metadata);
+                var coel = Ext.ComponentQuery.query(
+                    'momo-create-or-edit-layer')[0];
+                if (coel) {
+                    var coelViewModel = coel.getViewModel();
+                    coelViewModel.set('metadata', metadataObj);
+                    metadataController.createMetadataEntry(respObj, metadataObj);
+                    metadataHandled = true;
+                }
+            }
+        }
+
         //Create MetadataEntry
-        metadataController.createMetadataEntry(respObj);
+        if (!metadataHandled) {
+            metadataController.createMetadataEntry(respObj);
+        }
 
         //Load newly created Layerdata
-        viewModel.set('entityId', respObj.data.id);
+        viewModel.set('entityId', respObj.data.layer.id);
         coeLayerController.loadLayerData();
         // reset data and guit
         viewModel.set('upload', null);
