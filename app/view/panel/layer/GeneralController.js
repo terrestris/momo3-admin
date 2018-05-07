@@ -7,7 +7,7 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         'MoMo.shared.MetadataUtil',
         'MoMo.admin.view.form.SubmitForm',
         'MoMo.admin.view.grid.LayerAttributes',
-
+        'BasiGX.util.Url',
         'BasiGX.view.panel.GraphicPool'
     ],
 
@@ -136,8 +136,10 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
      */
     showProjectionWindow: function(respObj){
         var me = this;
-        //TODO Fix for multiupload
-        var layerName = respObj.tasksWithoutProjection[0].layer.name;
+        var layerName = '';
+        if (respObj.tasksWithoutProjection[0].layer) {
+            layerName = respObj.tasksWithoutProjection[0].layer.name;
+        }
         var viewModel = me.getView().lookupViewModel();
 
         Ext.create('Ext.window.Window', {
@@ -218,7 +220,8 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
                 fileProjection: combo.getValue(),
                 layerName: layer.get('name'),
                 dataType: layer.get('dataType'),
-                layerConfig: respObj.layerConfig
+                layerConfig: respObj.layerConfig,
+                imageId: respObj.legendImageId
             },
             defaultHeaders: BasiGX.util.CSRF.getHeader(),
             scope: this,
@@ -683,20 +686,10 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
         var me = this;
         var viewModel = me.getView().lookupViewModel();
         var layer = viewModel.get('layer');
-        var imgUrl = '/momoimage/get.action?id=' + img.get('id');
-
+        var imgUrl = BasiGX.util.Url.getWebProjectBaseUrl() +
+            'momoimage/get.action?id=' + img.get('id');
         me.updateLegendSrc(imgUrl, img);
-
-        var layerSource = layer.getSource();
-
-        var url = layerSource.get('url') + Ext.urlAppend(
-            '?SERVICE=WMS&VERSION=1.1.1&' +
-            'REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&' +
-            'LAYER=' + layerSource.get('layerNames'));
-        // avoid caching by reload
-        url += "&_dc=" + new Date().getTime();
-
-        viewModel.get('layer').set('fixLegendUrl', url);
+        viewModel.get('layer').set('fixLegendUrl', imgUrl);
     },
 
     /**
