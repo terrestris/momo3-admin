@@ -685,7 +685,6 @@ Ext.define('MoMo.admin.view.panel.layer.GeneralController', {
     onSelectLegendImg: function(img) {
         var me = this;
         var viewModel = me.getView().lookupViewModel();
-        var layer = viewModel.get('layer');
         var imgUrl = BasiGX.util.Url.getWebProjectBaseUrl() +
             'momoimage/get.action?id=' + img.get('id');
         me.updateLegendSrc(imgUrl, img);
